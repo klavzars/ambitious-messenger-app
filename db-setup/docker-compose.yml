@@ -6,10 +6,11 @@ services:
     image: "ambitiousdb-dev-environment"
     container_name: ambitious-db
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      PGDATA: ${PGDATA}
+      PG_CONTAINER_NAME: 'ambitiousdb'
+      POSTGRES_USE: 'dev'
+      POSTGRES_PASSWORD: 'ambitious'
+      POSTGRES_DB: 'ambitiousdb'
+      PGDATA: '/ambitiousdb/data'
     volumes:
        - db_data:/ambitiousdb/data
     ports:
