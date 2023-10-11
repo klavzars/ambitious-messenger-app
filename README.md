@@ -71,7 +71,7 @@ OR if the schema has change (if a table has been added or modified)
 
 #### Sass variables
 
-Here is a list of the current SAAS variables:
+Here is a list of the current Sass variables:
 
 ```scss
 $color-primary: #0881a3;
@@ -91,7 +91,7 @@ $font-semibold: 600;
 $font-bold: 800;
 ```
 
-To use them just import the `_variables.scss `file in the modules.scss file, for example:
+To use them just import the `_variables.scss ` file in the modules.scss file, for example:
 
 ```scss
 @import "./sass_utilities/_variables.scss";
