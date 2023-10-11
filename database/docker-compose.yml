@@ -7,7 +7,7 @@ services:
     container_name: ambitious-db
     environment:
       PG_CONTAINER_NAME: 'ambitiousdb'
-      POSTGRES_USE: 'dev'
+      POSTGRES_USER: 'dev'
       POSTGRES_PASSWORD: 'ambitious'
       POSTGRES_DB: 'ambitiousdb'
       PGDATA: '/ambitiousdb/data'
