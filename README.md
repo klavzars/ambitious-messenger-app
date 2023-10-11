@@ -15,19 +15,21 @@ Clone the project
   git clone https://github.com/briantwene/ambitious-bishes.git
 ```
 
-Go to the db-setup folder in backend
+
+
+Go to the `database` folder
 
 ```bash
-  cd backend/db-setup
+  cd database
 ```
 
-First create docker volume
+Create a docker volume called `db_data`
 
 ```bash
   docker volume create db_data
 ```
 
-Start the container
+Then, start the container
 
 ```bash
   docker compose up
@@ -37,7 +39,8 @@ The database should be running
 
 Next, is to get prisma working, the schema is there already
 
-install backend dependencies (make sure to be in `/backend`)
+
+Install dependencies (**make sure that you're in `/backend`**)
 
 ```bash
   npm install
@@ -48,9 +51,13 @@ now run the following to generate the prisma client
   npx prisma generate
 ```
 
+
 **OR** 
 
-if the schema has change (if a table has been added or modified)
+**You probably wont have to do this, but @briantwene will let you know**
+
+if the prisma schema has changed (if a table has been added or modified) run this
+
 ```bash
   npx prisma migrate dev
 ```
