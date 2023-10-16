@@ -110,8 +110,8 @@ $font-bold: 800;
 $font-small: 0.85rem;
 ```
 
-To use them just import the `_variables.scss ` file in the modules.scss file, for example:
+To use them just import the `variables.scss ` file in the modules.scss file, for example:
 
 ```scss
-@import "./sass_utilities/_variables.scss";
+@import "./sass_utilities/variables.scss";
 ```
