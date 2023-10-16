@@ -1,0 +1,35 @@
+@import "../sass_utilities/variables";
+@import "bootstrap";
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2rem;
+  margin-bottom: 2rem;
+
+  &Last {
+    margin-bottom: 0.9rem;
+  }
+
+  &__textInput,
+  &__textInput:focus {
+    background-color: $color-secondary-bright;
+    border: none;
+    outline: none;
+    border-bottom: 3px solid $color-primary;
+    padding: 0.7rem 1rem;
+  }
+
+  &__textInputInvalid,
+  &__textInputInvalid:focus {
+    border-bottom: 3px solid $color-invalid;
+  }
+
+  &__invalidMessage {
+    color: $color-invalid;
+    font-size: 0.85rem;
+    font-weight: $font-semibold;
+    align-self: flex-start;
+    text-align: left;
+  }
+}
