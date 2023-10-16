@@ -11,7 +11,11 @@ function TextInputGroup({
   isLast = false,
 }) {
   return (
-    <div className={`${styles.formGroup} ${isLast && styles.formGroupLast}`}>
+    <div
+      className={`${styles.formGroup} ${isLast && styles.formGroupLast} ${
+        inputInvalid && styles.formGroupInvalid
+      }`}
+    >
       <input
         className={`${styles.formGroup__textInput} ${
           inputInvalid && styles.formGroup__textInputInvalid
