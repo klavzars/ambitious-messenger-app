@@ -1,20 +1,16 @@
-const { registerUser } = require("./auth.service");
+const { registerUser, loginUser } = require("./auth.service");
 const { generateToken } = require("./jwt");
 const bcrypt = require("bcryptjs");
 
 const login = async (req, res, next) => {
   let { username, password } = req.body;
 
-  //get the user from database
-  const user = "some function here";
-
   //check if the password is the same
-  if (user.password != password) {
-    res.send("invalid password");
-  }
+  const user = loginUser(username);
 
   //then generateToken
-  const token = generateToken();
+  const token = generateToken(user);
+
   res.type("json").send({ token: token, msg: "login success" });
 };
 

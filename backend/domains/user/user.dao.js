@@ -34,8 +34,7 @@ const getUserProfileById = async (userId) => {
   }
 };
 
-const getUserByEmail = async (email) => {
-
+const get = async (email) => {
   const user = await prisma.user.findUnique({
     where: {
       email: email,
@@ -45,9 +44,9 @@ const getUserByEmail = async (email) => {
   return user;
 };
 
-const createUser = async (email, password, username) => {
+const create = async (email, password, username) => {
   console.log("email", email, "password", password, "username", username);
-  console.log("this is running")
+  console.log("this is running");
   const user = await prisma.user.create({
     data: {
       email,
@@ -55,15 +54,16 @@ const createUser = async (email, password, username) => {
       password,
     },
   });
-  console.log("user",user)
+  console.log("user", user);
 
   return user;
 };
 
-const updateUser = async () => {};
+const update = async () => {};
 
 module.exports = {
   getUserProfileById,
-  getUserByEmail,
-  createUser
+  get,
+  create,
+  update
 };
