@@ -6,27 +6,27 @@ const messageDao = require('./message.dao');
 // Delete message.
 // Query historical messages.
 // Get all historical messages.
-// Modify message.
+// Update message.
 
-// 创建新消息
-const createMessage = async (text, messageType, conversationType, status) => {
-  const newMessage = await messageDao.createMessage(text, messageType, conversationType, status);
-  return new Message(newMessage.id, newMessage.text, newMessage.messageType, newMessage.conversationType, newMessage.status, newMessage.createdAt);
+// Create new message
+const createMessage = async (from, message_text, sent, chat_id) => {
+  const newMessage = await messageDao.createMessage(from, message_text, sent, chat_id);
+  return new Message(newMessage.id, newMessage.from, newMessage.message_text, newMessage.sent, newMessage.chat_id);
 };
 
-// 获取所有历史消息
+// Get all historical messages
 const getAllMessages = async () => {
   const messages = await messageDao.getAllMessages();
-  return messages.map((message) => new Message(message.id, message.text, message.messageType, message.conversationType, message.status, message.createdAt));
+  return messages.map((message) => new Message(message.id, message.from,message.message_text, message.sent, message.chat_id));
 };
 
-// 更新消息
-const updateMessage = async (id, text, messageType, conversationType, status) => {
-  const updatedMessage = await messageDao.updateMessage(id, text, messageType, conversationType, status);
-  return new Message(updatedMessage.id, updatedMessage.text, updatedMessage.messageType, updatedMessage.conversationType, updatedMessage.status, updatedMessage.createdAt);
+// Update message
+const updateMessage = async (id,newMessage_text) => {
+  const updatedMessage = await messageDao.updateMessage(id, newMessage_text);
+  return new Message(updatedMessage.id, updatedMessage.message_text);
 };
 
-// 删除消息
+// Delete message
 const deleteMessage = async (id) => {
   await messageDao.deleteMessage(id);
 };
