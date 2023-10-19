@@ -28,10 +28,9 @@ const schemaValidator = (req, res, next) => {
     const schema = schemas[route];
 
     if (schema) {
-      console.log(res.body);
       // Validate req.body using the schema and validation options
       const { value, error } = schema.validate(req.body, validationOptions);
-      console.log(error);
+
       if (error) {
         // Joi Error
         const JoiError = {

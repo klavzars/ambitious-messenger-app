@@ -1,6 +1,6 @@
 //suposed that we use PostgresSQL and built a connector Pool
 // const {Pool} = require('pg');
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 //build a PostgresSQL connector
@@ -45,8 +45,6 @@ const get = async (email) => {
 };
 
 const create = async (email, password, username) => {
-  console.log("email", email, "password", password, "username", username);
-  console.log("this is running");
   const user = await prisma.user.create({
     data: {
       email,
@@ -54,7 +52,6 @@ const create = async (email, password, username) => {
       password,
     },
   });
-  console.log("user", user);
 
   return user;
 };
@@ -65,5 +62,5 @@ module.exports = {
   getUserProfileById,
   get,
   create,
-  update
+  update,
 };

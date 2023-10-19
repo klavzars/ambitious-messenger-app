@@ -20,7 +20,7 @@ const register = async (req, res, next) => {
   const hashedPassword = await bcrypt.hash(password, 12);
   //check somethings then add the user
   const registeredUser = await registerUser(email, hashedPassword, username);
-  console.log("registered", registeredUser);
+
   // could add a verification step here for later
   const token = generateToken(registeredUser.username, registeredUser.user_id);
   res.type("json").send({

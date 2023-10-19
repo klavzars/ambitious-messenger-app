@@ -2,11 +2,9 @@ const { sign, verify } = require("jsonwebtoken");
 const { config } = require("../../config");
 
 const generateToken = (user) => {
-  console.log("config", config);
   const {
     jwt: { secret, issuer, audience },
   } = config;
-  console.log("secret", secret);
 
   const token = sign(
     {
