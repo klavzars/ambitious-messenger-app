@@ -1,25 +1,5 @@
-const { sign, verify } = require("jsonwebtoken");
-const config = require("../../config");
-
-const generateToken = (user) => {
-  const { jwt, issuer, audience, secret } = config;
-  const token = sign(
-    {
-      userId: user.user_id,
-      username: user.username,
-    },
-    secret,
-    {
-      expiresIn: "1h",
-      notBefore: "0",
-      algorithm: "HS256",
-      audience: audience,
-      issuer: issuer,
-    }
-  );
-
-  return token;
-};
+const { verify } = require("jsonwebtoken");
+const config = require("../config");
 
 // token validation middleware
 const validateToken = (req, res, next) => {
@@ -45,9 +25,5 @@ const validateToken = (req, res, next) => {
     return;
   }
 
-  //validate the token
-
   next();
 };
-
-module.exports = { generateToken, validateToken };

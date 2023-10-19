@@ -1,4 +1,5 @@
-const { generateToken } = require("./auth");
+const { registerUser } = require("./auth.service");
+const { generateToken } = require("./jwt");
 const bcrypt = require("bcryptjs");
 
 const login = async (req, res, next) => {
@@ -14,7 +15,7 @@ const login = async (req, res, next) => {
 
   //then generateToken
   const token = generateToken();
-  res.type("json").send({ token: token, message: "login success" });
+  res.type("json").send({ token: token, msg: "login success" });
 };
 
 const register = async (req, res, next) => {
@@ -22,13 +23,18 @@ const register = async (req, res, next) => {
 
   const hashedPassword = await bcrypt.hash(password, 12);
   //check somethings then add the user
-  const createdUser = createUser(email, password, username);
-
+  const registeredUser = await registerUser(email, hashedPassword, username);
+  console.log("registered", registeredUser);
   // could add a verification step here for later
-  const token = generateToken(createdUser.username, createdUser.password);
-  res.type("json").send({ token: token });
-
-  res.send("auth - register");
+  const token = generateToken(registeredUser.username, registeredUser.user_id);
+  res.type("json").send({
+    token: token,
+    user: {
+      username: registeredUser.username,
+      user_id: registeredUser.user_id,
+    },
+    msg: "register success",
+  });
 };
 
 //change Password method
