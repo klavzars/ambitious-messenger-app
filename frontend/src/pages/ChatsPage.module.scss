@@ -1,0 +1,55 @@
+@import "../sass_utilities/variables";
+
+.pageContainer {
+  height: 100vh;
+}
+
+.contactsContainer {
+  width: 100vw;
+}
+
+.contact {
+  height: 7rem;
+  width: 100%;
+  display: flex;
+
+  &__imageContainer {
+    height: inherit;
+    display: flex;
+    align-items: center;
+  }
+
+  &__img {
+    height: 80%;
+    border-radius: 100%;
+    padding: 1rem;
+  }
+
+  &__mainContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  &__left {
+    align-self: center;
+  }
+
+  &__right {
+    padding: 1.5rem 1rem;
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  &__message {
+    margin: 0;
+  }
+
+  &__time {
+    font-style: italic;
+    font-size: $font-small;
+  }
+}
