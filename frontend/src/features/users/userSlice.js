@@ -22,6 +22,7 @@ export const register = createAsyncThunk(
   "auth/register",
   async (userRegistrationData, thunkAPI) => {
     try {
+      // console.log("slice register");
       return await userService.register(userRegistrationData);
     } catch (error) {
       const message =
@@ -36,10 +37,8 @@ export const register = createAsyncThunk(
 );
 
 const initialState = {
-  isLoading: false,
-  isSuccess: false,
-  isError: false,
-  message: "",
+  status: "idle",
+  error: null,
 };
 
 export const userSlice = createSlice({
@@ -47,43 +46,31 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      state.isLoading = false;
-      state.isError = false;
-      state.isSuccess = false;
-      state.message = "";
+      state.status = "idle";
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
-        state.isLoading = true;
+        state.status = "loading";
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isError = false;
-        state.message = "";
+        state.status = "succeeded";
       })
       .addCase(register.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.status = "failed";
+        state.error = action.payload;
       })
       .addCase(login.pending, (state) => {
-        state.isLoading = true;
+        state.status = "loading";
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isError = false;
-        state.message = "";
+        state.status = "succeeded";
       })
       .addCase(login.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.status = "failed";
+        state.error = action.payload;
       });
   },
 });
