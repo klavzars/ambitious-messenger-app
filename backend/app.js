@@ -4,6 +4,10 @@ const bodyParser = require("body-parser");
 const { isOperationalError } = require("./lib/error/errorHandler");
 const logger = require("./logger");
 const app = express();
+const cors = require("cors");
+
+// TODO - this is temporary, just so the frontend can make requests to the server
+app.use(cors({ origin: "http://localhost:5173" }));
 
 const port = 4202;
 
