@@ -1,5 +1,7 @@
 import styles from "./ChatsPage.module.scss";
 import { useState } from "react";
+import { MdMoreVert } from "react-icons/md";
+import { RiChatNewLine } from "react-icons/ri";
 
 // temporary
 import sampleProfilePic from "../assets/sample_profile_pic.png";
@@ -58,9 +60,22 @@ function ChatsPage() {
 
   return (
     <div className={styles.pageContainer}>
-      <h2 style={{ marginLeft: "2rem", marginBottom: "0", fontSize: "3rem" }}>
-        Messages
-      </h2>
+      <header className={styles.header}>
+        <div className={styles.headingContainer}>
+          <h2 className={styles.heading}>Chats</h2>
+        </div>
+        <button className={`${styles.buttonNewChat} ${styles.button}`}>
+          <RiChatNewLine
+            className={`${styles.buttonIcon} ${styles.buttonIcon__newChat}`}
+          />
+        </button>
+        <button className={`${styles.buttonOptions} ${styles.button}`}>
+          <MdMoreVert
+            className={`${styles.buttonIcon} ${styles.buttonIcon__options}`}
+          />
+        </button>
+      </header>
+
       {chats}
     </div>
   );

@@ -2,6 +2,7 @@ import styles from "./ConversationPage.module.scss";
 import { useState } from "react";
 import { MdKeyboardArrowLeft, MdMoreVert, MdLocalPhone } from "react-icons/md";
 import { GoDotFill, GoDot } from "react-icons/go";
+import { IoSend } from "react-icons/io5";
 // temporary
 import sampleProfilePic from "../assets/sample_profile_pic.png";
 
@@ -44,22 +45,59 @@ function ConversationPage() {
 
       <div className={styles.conversationContainer}>
         <div className={styles.messageContainer}>
-          <div className={styles.message__imageContainer}></div>
+          <div className={styles.message__imageContainer}>
+            <img
+              className={styles.message__img}
+              src={sampleProfilePic}
+              alt=""
+            />
+          </div>
           <div className={styles.message__mainContainer}>
             <div className={styles.message__heading}>
               <h5 className={styles.message__name}>John Doe</h5>
               <span className={styles.message__timestamp}>20:23</span>
             </div>
             <div className={styles.message__content}>
-              <p>Hey man go fuck yourself.</p>
+              <p className={styles.message__text}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore.
+              </p>
             </div>
+          </div>
+        </div>
+
+        <div className={styles.messageFromContainer}>
+          <div className={styles.messageFrom__mainContainer}>
+            <div className={styles.messageFrom__heading}>
+              <span className={styles.messageFrom__timestamp}>20:23</span>
+              <h5 className={styles.messageFrom__name}>John Doe</h5>
+            </div>
+            <div className={styles.messageFrom__content}>
+              <p className={styles.messageFrom__text}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod.
+              </p>
+            </div>
+          </div>
+          <div className={styles.messageFrom__imageContainer}>
+            <img
+              className={styles.messageFrom__img}
+              src={sampleProfilePic}
+              alt=""
+            />
           </div>
         </div>
       </div>
 
       <div className={styles.messageInput}>
-        <input className={styles.messageInput__textInput} type="text" />
-        <button className={styles.messageInput__buttonSend}>*send icon*</button>
+        <textarea
+          rows="1"
+          className={styles.messageInput__textInput}
+          placeholder="Aa"
+        />
+        <button className={styles.messageInput__buttonSend}>
+          <IoSend className={styles.messageInput__sendIcon} />
+        </button>
       </div>
     </div>
   );
