@@ -28,17 +28,17 @@ model member {
 
 model message {
   id           Int       @id @default(autoincrement())
-  from         Int?
+  from         String
   message_text String?
   sent         DateTime? @db.Timestamp(6)
   chat_id      Int?
   chat         chat?     @relation(fields: [chat_id], references: [chat_id], onDelete: NoAction, onUpdate: NoAction)
-  user         user?     @relation(fields: [from], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+  user         user?     @relation(fields: [from], references: [username], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model user {
   user_id  Int       @id @default(autoincrement())
-  username String?   @db.VarChar
+  username String   @db.VarChar  @unique
   email    String?   @unique @db.VarChar
   password String?   @db.VarChar
   member   member[]
