@@ -19,4 +19,4 @@ const authLogin = joi.object().keys({
   password: joi.string().trim().required(),
 });
 
-module.exports = { "/register": authRegister, "/login": authLogin };
+module.exports = { "/auth/register": authRegister, "/auth/login": authLogin };
