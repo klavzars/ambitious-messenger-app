@@ -1,4 +1,4 @@
-const Message = require('./message.model');
+//const Message = require('./message.model');
 const messageService = require('./message.service');
 
 // Message Handling:
@@ -11,11 +11,13 @@ const messageService = require('./message.service');
 
 // Create new message
 const createMessage = async (req, res) => {
+    console.log("message", req.body)
     const { from, message_text, sent, chat_id } = req.body;
     try {
         const newMessage = await messageService.createMessage(from, message_text, sent, chat_id);
         res.status(201).json(newMessage);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: 'Failed to create message' });
     }
 };
@@ -23,22 +25,23 @@ const createMessage = async (req, res) => {
 // Get all historical messages
 const getHistoryMessages = async (req, res) => {
     try {
+        console.log(messages)
         const messages = await messageService.getAllMessages();
         res.json(messages);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch history messages' });
+        res.status(500).json({ error: 'Failed to fetch121 history messages' });
     }
 };
 
 // Update messages
 const updateMessage = async (req, res) => {
-    const messageId = parseInt(req.params.id);
+    const id = parseInt(req.params.id);
     const { message_text} = req.body;
     try {
-        const updatedMessage = await messageService.updateMessage(messageId, message_text);
+        const updatedMessage = await messageService.updateMessage(id, message_text);
         res.json(updatedMessage);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update message' });
+        res.status(500).json({ error: 'Failed to update1121 message' });
     }
 };
 

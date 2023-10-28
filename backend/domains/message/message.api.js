@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const messagesController = require('./messages.controller');
+const messagesController = require('./message.controller');
 
 // Message Handling:
 // Create new message
@@ -11,15 +11,15 @@ const messagesController = require('./messages.controller');
 // update message.
 
 // Create new message (HTTP POST)
-router.post('/messages', messagesController.createMessage);
+router.post('/', messagesController.createMessage);
 
 // getHistoryMessages (HTTP GET)
-router.get('/messages', messagesController.getHistoryMessages);
+router.get('/', messagesController.getHistoryMessages);
 
 // updateMessage (HTTP PUT)
-router.put('/messages/:id', messagesController.updateMessage);
+router.put('/:id', messagesController.updateMessage);
 
 // deleteMessage (HTTP DELETE)
-router.delete('/messages/:id', messagesController.deleteMessage);
+router.delete('/:id', messagesController.deleteMessage);
 
 module.exports = router;

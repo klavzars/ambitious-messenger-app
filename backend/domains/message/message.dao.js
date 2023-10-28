@@ -1,4 +1,6 @@
-const prisma = require('./schema.prisma');
+const {PrismaClient} = require('@prisma/client');
+
+const prisma = new PrismaClient();
 
 // Message Handling:
 // Create new message
@@ -20,11 +22,12 @@ const createMessage = async (from, message_text, sent, chat_id) => {
         });
         return message;
     } catch (error) {
-        throw new Error('Failed to create message');
+        console.error(error)
+        throw new Error('Faile234d to create message');
     }
 };
 
-// Query messages
+// Get all historical messages.
 const getAllMessages = async () => {
     try {
         const messages = await prisma.message.findMany();
@@ -43,7 +46,7 @@ const updateMessage = async (id, message_text) => {
         });
         return updatedMessage;
     } catch (error) {
-        throw new Error('Failed to update message');
+        throw new Error('Failed to updat33e message');
     }
 };
 

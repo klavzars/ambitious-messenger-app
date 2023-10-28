@@ -4,16 +4,20 @@ const bodyParser = require("body-parser");
 const { isOperationalError } = require("./lib/error/errorHandler");
 const logger = require("./logger");
 const app = express();
+const messageRouter = require('./domains/message/message.api');
 
 const port = 4202;
 
 app.use(bodyParser.json());
 
+app.use("/auth", auth);
+app.use("/messages",messageRouter);
+
 app.get("/", (req, res) => {
   res.send("Welcome to the backend of Ambitious Messenger 😎");
 });
 
-app.use("/auth", auth);
+
 // if fatal error allow backend to exit gracefully
 // process.on("uncaughtException", (error) => {
 //   logger.fatal(error);
