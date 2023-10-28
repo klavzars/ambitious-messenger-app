@@ -11,13 +11,13 @@ const messageService = require('./message.service');
 
 // Create new message
 const createMessage = async (req, res) => {
-    console.log("message", req.body)
-    const { from, message_text, sent, chat_id } = req.body;
+    //console.log("message", req.body)
     try {
+        const { from, message_text, sent, chat_id } = req.body;
         const newMessage = await messageService.createMessage(from, message_text, sent, chat_id);
         res.status(201).json(newMessage);
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         res.status(500).json({ error: 'Failed to create message' });
     }
 };
@@ -25,23 +25,25 @@ const createMessage = async (req, res) => {
 // Get all historical messages
 const getHistoryMessages = async (req, res) => {
     try {
-        console.log(messages)
         const messages = await messageService.getAllMessages();
+        //console.log(messages)
         res.json(messages);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch121 history messages' });
+        res.status(500).json({ error: 'Failed to fetch history messages' });
     }
 };
 
 // Update messages
 const updateMessage = async (req, res) => {
-    const id = parseInt(req.params.id);
-    const { message_text} = req.body;
+    //const messageId = req.params.id;
+    //const updatedText = req.body.updatedText;
+    const messageId = parseInt(req.params.id);
+    const updatedText = req.body.updatedText;
     try {
-        const updatedMessage = await messageService.updateMessage(id, message_text);
-        res.json(updatedMessage);
+        const updatedMessage = await messageService.updateMessage(messageId, updatedText);
+        res.status(200).json(updatedMessage);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update1121 message' });
+        res.status(500).json({ error: 'Failed to update message' });
     }
 };
 
@@ -56,9 +58,22 @@ const deleteMessage = async (req, res) => {
     }
 };
 
+// Delete multiple messages
+const deleteMultipleMessages = async (req, res) => {
+    // Assuming messageIds is an array of Ids
+    const messageIds = req.body.messageIds; 
+    try {
+        await messageService.deleteMultipleMessages(messageIds);
+        res.status(204).end(); 
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete messages' });
+    }
+};
+
 module.exports = {
     createMessage,
     getHistoryMessages,
     updateMessage,
     deleteMessage,
+    deleteMultipleMessages
 };

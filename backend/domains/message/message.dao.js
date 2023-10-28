@@ -46,7 +46,7 @@ const updateMessage = async (id, message_text) => {
         });
         return updatedMessage;
     } catch (error) {
-        throw new Error('Failed to updat33e message');
+        throw new Error('Failed to update message');
     }
 };
 
@@ -59,9 +59,19 @@ const deleteMessage = async (id) => {
     }
 };
 
+// Delete multiple messages
+const deleteMultipleMessages = async (messageIds) => {
+    try {
+        await prisma.message.deleteMany( { where: { id: { in: messageIds } }});
+    } catch (error) {
+        throw new Error('Failed to delete messages');
+    }
+};
+
 module.exports = {
     createMessage,
     getAllMessages,
     updateMessage,
     deleteMessage,
+    deleteMultipleMessages
 };

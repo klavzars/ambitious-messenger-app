@@ -22,4 +22,7 @@ router.put('/:id', messagesController.updateMessage);
 // deleteMessage (HTTP DELETE)
 router.delete('/:id', messagesController.deleteMessage);
 
+// Delete multiple messages (HTTP DELETE)
+router.delete('/', messagesController.deleteMultipleMessages);
+
 module.exports = router;
