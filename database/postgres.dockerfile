@@ -6,4 +6,4 @@ LABEL description="Custom Postgres Image for Ambitious Messenger"
 LABEL version="1.0"
 
 
-COPY scripts/*.sql /docker-entrypoint-initdb.d/
+# COPY scripts/*.sql /docker-entrypoint-initdb.d/

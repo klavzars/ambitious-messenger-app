@@ -1,11 +1,14 @@
 const authSchemas = require("../domains/auth/auth.schema");
+const chatSchemas = require("../domains/chat/chat.schema");
 const joi = require("joi");
+const path = require("node:path");
 
 // the idea: https://www.digitalocean.com/community/tutorials/how-to-use-joi-for-node-api-schema-validation
 
 // instead of putting all schemas in one place will spread them here
 const schemas = {
   ...authSchemas,
+  ...chatSchemas,
 };
 
 // schema validator middleware
@@ -20,7 +23,7 @@ const schemaValidator = (req, res, next) => {
     stripUnknown: false,
   };
 
-  const route = req.route.path;
+  const route = path.join(req.baseUrl, req.path);
   const method = req.method.toLowerCase();
 
   if (supportedMethods.includes(method) && route in schemas) {

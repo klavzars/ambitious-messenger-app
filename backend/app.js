@@ -1,15 +1,20 @@
 const express = require("express");
-const auth = require("./domains/auth/auth.api");
 const bodyParser = require("body-parser");
-const { isOperationalError } = require("./lib/error/errorHandler");
 const logger = require("./logger");
-const app = express();
-const messageRouter = require('./domains/message/message.api');
+const cors = require("cors");
 
+const { isOperationalError } = require("./lib/error/errorHandler");
+
+const auth = require("./domains/auth/auth.api");
+const messageRouter = require('./domains/message/message.api');
 const port = 4202;
 
-app.use(bodyParser.json());
+const app = express();
 
+
+// TODO - this is temporary, just so the frontend can make requests to the server
+app.use(cors({ origin: "http://localhost:5173" }));
+app.use(bodyParser.json());
 app.use("/auth", auth);
 app.use("/messages",messageRouter);
 
