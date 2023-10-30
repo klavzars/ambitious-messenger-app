@@ -125,8 +125,6 @@ function SignUp() {
       return;
     }
 
-    // just a log for now
-    console.log(email, password, username);
     const userRegisterData = {
       username,
       email,

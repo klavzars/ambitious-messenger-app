@@ -81,9 +81,6 @@ function LogIn() {
       return;
     }
 
-    // just a log for now
-    console.log(email, password);
-
     const userLoginData = {
       email,
       password,

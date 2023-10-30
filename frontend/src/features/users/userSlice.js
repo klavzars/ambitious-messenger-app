@@ -22,7 +22,6 @@ export const register = createAsyncThunk(
   "auth/register",
   async (userRegistrationData, thunkAPI) => {
     try {
-      // console.log("slice register");
       return await userService.register(userRegistrationData);
     } catch (error) {
       const message =
@@ -49,6 +48,9 @@ export const userSlice = createSlice({
     reset: (state) => {
       state.status = "idle";
       state.error = null;
+    },
+    setIsUserAuthenticated: (state, action) => {
+      state.isUserAuthenticated = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -79,4 +81,4 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { reset } = userSlice.actions;
+export const { reset, setIsUserAuthenticated } = userSlice.actions;
