@@ -15,9 +15,13 @@ const API_URL_AUTH = `${getBaseUrl()}/auth`;
 const login = async (userLoginData) => {
   const response = await axios.post(`${API_URL_AUTH}/login`, userLoginData);
 
-  // if (response.data) {
-  //   localStorage.setItem("user", JSON.stringify(response.data.token));
-  // }
+  if (
+    response.data &&
+    response.data.isAuthSuccessful &&
+    response.data.expires
+  ) {
+    localStorage.setItem("tokenExpires", response.data.expires);
+  }
 
   return response.data;
 };
@@ -28,9 +32,13 @@ const register = async (userRegistrationData) => {
     userRegistrationData
   );
 
-  // if (response.data) {
-  //   localStorage.setItem("user", JSON.stringify(response.data.token));
-  // }
+  if (
+    response.data &&
+    response.data.isAuthSuccessful &&
+    response.data.expires
+  ) {
+    localStorage.setItem("tokenExpires", response.data.expires);
+  }
 
   return response.data;
 };

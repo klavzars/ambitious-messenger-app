@@ -39,6 +39,7 @@ export const register = createAsyncThunk(
 const initialState = {
   status: "idle",
   error: null,
+  isUserAuthenticated: false,
 };
 
 export const userSlice = createSlice({
@@ -57,6 +58,7 @@ export const userSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.isUserAuthenticated = true;
       })
       .addCase(register.rejected, (state, action) => {
         state.status = "failed";
@@ -67,6 +69,7 @@ export const userSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.isUserAuthenticated = true;
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
