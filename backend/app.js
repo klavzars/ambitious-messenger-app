@@ -1,23 +1,28 @@
 const express = require("express");
-const auth = require("./domains/auth/auth.api");
 const bodyParser = require("body-parser");
-const { isOperationalError } = require("./lib/error/errorHandler");
 const logger = require("./logger");
-const app = express();
 const cors = require("cors");
+
+const { isOperationalError } = require("./lib/error/errorHandler");
+
+const auth = require("./domains/auth/auth.api");
+const messageRouter = require('./domains/message/message.api');
+const port = 4202;
+
+const app = express();
+
 
 // TODO - this is temporary, just so the frontend can make requests to the server
 app.use(cors({ origin: "http://localhost:5173" }));
-
-const port = 4202;
-
 app.use(bodyParser.json());
+app.use("/auth", auth);
+app.use("/messages",messageRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the backend of Ambitious Messenger 😎");
 });
 
-app.use("/auth", auth);
+
 // if fatal error allow backend to exit gracefully
 // process.on("uncaughtException", (error) => {
 //   logger.fatal(error);
