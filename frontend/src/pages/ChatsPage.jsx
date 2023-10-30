@@ -2,6 +2,7 @@ import styles from "./ChatsPage.module.scss";
 import { useState } from "react";
 import { MdMoreVert } from "react-icons/md";
 import { RiChatNewLine } from "react-icons/ri";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 // temporary
 import sampleProfilePic from "../assets/sample_profile_pic.png";
@@ -32,6 +33,21 @@ const DUMMY_DATA = [
     lastText: "What's for lunch?",
     timestamp: "3d",
   },
+  {
+    username: "David Lee",
+    lastText: "I'll be there in 5 minutes",
+    timestamp: "1m",
+  },
+  {
+    username: "John Doe",
+    lastText: "Whassup man",
+    timestamp: "2m",
+  },
+  {
+    username: "Jane Smith",
+    lastText: "Hey there!",
+    timestamp: "1d",
+  },
 ];
 
 function ChatsPage() {
@@ -61,19 +77,28 @@ function ChatsPage() {
   return (
     <div className={styles.pageContainer}>
       <header className={styles.header}>
-        <div className={styles.headingContainer}>
-          <h2 className={styles.heading}>Chats</h2>
+        <div className={styles.leftSideContainer}>
+          <button className={`${styles.buttonBurger} ${styles.button}`}>
+            <GiHamburgerMenu
+              className={`${styles.buttonIcon} ${styles.buttonIcon__burger}`}
+            />
+          </button>
+          <div className={styles.headingContainer}>
+            <h2 className={styles.heading}>Chats</h2>
+          </div>
         </div>
-        <button className={`${styles.buttonNewChat} ${styles.button}`}>
-          <RiChatNewLine
-            className={`${styles.buttonIcon} ${styles.buttonIcon__newChat}`}
-          />
-        </button>
-        <button className={`${styles.buttonOptions} ${styles.button}`}>
-          <MdMoreVert
-            className={`${styles.buttonIcon} ${styles.buttonIcon__options}`}
-          />
-        </button>
+        <div className={styles.buttonsContainer}>
+          <button className={`${styles.buttonNewChat} ${styles.button}`}>
+            <RiChatNewLine
+              className={`${styles.buttonIcon} ${styles.buttonIcon__newChat}`}
+            />
+          </button>
+          <button className={`${styles.buttonOptions} ${styles.button}`}>
+            <MdMoreVert
+              className={`${styles.buttonIcon} ${styles.buttonIcon__options}`}
+            />
+          </button>
+        </div>
       </header>
 
       {chats}
