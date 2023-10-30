@@ -38,7 +38,7 @@ export const register = createAsyncThunk(
 const initialState = {
   status: "idle",
   error: null,
-  isUserAuthenticated: false,
+  authStatus: "undetermined", // 'undetermined', 'auth', 'unauth'
 };
 
 export const userSlice = createSlice({
@@ -49,8 +49,8 @@ export const userSlice = createSlice({
       state.status = "idle";
       state.error = null;
     },
-    setIsUserAuthenticated: (state, action) => {
-      state.isUserAuthenticated = action.payload;
+    setAuthStatus: (state, action) => {
+      state.authStatus = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -60,25 +60,27 @@ export const userSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.isUserAuthenticated = true;
+        state.authStatus = "auth";
       })
       .addCase(register.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+        state.authStatus = "unauth";
       })
       .addCase(login.pending, (state) => {
         state.status = "loading";
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.isUserAuthenticated = true;
+        state.authStatus = "auth";
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
+        state.authStatus = "unauth";
         state.error = action.payload;
       });
   },
 });
 
 export default userSlice.reducer;
-export const { reset, setIsUserAuthenticated } = userSlice.actions;
+export const { reset, setAuthStatus } = userSlice.actions;

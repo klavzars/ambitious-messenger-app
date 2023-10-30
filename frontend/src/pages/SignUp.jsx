@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { register, reset } from "../features/users/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 // TODO - maybe implement better email validation
 // NOTE to self - include source of regex
@@ -209,11 +210,12 @@ function SignUp() {
                 >
                   Sign Up
                 </button>
-                <a
+                <Link
+                  to={"/login"}
                   className={`${styles.login__createAccountLink} ${styles.login__link}`}
                 >
                   Already have an account? Sign in!
-                </a>
+                </Link>
               </form>
             </Col>
           </Row>
