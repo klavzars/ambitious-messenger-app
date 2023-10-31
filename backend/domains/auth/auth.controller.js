@@ -9,9 +9,14 @@ const login = async (req, res, next) => {
   const user = loginUser(username);
 
   //then generateToken
-  const token = generateToken(user);
+  const { token, expires } = generateToken(user);
 
-  res.type("json").send({ token: token, msg: "login success" });
+  // include cookie in response
+  // TODO: should we add a maxAge on the cookie, the same as the token expiration?
+  res
+    .type("json")
+    .cookie("token", token, { httpOnly: true }) // NOTE: in production, set secure: true
+    .send({ expires, isAuthSuccessful: true, msg: "login success" });
 };
 
 const register = async (req, res, next) => {
@@ -22,15 +27,20 @@ const register = async (req, res, next) => {
   const registeredUser = await registerUser(email, hashedPassword, username);
 
   // could add a verification step here for later
-  const token = generateToken(registeredUser.username, registeredUser.user_id);
-  res.type("json").send({
-    token: token,
-    user: {
-      username: registeredUser.username,
-      user_id: registeredUser.user_id,
-    },
-    msg: "register success",
-  });
+  const { token, expires } = generateToken(registeredUser.username, registeredUser.user_id);
+
+  res
+    .type("json")
+    .cookie("token", token, { httpOnly: true }) // NOTE: in production, set secure: true
+    .send({
+      user: {
+        username: registeredUser.username,
+        user_id: registeredUser.user_id,
+      },
+      expires,
+      isAuthSuccessful: true,
+      msg: "register success",
+    });
 };
 
 //change Password method
