@@ -3,6 +3,11 @@ import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
 import logo from "../assets/ambitious_logo_blue.svg";
 import { useState } from "react";
 import TextInputGroup from "../components/TextInputGroup";
+import { useDispatch, useSelector } from "react-redux";
+import { login, reset } from "../features/users/userSlice";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 // TODO - maybe implement better email validation
 // NOTE to self - include source of regex
@@ -16,6 +21,26 @@ const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
 
 function LogIn() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { status: userStatus, error: userError } = useSelector(
+    (state) => state.users
+  );
+  useEffect(() => {
+    if (userStatus === "failed") {
+      // TODO show error
+      console.log(userError);
+    }
+    // TODO this will need some additional checks
+    if (userStatus === "succeeded") {
+      navigate("/");
+
+      return () => {
+        dispatch(reset());
+      };
+    }
+  }, [userStatus, navigate, userError]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -57,14 +82,18 @@ function LogIn() {
       return;
     }
 
-    // just a log for now
-    console.log(email, password);
+    const userLoginData = {
+      email,
+      password,
+    };
+
+    dispatch(login(userLoginData));
 
     // reset inputs and touch states
-    setEmail("");
-    setPassword("");
-    setEmailTouched(false);
-    setPasswordTouched(false);
+    // setEmail("");
+    // setPassword("");
+    // setEmailTouched(false);
+    // setPasswordTouched(false);
   };
 
   return (
@@ -111,14 +140,19 @@ function LogIn() {
                 >
                   Forgot your password?
                 </a>
-                <button className={styles.login__button} type="submit">
+                <button
+                  className={styles.login__button}
+                  disabled={userStatus === "loading"}
+                  type="submit"
+                >
                   Sign in
                 </button>
-                <a
+                <Link
+                  to={"/signup"}
                   className={`${styles.login__createAccountLink} ${styles.login__link}`}
                 >
                   Don't have an account yet? Sign up!
-                </a>
+                </Link>
               </form>
             </Col>
           </Row>

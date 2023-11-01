@@ -1,21 +1,25 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { isOperationalError } = require("./lib/error/errorHandler");
 const logger = require("./logger");
-const app = express();
-const port = 4202;
+const { isOperationalError } = require("./lib/error/errorHandler");
 
 //routes
-const auth = require("./domains/auth/auth.api");
-const chat = require("./domains/chat/chat.api");
+const authRouter = require("./domains/auth/auth.api");
+const chatRouter = require("./domains/chat/chat.api");
+const messageRouter = require('./domains/message/message.api');
+
+
+const port = 4202;
+const app = express();
+
 
 // TODO - this is temporary, just so the frontend can make requests to the server
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(bodyParser.json());
-
-app.use("/auth", auth);
-app.use("/chat", chat);
+app.use("/messages",messageRouter);
+app.use("/auth", authRouter);
+app.use("/chat", chatRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the backend of Ambitious Messenger 😎");
