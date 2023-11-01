@@ -1,9 +1,9 @@
 //import userData
 const userDao = require('./user.dao');
 
-//get userProfile by ID
-const getUserProfileById = (userId) => {
-  return userDao.getUserProfileById(userId);
+// Fetch user profile
+const getUserProfile = async (userId) => {
+  return await userDao.getUserProfile(userId);
 };
 
 
@@ -32,7 +32,7 @@ const createUser = async (email, password, username) => {
 };
 
 module.exports = {
-  getUserProfileById,
+  getUserProfile,
   createUser,
   getUser,
 };
