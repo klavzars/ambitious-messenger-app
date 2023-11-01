@@ -97,4 +97,4 @@ const remove = async (member_id) => {
   return deletedMember;
 };
 
-module.exports = { create, add, get, getSingle, remove, findMemberId };
+module.exports = { create, add, get, getSingle, remove };
