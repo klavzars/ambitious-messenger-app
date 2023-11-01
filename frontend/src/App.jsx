@@ -11,6 +11,8 @@ import ProtectedRoute from "./components/routing/ProtectedRoute";
 import { Navigate, useNavigate } from "react-router-dom";
 import PublicRoute from "./components/routing/PublicRoute";
 import Contacts from "./pages/Contacts";
+import MainTest from "./components/chat/MainTest";
+import Chats from "./pages/Chats";
 
 function App() {
   const { authStatus } = useSelector((state) => state.users);
@@ -43,8 +45,11 @@ function App() {
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
           {/* Currently not a protected route for testing purposes*/}
-          <Route path="/chats" element={<Contacts />} />
+          <Route path="/chat" element={<Contacts />} />
+          <Route path="/chats/:chatId" element={<Chats />} />
+          <Route path="/chats" element={<Chats />} />
           <Route path="/chats/test" element={<Chat />} />
+          <Route path="/main-test" element={<MainTest />}></Route>
         </Route>
 
         <Route element={<ProtectedRoute authStatus={authStatus} />}>

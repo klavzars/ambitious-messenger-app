@@ -52,19 +52,17 @@ const DUMMY_DATA = [
 
 function Contacts() {
   const chats = DUMMY_DATA.map((chat, index) => (
-    <div className={styles.contactsContainer}>
-      <div className={styles.contact}>
-        <div className={styles.contact__imageContainer}>
-          <img className={styles.contact__img} src={sampleProfilePic} alt={"" /*MAKE THIS DYNAMIC !!*/} />
+    <div className={styles.contact}>
+      <div className={styles.contact__imageContainer}>
+        <img className={styles.contact__img} src={sampleProfilePic} alt={"" /*MAKE THIS DYNAMIC !!*/} />
+      </div>
+      <div className={styles.contact__mainContainer}>
+        <div className={styles.contact__left}>
+          <h4 className={styles.contact__name}>{chat.username}</h4>
+          <p className={styles.contact__message}>{chat.lastText}</p>
         </div>
-        <div className={styles.contact__mainContainer}>
-          <div className={styles.contact__left}>
-            <h4 className={styles.contact__name}>{chat.username}</h4>
-            <p className={styles.contact__message}>{chat.lastText}</p>
-          </div>
-          <div className={styles.contact__right}>
-            <span className={styles.contact__time}>{chat.timestamp}</span>
-          </div>
+        <div className={styles.contact__right}>
+          <span className={styles.contact__time}>{chat.timestamp}</span>
         </div>
       </div>
     </div>
@@ -90,8 +88,7 @@ function Contacts() {
           </button>
         </div>
       </header>
-
-      {chats}
+      <div className={styles.contactsContainer}>{chats}</div>
     </div>
   );
 }
