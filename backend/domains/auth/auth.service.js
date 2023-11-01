@@ -1,6 +1,6 @@
 const { compare } = require("bcryptjs");
-const { getUserByEmail } = require("../user/user.dao");
-const { createUser, getUser } = require("../user/user.service");
+
+const { createUser, getUser, getUserByEmail } = require("../user/user.service");
 
 const registerUser = async (email, password, username) => {
   // call create user service
@@ -13,7 +13,7 @@ const registerUser = async (email, password, username) => {
 
 const loginUser = async (email, password) => {
   try {
-    const user = await getUser(email);
+    const user = await getUserByEmail(email);
 
     // check if password is correct
     const isValid = await compare(password, user.password);
