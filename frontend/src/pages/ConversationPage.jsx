@@ -6,16 +6,6 @@ import { IoSend } from "react-icons/io5";
 // temporary
 import sampleProfilePic from "../assets/sample_profile_pic.png";
 
-const DUMMY_DATA = [];
-
-import styles from "./ConversationPage.module.scss";
-import { useState } from "react";
-import { MdKeyboardArrowLeft, MdMoreVert, MdLocalPhone } from "react-icons/md";
-import { GoDotFill, GoDot } from "react-icons/go";
-import { IoSend } from "react-icons/io5";
-// temporary
-import sampleProfilePic from "../assets/sample_profile_pic.png";
-
 function ConversationPage() {
   return (
     <div className={styles.pageContainer}>
@@ -102,16 +92,17 @@ function ConversationPage() {
   );
 }
 
+import TextareaAutosize from "react-textarea-autosize";
+
 function MessageInput() {
   return (
-    <div className={styles.messageInputContainer}>
-      <input
-        className={styles.messageInputContainer__input}
-        type="text"
+    <div className={styles.messageInput}>
+      <TextareaAutosize
+        className={styles.messageInput__textInput}
         placeholder="Type a message"
       />
-      <button className={styles.messageInputContainer__button}>
-        <IoSend className={styles.messageInputContainer__icon} />
+      <button className={styles.messageInput__buttonSend}>
+        <IoSend className={styles.messageInput__sendIcon} />
       </button>
     </div>
   );
