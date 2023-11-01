@@ -7,16 +7,18 @@ const { isOperationalError } = require("./lib/error/errorHandler");
 
 const auth = require("./domains/auth/auth.api");
 const messageRouter = require('./domains/message/message.api');
+const userProfileRouter = require('./domains/user/user.api');
+
 const port = 4202;
 
 const app = express();
-
 
 // TODO - this is temporary, just so the frontend can make requests to the server
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(bodyParser.json());
 app.use("/auth", auth);
 app.use("/messages",messageRouter);
+app.use("/users",userProfileRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the backend of Ambitious Messenger 😎");

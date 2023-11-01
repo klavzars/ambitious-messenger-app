@@ -4,6 +4,6 @@ const router = express.Router();
 const userController = require('./user.controller');
 
 //define Router for getting userProfile with ID
-router.get('/id', userController.getUserProfile);
+router.get('/:user_id', userController.getUserProfile);
 
 module.exports = router;
