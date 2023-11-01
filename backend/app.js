@@ -1,7 +1,7 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("./logger");
-const cors = require("cors");
 
 const { isOperationalError } = require("./lib/error/errorHandler");
 

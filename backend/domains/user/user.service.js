@@ -7,9 +7,18 @@ const getUserProfile = async (userId) => {
 };
 
 
-const getUser = (email) => {
+const getUserByEmail = async (email) => {
   try {
-    const user = userDao.get(email);
+    const user = userDao.getByEmail(email);
+    if (!user) throw error("user not found");
+
+    return user;
+  } catch (error) {}
+};
+
+const getUser = async (username) => {
+  try {
+    const user = await userDao.get(username);
     if (!user) throw error("user not found");
 
     return user;
@@ -35,4 +44,5 @@ module.exports = {
   getUserProfile,
   createUser,
   getUser,
+  getUserByEmail,
 };

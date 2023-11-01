@@ -15,7 +15,17 @@ const getUserProfile = async (userId) => {
   });
 };
 
-const get = async (email) => {
+const get = async (username) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+  });
+
+  return user;
+};
+
+const getByEmail = async (email) => {
   const user = await prisma.user.findUnique({
     where: {
       email: email,
@@ -44,4 +54,5 @@ module.exports = {
   get,
   create,
   update,
+  getByEmail,
 };
