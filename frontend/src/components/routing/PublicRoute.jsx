@@ -6,7 +6,7 @@ function PublicRoute(props) {
   const { authStatus } = props;
 
   if (authStatus === "undetermined") {
-    return null; // TODO possibly add a loading indicator/spinner/sth ??
+    return null; // TODO possibly add a loading indicator/spinner/sth
   }
 
   return authStatus === "auth" ? <Navigate to="/" /> : <Outlet />;

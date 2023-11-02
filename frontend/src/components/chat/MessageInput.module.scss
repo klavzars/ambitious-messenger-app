@@ -1,20 +1,22 @@
 @import "../../sass_utilities/variables";
 
 .messageInput {
-  height: 10%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 1.5rem;
+  padding: 1rem 1.5rem;
 
   &__textInput {
-    width: 80%;
+    resize: none;
+    width: 85%;
     background-color: $color-secondary-bright;
-    border-radius: 10px;
-    padding: 0.3rem 0.8rem;
+    border-radius: 17px;
+    padding: 0.4rem 0.9rem;
     font-size: 1rem;
     font-family: $font-family;
     border: none;
+    flex: 1;
+    margin-right: 1rem;
 
     &:focus {
       border: none;
@@ -26,11 +28,11 @@
     width: 8%;
     height: auto;
     background-color: transparent;
-    // margin: 0 0.5rem;
   }
 
   &__sendIcon {
     width: 100%;
+    max-width: 1.75rem;
     height: auto;
     color: $color-primary;
   }

@@ -1,17 +1,15 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
-import Chat from "./pages/Chat";
+import Chat from "./components/chat/Chat";
 import { setAuthStatus } from "./features/users/userSlice";
 import "./App.scss";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
-import { Navigate, useNavigate } from "react-router-dom";
 import PublicRoute from "./components/routing/PublicRoute";
-import Contacts from "./pages/Contacts";
-import MainTest from "./components/chat/MainTest";
+import Contacts from "./components/chat/Contacts";
 import Chats from "./pages/Chats";
 
 function App() {
@@ -48,8 +46,6 @@ function App() {
           <Route path="/chat" element={<Contacts />} />
           <Route path="/chats/:chatId" element={<Chats />} />
           <Route path="/chats" element={<Chats />} />
-          <Route path="/chats/test" element={<Chat />} />
-          <Route path="/main-test" element={<MainTest />}></Route>
         </Route>
 
         <Route element={<ProtectedRoute authStatus={authStatus} />}>

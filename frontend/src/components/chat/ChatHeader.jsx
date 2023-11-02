@@ -15,7 +15,7 @@ function ChatHeader(props) {
         <h4 className={styles.contactInfo__name}>{props.name}</h4>
         <div className={styles.status}>
           {props.status ? <GoDotFill className={styles.status__dot} /> : <GoDot className={styles.status__dot} />}
-          <span className={styles.status__text}>{props.online ? "Online" : "Offline"}</span>
+          <span className={styles.status__text}>{props.status ? "Online" : "Offline"}</span>
         </div>
       </div>
       <button className={`${styles.buttonVoice} ${styles.button}`}>

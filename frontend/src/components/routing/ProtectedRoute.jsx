@@ -5,7 +5,7 @@ function ProtectedRoute(props) {
   const { authStatus } = props;
 
   if (authStatus === "undetermined") {
-    return null; // TODO possibly add a loading indicator/spinner/sth ??
+    return null; // TODO possibly add a loading indicator/spinner/sth
   }
 
   return authStatus === "unauth" ? <Navigate to="/login" /> : <Outlet />;

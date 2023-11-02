@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Contacts from "./Contacts";
-import Chat from "./Chat";
+import Contacts from "../components/chat/Contacts";
+import Chat from "../components/chat/Chat";
 import styles from "./Chats.module.scss";
+
+const mobileBreakpoint = 992;
 
 const Chats = () => {
   const { chatId } = useParams();
   const isChatOpened = chatId ? true : false;
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= mobileBreakpoint);
 
   const handleWindowSizeChange = () => {
-    setIsMobile(window.innerWidth <= 768);
+    setIsMobile(window.innerWidth <= mobileBreakpoint);
   };
 
   useEffect(() => {
