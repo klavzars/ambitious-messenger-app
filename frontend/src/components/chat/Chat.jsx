@@ -5,13 +5,13 @@ import ChatHeader from "./ChatHeader";
 import Message from "./Message";
 
 // temporary
-import sampleProfilePic from "../../assets/sample_profile_pic.png";
+import defaultUserPic from "../../assets/default_user_1.png";
 
 const DUMMY_MESSAGES = [
   {
     id: 1,
     type: "sent",
-    picture: sampleProfilePic,
+    picture: defaultUserPic,
     username: "John Doe",
     timestamp: "20:23",
     message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
@@ -19,7 +19,7 @@ const DUMMY_MESSAGES = [
   {
     id: 2,
     type: "received",
-    picture: sampleProfilePic,
+    picture: defaultUserPic,
     username: "John Doe",
     timestamp: "20:23",
     message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
@@ -27,7 +27,7 @@ const DUMMY_MESSAGES = [
   {
     id: 3,
     type: "sent",
-    picture: sampleProfilePic,
+    picture: defaultUserPic,
     username: "John Doe",
     timestamp: "20:23",
     message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
@@ -35,7 +35,7 @@ const DUMMY_MESSAGES = [
   {
     id: 4,
     type: "received",
-    picture: sampleProfilePic,
+    picture: defaultUserPic,
     username: "John Doe",
     timestamp: "20:23",
     message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
@@ -43,7 +43,7 @@ const DUMMY_MESSAGES = [
   {
     id: 5,
     type: "sent",
-    picture: sampleProfilePic,
+    picture: defaultUserPic,
     username: "John Doe",
     timestamp: "20:23",
     message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
@@ -51,7 +51,7 @@ const DUMMY_MESSAGES = [
   {
     id: 6,
     type: "received",
-    picture: sampleProfilePic,
+    picture: defaultUserPic,
     username: "John Doe",
     timestamp: "20:23",
     message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
@@ -59,7 +59,7 @@ const DUMMY_MESSAGES = [
   {
     id: 7,
     type: "sent",
-    picture: sampleProfilePic,
+    picture: defaultUserPic,
     username: "John Doe",
     timestamp: "20:23",
     message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
@@ -67,7 +67,7 @@ const DUMMY_MESSAGES = [
   {
     id: 8,
     type: "received",
-    picture: sampleProfilePic,
+    picture: defaultUserPic,
     username: "John Doe",
     timestamp: "20:23",
     message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
@@ -87,7 +87,7 @@ function Chat() {
 
   return (
     <div className={styles.pageContainer}>
-      <ChatHeader profilePic={sampleProfilePic} name="John Doe" status={true} />
+      <ChatHeader profilePic={defaultUserPic} name="John Doe" status={true} />
       <div className={styles.scrollContainer} ref={scrollableContainerRef}>
         <div className={styles.conversationContainer}>
           {DUMMY_MESSAGES.map((message) => (

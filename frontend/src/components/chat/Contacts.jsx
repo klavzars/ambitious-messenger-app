@@ -3,7 +3,7 @@ import { FaRegPenToSquare } from "react-icons/fa6";
 import { MdMoreVert } from "react-icons/md";
 
 // temporary
-import sampleProfilePic from "../../assets/sample_profile_pic.png";
+import defaultUserPic from "../../assets/default_user_1.png";
 
 const DUMMY_DATA = [
   {
@@ -60,7 +60,7 @@ function Contacts() {
   const contacts = DUMMY_DATA.map((contact) => (
     <div className={styles.contact} key={contact.id}>
       <div className={styles.contact__imageContainer}>
-        <img className={styles.contact__img} src={sampleProfilePic} alt={"" /* TODO make this dynamic*/} />
+        <img className={styles.contact__img} src={defaultUserPic} alt={"" /* TODO make this dynamic*/} />
       </div>
       <div className={styles.contact__mainContainer}>
         <div className={styles.contact__left}>
