@@ -19,6 +19,7 @@ app.use(cors({ origin: "http://localhost:5173" }));
 app.use(bodyParser.json());
 app.use("/messages",messageRouter);
 app.use("/users",userProfileRouter);
+app.use("/allusers",userProfileRouter);
 app.use("/auth", authRouter);
 app.use("/chat", chatRouter);
 
