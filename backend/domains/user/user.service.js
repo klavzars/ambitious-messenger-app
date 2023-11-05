@@ -1,9 +1,14 @@
 //import userData
 const userDao = require('./user.dao');
 
-// Fetch user profile
+// Fetch user profile by userId
 const getUserProfile = async (userId) => {
   return await userDao.getUserProfile(userId);
+};
+
+// Get all user profiles
+const getAllUserProfiles = async () => {
+  return await userDao.getAllUserProfiles();
 };
 
 
@@ -42,6 +47,7 @@ const createUser = async (email, password, username) => {
 
 module.exports = {
   getUserProfile,
+  getAllUserProfiles,
   createUser,
   getUser,
   getUserByEmail,
