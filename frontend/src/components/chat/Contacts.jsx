@@ -4,6 +4,7 @@ import { MdMoreVert } from "react-icons/md";
 
 // temporary
 import defaultUserPic from "../../assets/default_user_1.png";
+import NewChat from "./NewChat";
 
 const DUMMY_DATA = [
   {
@@ -91,7 +92,8 @@ function Contacts() {
           </button>
         </div>
       </header>
-      <div className={styles.contactsContainer}>{contacts}</div>
+      {/* <div className={styles.contactsContainer}>{contacts}</div> */}
+      <NewChat />
     </div>
   );
 }

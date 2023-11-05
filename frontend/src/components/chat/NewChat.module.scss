@@ -1,0 +1,82 @@
+@import "../../sass_utilities/variables";
+
+.newChat {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+
+  &__title {
+  }
+}
+
+.searchInput {
+  align-self: center;
+  width: 100%;
+  width: 90%;
+  background-color: $color-secondary-bright;
+  border-radius: 17px;
+  padding: 0.4rem 0.9rem;
+  font-size: 1rem;
+  font-family: $font-family;
+  border: none;
+
+  margin-bottom: 1rem;
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+
+.userList {
+  list-style-type: none;
+  padding: 0 2rem;
+  margin: 0;
+
+  &__leftContainer {
+    display: flex;
+  }
+
+  &__imageContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  &__img {
+    height: 2rem;
+    width: auto;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+
+    &__username {
+    }
+  }
+
+  &__checkbox {
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+}
+
+.createChat {
+  display: flex;
+  justify-content: flex-end;
+
+  &__button {
+    background-color: $color-primary;
+    border: none;
+    color: $color-text-bright;
+    font-weight: $font-semibold;
+    color: $color-secondary-bright;
+    padding: 0.5rem 2rem;
+    border-radius: 999px;
+    align-self: center;
+    margin: 1.5rem 1rem;
+  }
+}
