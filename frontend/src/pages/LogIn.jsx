@@ -1,5 +1,4 @@
 import styles from "./LogIn.module.scss";
-import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
 import logo from "../assets/ambitious_logo_blue.svg";
 import { useState } from "react";
 import TextInputGroup from "../components/TextInputGroup";
@@ -17,15 +16,12 @@ const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 // simple password validation - must be 8 characters and include one
 // of each: lowercase letter, uppercase letter, number, special character
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
 
 function LogIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status: userStatus, error: userError } = useSelector(
-    (state) => state.users
-  );
+  const { status: userStatus, error: userError } = useSelector((state) => state.users);
   useEffect(() => {
     if (userStatus === "failed") {
       // TODO show error
@@ -99,16 +95,12 @@ function LogIn() {
   return (
     <div className={styles.outsideContainer}>
       <div className={styles.card}>
-        <Container className={styles.bsContainer}>
-          <Row className={`${styles.mainRow}`}>
-            <Col md={12} lg={6} className={`${styles.imageContainer}`}>
-              <img
-                src={logo}
-                alt="Ambitious Messenger logo"
-                className={styles.logoImage}
-              />
-            </Col>
-            <Col md={12} lg={6} className={styles.login}>
+        <div className={styles.bsContainer}>
+          <div className={`${styles.mainRow}`}>
+            <div className={`${styles.imageContainer} ${styles.col}`}>
+              <img src={logo} alt="Ambitious Messenger logo" className={styles.logoImage} />
+            </div>
+            <div className={`${styles.login} ${styles.col}`}>
               <form className={styles.login__form} onSubmit={submitFormHanlder}>
                 <h2 className={styles.login__title}>Sign in</h2>
                 <TextInputGroup
@@ -135,28 +127,17 @@ function LogIn() {
                   className={styles.login__FormGroupLast}
                   isLast={true}
                 />
-                <a
-                  className={`${styles.login__resetPasswordLink} ${styles.login__link}`}
-                >
-                  Forgot your password?
-                </a>
-                <button
-                  className={styles.login__button}
-                  disabled={userStatus === "loading"}
-                  type="submit"
-                >
+                <a className={`${styles.login__resetPasswordLink} ${styles.login__link}`}>Forgot your password?</a>
+                <button className={styles.login__button} disabled={userStatus === "loading"} type="submit">
                   Sign in
                 </button>
-                <Link
-                  to={"/signup"}
-                  className={`${styles.login__createAccountLink} ${styles.login__link}`}
-                >
+                <Link to={"/signup"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
                   Don't have an account yet? Sign up!
                 </Link>
               </form>
-            </Col>
-          </Row>
-        </Container>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

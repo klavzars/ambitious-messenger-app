@@ -1,20 +1,11 @@
 @import "../sass_utilities/variables";
-@import "bootstrap";
 
 .outsideContainer {
   min-height: 100vh;
   width: 100%;
   position: relative;
   background: #84d2e8;
-  background: linear-gradient(
-    90deg,
-    rgba(132, 210, 232, 1) 0%,
-    rgba(93, 190, 217, 1) 100%
-  );
-}
-
-.bsContainer {
-  margin: auto;
+  background: linear-gradient(90deg, rgba(132, 210, 232, 1) 0%, rgba(93, 190, 217, 1) 100%);
 }
 
 .card {
@@ -40,6 +31,13 @@
 
 .mainRow {
   margin-bottom: 2rem;
+  display: flex;
+}
+
+.col {
+  width: 50%;
+  display: flex;
+  justify-content: center;
 }
 
 .imageContainer {
@@ -49,7 +47,7 @@
 }
 
 .logoImage {
-  width: 100%;
+  width: 90%;
   height: auto;
   max-height: 30rem;
 }
@@ -103,7 +101,15 @@
   }
 }
 
-@include media-breakpoint-down(lg) {
+@media only screen and (max-width: 992px) {
+  .mainRow {
+    flex-direction: column;
+  }
+
+  .col {
+    width: 100%;
+  }
+
   .card {
     position: static;
     min-height: 100vh;
@@ -119,11 +125,5 @@
   .logoImage {
     width: 100%;
     max-height: 40vh;
-  }
-}
-
-@include media-breakpoint-down(sm) {
-  .login__title {
-    margin-top: 0rem;
   }
 }

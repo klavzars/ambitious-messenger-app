@@ -1,5 +1,4 @@
 import styles from "./SignUp.module.scss";
-import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
 import logo from "../assets/ambitious_logo_blue.svg";
 import { useState } from "react";
 import TextInputGroup from "../components/TextInputGroup";
@@ -17,8 +16,7 @@ const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 // simple password validation - must be 8 characters and include one
 // of each: lowercase letter, uppercase letter, number, special character
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
 
 // allows letters and numbers as well as _-.@ special characters
 const usernameRegex = /^[a-zA-Z0-9_\-\.@]+$/;
@@ -26,9 +24,7 @@ const usernameRegex = /^[a-zA-Z0-9_\-\.@]+$/;
 function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status: userStatus, error: userError } = useSelector(
-    (state) => state.users
-  );
+  const { status: userStatus, error: userError } = useSelector((state) => state.users);
 
   useEffect(() => {
     if (userStatus === "failed") {
@@ -148,16 +144,12 @@ function SignUp() {
   return (
     <div className={styles.outsideContainer}>
       <div className={styles.card}>
-        <Container className={styles.bsContainer}>
-          <Row className={`${styles.mainRow}`}>
-            <Col md={12} lg={6} className={`${styles.imageContainer}`}>
-              <img
-                src={logo}
-                alt="Ambitious Messenger logo"
-                className={styles.logoImage}
-              />
-            </Col>
-            <Col md={12} lg={6} className={styles.login}>
+        <div className={styles.bsContainer}>
+          <div className={`${styles.mainRow}`}>
+            <div className={`${styles.imageContainer} ${styles.col}`}>
+              <img src={logo} alt="Ambitious Messenger logo" className={styles.logoImage} />
+            </div>
+            <div className={`${styles.login} ${styles.col}`}>
               <form className={styles.login__form} onSubmit={submitFormHanlder}>
                 <h2 className={styles.login__title}>Sign Up</h2>
                 <TextInputGroup
@@ -203,23 +195,16 @@ function SignUp() {
                   className={styles.login__FormGroupLast}
                   isLast={true}
                 /> */}
-                <button
-                  className={styles.login__button}
-                  type="submit"
-                  disabled={userStatus === "loading"}
-                >
+                <button className={styles.login__button} type="submit" disabled={userStatus === "loading"}>
                   Sign Up
                 </button>
-                <Link
-                  to={"/login"}
-                  className={`${styles.login__createAccountLink} ${styles.login__link}`}
-                >
+                <Link to={"/login"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
                   Already have an account? Sign in!
                 </Link>
               </form>
-            </Col>
-          </Row>
-        </Container>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
