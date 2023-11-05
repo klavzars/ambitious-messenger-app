@@ -144,47 +144,46 @@ function SignUp() {
   return (
     <div className={styles.outsideContainer}>
       <div className={styles.card}>
-        <div className={styles.bsContainer}>
-          <div className={`${styles.mainRow}`}>
-            <div className={`${styles.imageContainer} ${styles.col}`}>
-              <img src={logo} alt="Ambitious Messenger logo" className={styles.logoImage} />
-            </div>
-            <div className={`${styles.login} ${styles.col}`}>
-              <form className={styles.login__form} onSubmit={submitFormHanlder}>
-                <h2 className={styles.login__title}>Sign Up</h2>
-                <TextInputGroup
-                  type="email"
-                  value={email}
-                  placeholder="Enter your email"
-                  onChange={emailChangedHandler}
-                  onBlur={emailBlurHandler}
-                  inputInvalid={emailInputInvalid}
-                  errorMsg={"Please provide a valid email."}
-                />
-                <TextInputGroup
-                  type="text"
-                  value={username}
-                  placeholder="Enter your username"
-                  onChange={usernameChangedHandler}
-                  onBlur={usernameBlurHandler}
-                  inputInvalid={usernameInputInvalid}
-                  errorMsg={"Please provide a valid username."}
-                />
-                <TextInputGroup
-                  type="password"
-                  value={password}
-                  placeholder="Enter your password"
-                  onChange={passwordChangedHandler}
-                  onBlur={passwordBlurHandler}
-                  inputInvalid={passwordInputInvalid}
-                  errorMsg={
-                    "Password must be at least 8 characters long, \
+        <div className={`${styles.mainRow}`}>
+          <div className={`${styles.imageContainer} ${styles.col}`}>
+            <img src={logo} alt="Ambitious Messenger logo" className={styles.logoImage} />
+          </div>
+          <div className={`${styles.login} ${styles.col}`}>
+            <form className={styles.login__form} onSubmit={submitFormHanlder}>
+              <h2 className={styles.login__title}>Sign Up</h2>
+              <TextInputGroup
+                type="email"
+                value={email}
+                placeholder="Enter your email"
+                onChange={emailChangedHandler}
+                onBlur={emailBlurHandler}
+                inputInvalid={emailInputInvalid}
+                errorMsg={"Please provide a valid email."}
+              />
+              <TextInputGroup
+                type="text"
+                value={username}
+                placeholder="Enter your username"
+                onChange={usernameChangedHandler}
+                onBlur={usernameBlurHandler}
+                inputInvalid={usernameInputInvalid}
+                errorMsg={"Please provide a valid username."}
+              />
+              <TextInputGroup
+                type="password"
+                value={password}
+                placeholder="Enter your password"
+                onChange={passwordChangedHandler}
+                onBlur={passwordBlurHandler}
+                inputInvalid={passwordInputInvalid}
+                errorMsg={
+                  "Password must be at least 8 characters long, \
                     contain 1 lowercase letter, 1 uppercase letter, \
                     1 digit, and 1 special character."
-                  }
-                  className={styles.login__FormGroupLast}
-                />
-                {/* <TextInputGroup
+                }
+                className={styles.login__FormGroupLast}
+              />
+              {/* <TextInputGroup
                   type="password"
                   value={repeatPassword}
                   placeholder="Repeat your password"
@@ -195,14 +194,13 @@ function SignUp() {
                   className={styles.login__FormGroupLast}
                   isLast={true}
                 /> */}
-                <button className={styles.login__button} type="submit" disabled={userStatus === "loading"}>
-                  Sign Up
-                </button>
-                <Link to={"/login"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
-                  Already have an account? Sign in!
-                </Link>
-              </form>
-            </div>
+              <button className={styles.login__button} type="submit" disabled={userStatus === "loading"}>
+                Sign Up
+              </button>
+              <Link to={"/login"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
+                Already have an account? Sign in!
+              </Link>
+            </form>
           </div>
         </div>
       </div>

@@ -95,47 +95,45 @@ function LogIn() {
   return (
     <div className={styles.outsideContainer}>
       <div className={styles.card}>
-        <div className={styles.bsContainer}>
-          <div className={`${styles.mainRow}`}>
-            <div className={`${styles.imageContainer} ${styles.col}`}>
-              <img src={logo} alt="Ambitious Messenger logo" className={styles.logoImage} />
-            </div>
-            <div className={`${styles.login} ${styles.col}`}>
-              <form className={styles.login__form} onSubmit={submitFormHanlder}>
-                <h2 className={styles.login__title}>Sign in</h2>
-                <TextInputGroup
-                  type="email"
-                  value={email}
-                  placeholder="Enter your email"
-                  onChange={emailChangedHandler}
-                  onBlur={emailBlurHandler}
-                  inputInvalid={emailInputInvalid}
-                  errorMsg={"Please provide a valid email."}
-                />
-                <TextInputGroup
-                  type="password"
-                  value={password}
-                  placeholder="Enter your password"
-                  onChange={passwordChangedHandler}
-                  onBlur={passwordBlurHandler}
-                  inputInvalid={passwordInputInvalid}
-                  errorMsg={
-                    "Password must be at least 8 characters long, \
+        <div className={`${styles.mainRow}`}>
+          <div className={`${styles.imageContainer} ${styles.col}`}>
+            <img src={logo} alt="Ambitious Messenger logo" className={styles.logoImage} />
+          </div>
+          <div className={`${styles.login} ${styles.col}`}>
+            <form className={styles.login__form} onSubmit={submitFormHanlder}>
+              <h2 className={styles.login__title}>Sign in</h2>
+              <TextInputGroup
+                type="email"
+                value={email}
+                placeholder="Enter your email"
+                onChange={emailChangedHandler}
+                onBlur={emailBlurHandler}
+                inputInvalid={emailInputInvalid}
+                errorMsg={"Please provide a valid email."}
+              />
+              <TextInputGroup
+                type="password"
+                value={password}
+                placeholder="Enter your password"
+                onChange={passwordChangedHandler}
+                onBlur={passwordBlurHandler}
+                inputInvalid={passwordInputInvalid}
+                errorMsg={
+                  "Password must be at least 8 characters long, \
                     contain 1 lowercase letter, 1 uppercase letter, \
                     1 digit, and 1 special character."
-                  }
-                  className={styles.login__FormGroupLast}
-                  isLast={true}
-                />
-                <a className={`${styles.login__resetPasswordLink} ${styles.login__link}`}>Forgot your password?</a>
-                <button className={styles.login__button} disabled={userStatus === "loading"} type="submit">
-                  Sign in
-                </button>
-                <Link to={"/signup"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
-                  Don't have an account yet? Sign up!
-                </Link>
-              </form>
-            </div>
+                }
+                className={styles.login__FormGroupLast}
+                isLast={true}
+              />
+              <a className={`${styles.login__resetPasswordLink} ${styles.login__link}`}>Forgot your password?</a>
+              <button className={styles.login__button} disabled={userStatus === "loading"} type="submit">
+                Sign in
+              </button>
+              <Link to={"/signup"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
+                Don't have an account yet? Sign up!
+              </Link>
+            </form>
           </div>
         </div>
       </div>
