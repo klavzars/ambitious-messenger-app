@@ -1,0 +1,139 @@
+@import "../../sass_utilities/variables";
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.contactsContainer {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.3rem 0;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.leftSideContainer {
+  display: flex;
+  align-items: center;
+}
+
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  height: 10%;
+  min-height: 4.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: $color-secondary-bright;
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: $font-semibold;
+  margin: 0 1rem;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  color: $color-primary;
+  height: 100%;
+  margin: 0 0.6rem;
+
+  &Options {
+    margin-right: 0;
+  }
+
+  &Icon {
+    &__newChat {
+      height: 1.65rem;
+    }
+
+    &__options {
+      height: 1.7rem;
+    }
+
+    width: auto;
+  }
+}
+
+.contact {
+  // height: 7rem;
+  max-width: 100%;
+  display: flex;
+
+  &__imageContainer {
+    height: inherit;
+    display: flex;
+    align-items: center;
+    padding: 0.7rem 1rem;
+  }
+
+  &__img {
+    height: 4.5rem;
+    border-radius: 100%;
+  }
+
+  &__mainContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__left {
+    align-self: center;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__right {
+    padding: 1.5rem 1.2rem;
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: $font-semibold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__message {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__time {
+    font-style: italic;
+    font-size: $font-small;
+  }
+}

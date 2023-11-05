@@ -1,0 +1,139 @@
+@import "../../sass_utilities/variables";
+
+// TODO: rewrite this to reduce code duplication
+
+.messageFrom {
+  &Container {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 1.2rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:first-child {
+      margin-top: 1.2rem;
+    }
+  }
+
+  &__imageContainer {
+    width: 15%;
+    max-width: 4rem;
+    padding: 0.2rem 0.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+  }
+
+  &__mainContainer {
+    max-width: 70%;
+  }
+
+  &__img {
+    width: 100%;
+    border-radius: 100%;
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0.2rem;
+    align-items: center;
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: $font-semibold;
+    color: $color-text-bright;
+  }
+
+  &__timestamp {
+    margin: 0;
+    font-size: $font-small;
+  }
+
+  &__content {
+    background-color: $color-secondary-bright;
+    color: $color-text;
+    padding: 0.7rem 1rem;
+    border-radius: 0.8rem;
+    border-top-right-radius: 0;
+  }
+
+  &__text {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.message {
+  &Container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1.2rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:first-child {
+      margin-top: 1.2rem;
+    }
+  }
+
+  &__imageContainer {
+    width: 15%;
+    max-width: 4rem;
+    padding: 0.2rem 0.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+  }
+
+  &__mainContainer {
+    max-width: 70%;
+  }
+
+  &__img {
+    width: 100%;
+    border-radius: 100%;
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.2rem;
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: $font-semibold;
+    color: $color-text-bright;
+  }
+
+  &__timestamp {
+    margin: 0;
+    font-size: $font-small;
+  }
+
+  &__content {
+    background-color: $color-primary;
+    color: $color-secondary-bright;
+    padding: 0.7rem 1rem;
+    border-radius: 0.8rem;
+    border-top-left-radius: 0;
+  }
+
+  &__text {
+    padding: 0;
+    margin: 0;
+  }
+}
