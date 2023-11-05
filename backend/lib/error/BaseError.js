@@ -1,3 +1,5 @@
+// Idea: https://sematext.com/blog/node-js-error-handling/
+
 class BaseError extends Error {
   constructor(name, statusCode, description, isOperational) {
     super(description);

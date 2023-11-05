@@ -1,19 +1,21 @@
 //import userData
-const userDao = require('./user.dao');
+const { HTTP404Error } = require("../../lib/error/customErrors");
+const userDao = require("./user.dao");
 
 // Fetch user profile
 const getUserProfile = async (userId) => {
   return await userDao.getUserProfile(userId);
 };
 
-
 const getUserByEmail = async (email) => {
   try {
     const user = userDao.getByEmail(email);
-    if (!user) throw error("user not found");
+    if (!user) throw new HTTP404Error("user not found");
 
     return user;
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getUser = async (username) => {

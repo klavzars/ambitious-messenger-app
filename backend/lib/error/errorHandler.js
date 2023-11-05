@@ -3,21 +3,35 @@
 const logger = require("../../logger");
 const BaseError = require("./BaseError");
 
-//error handling middleware
-
+// Error logging function - for stuff outside of express handler
 const logError = (err) => {
   logger.error(err);
 };
 
+// Error Logging Middleware
 const logErrorMiddleware = (err, req, res, next) => {
   logError(err);
   next(err);
 };
 
-const returnError = (err, req, res, next) => {
-  res.status(err.statusCode || 500).send(err.message);
+// Function for sending response back to client
+const returnResponse = (err, req, res, next) => {
+  let msg;
+  let code;
+
+  // console.log(err.message)
+  if (err.statusCode) {
+    code = err.statusCode;
+    msg = err.message;
+  } else {
+    code = 500;
+    msg = "Internal Server Error";
+  }
+
+  res.status(code).send(msg);
 };
 
+// function for checking if the error is an operational
 const isOperationalError = (error) => {
   if (error instanceof BaseError) {
     return error.isOperational;
@@ -28,6 +42,6 @@ const isOperationalError = (error) => {
 module.exports = {
   logError,
   logErrorMiddleware,
-  returnError,
-  isOperationalError
+  returnResponse,
+  isOperationalError,
 };
