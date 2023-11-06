@@ -8,7 +8,9 @@ const registerUser = async (email, password, username) => {
     //check if the email already exists
     const newUser = await createUser(email, password, username);
     return newUser;
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 };
 
 const loginUser = async (email, password) => {

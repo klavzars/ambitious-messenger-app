@@ -6,7 +6,7 @@ const login = async (req, res, next) => {
   let { username, password } = req.body;
 
   //check if the password is the same
-  const user = loginUser(username);
+  const user = await loginUser(username);
 
   //then generateToken
   const { token, expires } = generateToken(user);
