@@ -1,7 +1,7 @@
 const { getUser } = require("../user/user.service");
 const { create, add, get, getSingle, remove, findMemberId } = require("./chat.dao");
 
-const createChat = async (isPrivate, members, user = "briantwene") => {
+const createChat = async (isPrivate, members, user) => {
   //will first check if room its private
   // TODO implement your own personal chat room for you only
 

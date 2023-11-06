@@ -13,11 +13,13 @@ const getAllUserProfiles = async () => {
 
 const getUserByEmail = async (email) => {
   try {
-    const user = userDao.getByEmail(email);
-    if (!user) throw error("user not found");
+    const user = await userDao.getByEmail(email);
+    if (!user) throw new Error("user not found");
 
     return user;
-  } catch (error) {}
+  } catch (error) {
+    console.error("error getting user by email", error);
+  }
 };
 
 const getUser = async (username) => {

@@ -21,11 +21,13 @@ const loginUser = async (email, password) => {
     const isValid = await compare(password, user.password);
 
     if (!isValid) {
-      throw error("invalid user");
+      throw new Error("invalid user");
     }
 
     return user;
-  } catch (error) {}
+  } catch (error) {
+    console.log("error on login", error);
+  }
 };
 
 module.exports = {

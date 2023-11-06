@@ -1,5 +1,5 @@
 const { sign, verify } = require("jsonwebtoken");
-const { config } = require("../../config");
+const config = require("../../config");
 
 // Expiration duration in seconds
 const expiresInSeconds = 3600; // 1 hour
