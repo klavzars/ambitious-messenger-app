@@ -1,15 +1,11 @@
 //import userData
-<<<<<<< HEAD
 const { HTTP404Error } = require("../../lib/error/customErrors");
-=======
->>>>>>> origin/main
 const userDao = require("./user.dao");
 
 // Fetch user profile by userId
 const getUserProfile = async (userId) => {
   return await userDao.getUserProfile(userId);
 };
-
 
 // Get all user profiles
 const getAllUserProfiles = async () => {
