@@ -46,7 +46,8 @@ function LogIn() {
   const [passwordTouched, setPasswordTouched] = useState(false);
 
   const enteredEmailValid = emailRegex.test(email.trim());
-  const enteredPasswordValid = passwordRegex.test(password);
+  // not checking validity of password here so we don't give away too much info
+  const enteredPasswordValid = password !== "";
 
   const emailInputInvalid = emailTouched && !enteredEmailValid;
   const passwordInputInvalid = passwordTouched && !enteredPasswordValid;
@@ -118,18 +119,19 @@ function LogIn() {
                 onChange={passwordChangedHandler}
                 onBlur={passwordBlurHandler}
                 inputInvalid={passwordInputInvalid}
-                errorMsg={
-                  "Password must be at least 8 characters long, \
-                    contain 1 lowercase letter, 1 uppercase letter, \
-                    1 digit, and 1 special character."
-                }
+                errorMsg={"Please provide a password."}
                 className={styles.login__FormGroupLast}
                 isLast={true}
               />
-              <a className={`${styles.login__resetPasswordLink} ${styles.login__link}`}>Forgot your password?</a>
+              <Link to={""} className={`${styles.login__resetPasswordLink} ${styles.login__link}`}>
+                Forgot your password?
+              </Link>
               <button className={styles.login__button} disabled={userStatus === "loading"} type="submit">
                 Sign in
               </button>
+              {userStatus === "failed" && (
+                <div className={styles.login__error}>{userStatus.error ? userStatus.error : "Login unsuccessful."}</div>
+              )}
               <Link to={"/signup"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
                 Don't have an account yet? Sign up!
               </Link>

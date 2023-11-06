@@ -1,11 +1,11 @@
 @import "../sass_utilities/variables";
+@import "../sass_utilities/mixins";
 
 .outsideContainer {
   min-height: 100vh;
   width: 100%;
   // position: relative;
-  background: #84d2e8;
-  background: linear-gradient(90deg, rgba(132, 210, 232, 1) 0%, rgba(93, 190, 217, 1) 100%);
+  background: $color-secondary-bright;
 }
 
 .card {
@@ -68,10 +68,12 @@
   &__resetPasswordLink {
     align-self: flex-end;
     margin-right: 2rem;
+    margin-bottom: 2.5rem;
   }
 
   &__createAccountLink {
     align-self: center;
+    margin-top: 0.6rem;
   }
 
   &__logoImage {
@@ -87,11 +89,18 @@
     padding: 0.6rem 4rem;
     border-radius: 60px;
     align-self: center;
-    margin: 3.5rem 0 0.9rem 0;
+    margin: 0rem 0 0.2rem 0;
+  }
+
+  &__error {
+    color: $color-invalid;
+    font-size: 0.85rem;
+    font-weight: $font-semibold;
+    margin: 0.2rem 0 1rem 0;
   }
 }
 
-@media only screen and (min-width: 992px) {
+@include breakpoint-lg-up {
   .mainRow {
     margin-bottom: 2rem;
     display: flex;
@@ -128,5 +137,11 @@
     width: 90%;
     height: auto;
     max-height: 30rem;
+  }
+
+  .outsideContainer {
+    position: relative;
+    background: #84d2e8;
+    background: linear-gradient(90deg, rgba(132, 210, 232, 1) 0%, rgba(93, 190, 217, 1) 100%);
   }
 }

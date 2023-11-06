@@ -1,6 +1,4 @@
 // color variables
-// this is slightly modified from the current figma palette,
-// might add or change some colors later on
 $color-primary: #0881a3;
 $color-primary-bright: #84d2e8;
 $color-primary-dark: #125067;
@@ -15,8 +13,6 @@ $color-text-bright: #33373d;
 $color-invalid: #dd1c1a;
 
 // font weight variables
-// NOTE: not sure how useful this will be,
-// but it can't hurt to have it here
 $font-light: 300;
 $font-regular: 400;
 $font-semibold: 600;
@@ -25,9 +21,3 @@ $font-bold: 800;
 $font-small: 0.85rem;
 
 $font-family: Montserrat, sans-serif;
-// conversion to pixels
-@use "sass:math";
-
-@function em($pixels, $context: 16) {
-  @return #{math.div($pixels, $context)}rem;
-}

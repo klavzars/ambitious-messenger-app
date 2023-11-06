@@ -197,6 +197,11 @@ function SignUp() {
               <button className={styles.login__button} type="submit" disabled={userStatus === "loading"}>
                 Sign Up
               </button>
+              {userStatus === "failed" && (
+                <div className={styles.login__error}>
+                  {userStatus.error ? userStatus.error : "Signup unsuccessful."}
+                </div>
+              )}
               <Link to={"/login"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
                 Already have an account? Sign in!
               </Link>
