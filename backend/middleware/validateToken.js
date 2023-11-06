@@ -21,7 +21,6 @@ const validateToken = (req, res, next) => {
     },
     (error, decoded) => {
       if (error) {
-        console.error(error);
         res.clearCookie("token");
         return res.status(401).json({ message: "Invalid Token, Please Login" });
       } else {
