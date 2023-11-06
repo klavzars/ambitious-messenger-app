@@ -13,7 +13,6 @@ const getBaseUrl = () => {
 const API_URL_AUTH = `${getBaseUrl()}/auth`;
 
 const login = async (userLoginData) => {
-  console.log("userLoginData", userLoginData);
   const response = await axios.post(`${API_URL_AUTH}/login`, userLoginData);
 
   if (response.data && response.data.isAuthSuccessful && response.data.expires) {

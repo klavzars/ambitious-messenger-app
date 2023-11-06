@@ -3,7 +3,6 @@ import userService from "./userService";
 
 export const login = createAsyncThunk("auth/login", async (userLoginData, thunkAPI) => {
   try {
-    console.log("userLoginData", userLoginData);
     return await userService.login(userLoginData);
   } catch (error) {
     const message =
