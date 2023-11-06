@@ -1,5 +1,4 @@
 import styles from "./LogIn.module.scss";
-import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
 import logo from "../assets/ambitious_logo_blue.svg";
 import { useState } from "react";
 import TextInputGroup from "../components/TextInputGroup";
@@ -15,17 +14,10 @@ import { Link } from "react-router-dom";
 // simple email validation
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
-// simple password validation - must be 8 characters and include one
-// of each: lowercase letter, uppercase letter, number, special character
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
-
 function LogIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status: userStatus, error: userError } = useSelector(
-    (state) => state.users
-  );
+  const { status: userStatus, error: userError } = useSelector((state) => state.users);
   useEffect(() => {
     if (userStatus === "failed") {
       // TODO show error
@@ -50,7 +42,8 @@ function LogIn() {
   const [passwordTouched, setPasswordTouched] = useState(false);
 
   const enteredEmailValid = emailRegex.test(email.trim());
-  const enteredPasswordValid = passwordRegex.test(password);
+  // not checking validity of password here so we don't give away too much info
+  const enteredPasswordValid = password !== "";
 
   const emailInputInvalid = emailTouched && !enteredEmailValid;
   const passwordInputInvalid = passwordTouched && !enteredPasswordValid;
@@ -99,64 +92,48 @@ function LogIn() {
   return (
     <div className={styles.outsideContainer}>
       <div className={styles.card}>
-        <Container className={styles.bsContainer}>
-          <Row className={`${styles.mainRow}`}>
-            <Col md={12} lg={6} className={`${styles.imageContainer}`}>
-              <img
-                src={logo}
-                alt="Ambitious Messenger logo"
-                className={styles.logoImage}
+        <div className={`${styles.mainRow}`}>
+          <div className={`${styles.imageContainer} ${styles.col}`}>
+            <img src={logo} alt="Ambitious Messenger logo" className={styles.logoImage} />
+          </div>
+          <div className={`${styles.login} ${styles.col}`}>
+            <form className={styles.login__form} onSubmit={submitFormHanlder}>
+              <h2 className={styles.login__title}>Sign in</h2>
+              <TextInputGroup
+                type="email"
+                value={email}
+                placeholder="Enter your email"
+                onChange={emailChangedHandler}
+                onBlur={emailBlurHandler}
+                inputInvalid={emailInputInvalid}
+                errorMsg={"Please provide a valid email."}
               />
-            </Col>
-            <Col md={12} lg={6} className={styles.login}>
-              <form className={styles.login__form} onSubmit={submitFormHanlder}>
-                <h2 className={styles.login__title}>Sign in</h2>
-                <TextInputGroup
-                  type="email"
-                  value={email}
-                  placeholder="Enter your email"
-                  onChange={emailChangedHandler}
-                  onBlur={emailBlurHandler}
-                  inputInvalid={emailInputInvalid}
-                  errorMsg={"Please provide a valid email."}
-                />
-                <TextInputGroup
-                  type="password"
-                  value={password}
-                  placeholder="Enter your password"
-                  onChange={passwordChangedHandler}
-                  onBlur={passwordBlurHandler}
-                  inputInvalid={passwordInputInvalid}
-                  errorMsg={
-                    "Password must be at least 8 characters long, \
-                    contain 1 lowercase letter, 1 uppercase letter, \
-                    1 digit, and 1 special character."
-                  }
-                  className={styles.login__FormGroupLast}
-                  isLast={true}
-                />
-                <a
-                  className={`${styles.login__resetPasswordLink} ${styles.login__link}`}
-                >
-                  Forgot your password?
-                </a>
-                <button
-                  className={styles.login__button}
-                  disabled={userStatus === "loading"}
-                  type="submit"
-                >
-                  Sign in
-                </button>
-                <Link
-                  to={"/signup"}
-                  className={`${styles.login__createAccountLink} ${styles.login__link}`}
-                >
-                  Don't have an account yet? Sign up!
-                </Link>
-              </form>
-            </Col>
-          </Row>
-        </Container>
+              <TextInputGroup
+                type="password"
+                value={password}
+                placeholder="Enter your password"
+                onChange={passwordChangedHandler}
+                onBlur={passwordBlurHandler}
+                inputInvalid={passwordInputInvalid}
+                errorMsg={"Please provide a password."}
+                className={styles.login__FormGroupLast}
+                isLast={true}
+              />
+              <Link to={""} className={`${styles.login__resetPasswordLink} ${styles.login__link}`}>
+                Forgot your password?
+              </Link>
+              <button className={styles.login__button} disabled={userStatus === "loading"} type="submit">
+                Sign in
+              </button>
+              {userStatus === "failed" && (
+                <div className={styles.login__error}>{userStatus.error ? userStatus.error : "Login unsuccessful."}</div>
+              )}
+              <Link to={"/signup"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
+                Don't have an account yet? Sign up!
+              </Link>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
