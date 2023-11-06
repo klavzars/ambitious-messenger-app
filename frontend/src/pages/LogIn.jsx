@@ -126,7 +126,11 @@ function LogIn() {
                 Sign in
               </button>
               {userStatus === "failed" && (
-                <div className={styles.login__error}>{userStatus.error ? userStatus.error : "Login unsuccessful."}</div>
+                <div className={styles.login__error}>
+                  {
+                    /*userStatus.error ? userStatus.error :  <-- TODO implement proper error messaging from the backend*/ "Login unsuccessful."
+                  }
+                </div>
               )}
               <Link to={"/signup"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
                 Don't have an account yet? Sign up!

@@ -30,7 +30,6 @@ function Dropdown() {
   };
 
   const handleLogout = () => {
-    console.log("logout");
     dispatch(logout());
   };
 

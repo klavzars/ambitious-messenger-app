@@ -40,9 +40,6 @@ function SignUp() {
         // it should do it automatically but im not sure
       };
     }
-    return () => {
-      dispatch(reset());
-    };
   }, [userStatus, navigate, userError]);
 
   const [email, setEmail] = useState("");
@@ -199,7 +196,9 @@ function SignUp() {
               </button>
               {userStatus === "failed" && (
                 <div className={styles.login__error}>
-                  {userStatus.error ? userStatus.error : "Signup unsuccessful."}
+                  {
+                    /*userError ? userError : <-- TODO implement proper error messaging from the backend*/ "Signup unsuccessful."
+                  }
                 </div>
               )}
               <Link to={"/login"} className={`${styles.login__createAccountLink} ${styles.login__link}`}>
