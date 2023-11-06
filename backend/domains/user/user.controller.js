@@ -12,6 +12,16 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+const getAllUserProfiles = async (req, res) => {
+  try {
+    const allUsers = await userService.getAllUserProfiles();
+    res.json(allUsers);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch all user profiles' });
+  }
+};
+
 module.exports = {
-  getUserProfile
+  getUserProfile,
+  getAllUserProfiles,
 };

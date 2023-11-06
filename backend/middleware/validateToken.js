@@ -5,11 +5,12 @@ const config = require("../config");
 const validateToken = (req, res, next) => {
   const { jwt } = config;
   //get the token out of the auth header
-  const token = req.headers["authorization"];
+  const token = req.cookies.token;
 
-  //then verify the token
-  try {
-    tokenPayload = verify(token?.split(" ")[1], jwt.secret, {
+  verify(
+    token,
+    jwt.secret,
+    {
       complete: true,
       audience: jwt.audience,
       issuer: jwt.issuer,
@@ -17,13 +18,18 @@ const validateToken = (req, res, next) => {
       clockTolerance: 0,
       ignoreExpiration: false,
       ignoreNotBefore: false,
-    });
-
-    req.token = tokenPayload;
-  } catch (error) {
-    console.error(error);
-    return;
-  }
-
-  next();
+    },
+    (error, decoded) => {
+      if (error) {
+        console.error(error);
+        res.clearCookie("token");
+        return res.status(401).json({ message: "Invalid Token, Please Login" });
+      } else {
+        // move on to the controller
+        next();
+      }
+    }
+  );
 };
+
+module.exports = validateToken;

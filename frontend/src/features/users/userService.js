@@ -13,13 +13,10 @@ const getBaseUrl = () => {
 const API_URL_AUTH = `${getBaseUrl()}/auth`;
 
 const login = async (userLoginData) => {
+  console.log("userLoginData", userLoginData);
   const response = await axios.post(`${API_URL_AUTH}/login`, userLoginData);
 
-  if (
-    response.data &&
-    response.data.isAuthSuccessful &&
-    response.data.expires
-  ) {
+  if (response.data && response.data.isAuthSuccessful && response.data.expires) {
     localStorage.setItem("tokenExpires", response.data.expires);
   }
 
@@ -27,17 +24,20 @@ const login = async (userLoginData) => {
 };
 
 const register = async (userRegistrationData) => {
-  const response = await axios.post(
-    `${API_URL_AUTH}/register`,
-    userRegistrationData
-  );
+  const response = await axios.post(`${API_URL_AUTH}/register`, userRegistrationData);
 
-  if (
-    response.data &&
-    response.data.isAuthSuccessful &&
-    response.data.expires
-  ) {
+  if (response.data && response.data.isAuthSuccessful && response.data.expires) {
     localStorage.setItem("tokenExpires", response.data.expires);
+  }
+
+  return response.data;
+};
+
+const logout = async () => {
+  const response = await axios.post(`${API_URL_AUTH}/logout`);
+
+  if (response.status >= 200 && response.status < 300) {
+    localStorage.removeItem("tokenExpires");
   }
 
   return response.data;
@@ -46,6 +46,7 @@ const register = async (userRegistrationData) => {
 const userService = {
   login,
   register,
+  logout,
 };
 
 export default userService;

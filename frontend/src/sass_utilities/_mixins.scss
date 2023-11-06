@@ -1,0 +1,37 @@
+@use "sass:math";
+
+// media query mixins
+@mixin breakpoint-sm-up {
+  @media (min-width: 576px) {
+    @content;
+  }
+}
+
+@mixin breakpoint-md-up {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin breakpoint-lg-up {
+  @media (min-width: 992px) {
+    @content;
+  }
+}
+
+@mixin breakpoint-xl-up {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin breakpoint-xxl-down {
+  @media (max-width: 1400px) {
+    @content;
+  }
+}
+
+// conversion to pixels - in case we need it
+@function em($pixels, $context: 16) {
+  @return #{math.div($pixels, $context)}rem;
+}

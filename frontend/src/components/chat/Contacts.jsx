@@ -1,6 +1,7 @@
 import styles from "./Contacts.module.scss";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import { MdMoreVert } from "react-icons/md";
+
+import Dropdown from "../Dropdown";
 
 // temporary
 import defaultUserPic from "../../assets/default_user_1.png";
@@ -22,37 +23,37 @@ const DUMMY_DATA = [
     id: 3,
     username: "Jane Smith",
     lastText: "Hey there!",
-    timestamp: "1d",
+    timestamp: "10m",
   },
   {
     id: 4,
     username: "Michael Johnson",
     lastText: "How's it going?",
-    timestamp: "2d",
+    timestamp: "2h",
   },
   {
     id: 5,
     username: "Emily Wilson",
     lastText: "What's for lunch?",
-    timestamp: "3d",
+    timestamp: "3h",
   },
   {
     id: 6,
     username: "David Lee",
     lastText: "I'll be there in 5 minutes",
-    timestamp: "1m",
+    timestamp: "1d",
   },
   {
     id: 7,
     username: "John Doe",
     lastText: "Whassup man",
-    timestamp: "2m",
+    timestamp: "2d",
   },
   {
     id: 8,
     username: "Jane Smith",
     lastText: "Hey there!",
-    timestamp: "1d",
+    timestamp: "5d",
   },
 ];
 
@@ -86,9 +87,7 @@ function Contacts() {
           <button className={`${styles.buttonNewChat} ${styles.button}`}>
             <FaRegPenToSquare className={`${styles.buttonIcon} ${styles.buttonIcon__newChat}`} />
           </button>
-          <button className={`${styles.buttonOptions} ${styles.button}`}>
-            <MdMoreVert className={`${styles.buttonIcon} ${styles.buttonIcon__options}`} />
-          </button>
+          <Dropdown />
         </div>
       </header>
       <div className={styles.contactsContainer}>{contacts}</div>

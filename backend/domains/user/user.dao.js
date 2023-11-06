@@ -15,6 +15,11 @@ const getUserProfile = async (userId) => {
   });
 };
 
+// Get all user profiles
+const getAllUserProfiles = async () => {
+  return await prisma.user.findMany();
+};
+
 const get = async (username) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -51,6 +56,7 @@ const update = async () => {};
 
 module.exports = {
   getUserProfile,
+  getAllUserProfiles,
   get,
   create,
   update,

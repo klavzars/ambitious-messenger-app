@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const chatController = require("./chat.controller");
+const validateToken = require("../../middleware/validateToken");
 
 // TODO add verify middleware to these endpoints
 // creating chat
@@ -10,7 +11,7 @@ router.post("/", chatController.createChat);
 router.post("/:chat_id/members", chatController.addMember);
 
 // getting all chats
-router.get("/:username", chatController.getUserChats);
+router.get("/:username", validateToken, chatController.getUserChats);
 
 // TODO need to figure how out how this can be implemented, might involve schema mods
 // delete
