@@ -25,7 +25,7 @@ function LogIn() {
     }
     // TODO this will need some additional checks
     if (userStatus === "succeeded") {
-      navigate("/");
+      navigate("/chats");
 
       return () => {
         dispatch(reset());
