@@ -33,7 +33,7 @@ function SignUp() {
     }
     // TODO this will need some additional checks
     if (userStatus === "succeeded") {
-      navigate("/");
+      navigate("/chats");
       return () => {
         dispatch(reset());
         // NOTE: figure out if i need to clear component state here,
