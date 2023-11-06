@@ -1,5 +1,5 @@
 //import userData
-const userDao = require('./user.dao');
+const userDao = require("./user.dao");
 
 // Fetch user profile by userId
 const getUserProfile = async (userId) => {
@@ -11,14 +11,15 @@ const getAllUserProfiles = async () => {
   return await userDao.getAllUserProfiles();
 };
 
-
 const getUserByEmail = async (email) => {
   try {
-    const user = userDao.getByEmail(email);
-    if (!user) throw error("user not found");
+    const user = await userDao.getByEmail(email);
+    if (!user) throw new Error("user not found");
 
     return user;
-  } catch (error) {}
+  } catch (error) {
+    console.error("error getting user by email", error);
+  }
 };
 
 const getUser = async (username) => {
@@ -33,16 +34,24 @@ const getUser = async (username) => {
 const createUser = async (email, password, username) => {
   // check if the user has already been created
   try {
-    const isExistingUser = await userDao.get(email);
+    const isExistingUser = await userDao.getByEmail(email);
+    const hasSameUsername = await userDao.get(username);
 
+    //console.log(isExistingUser, hasSameUsername);
     if (isExistingUser) {
-      throw error("user already exists");
+      throw new Error("user already exists");
+    }
+
+    if (hasSameUsername) {
+      throw new Error("username taken");
     }
 
     //if not create the user and return
     const newUser = await userDao.create(email, password, username);
     return newUser;
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = {

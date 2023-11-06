@@ -8,7 +8,9 @@ const registerUser = async (email, password, username) => {
     //check if the email already exists
     const newUser = await createUser(email, password, username);
     return newUser;
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 };
 
 const loginUser = async (email, password) => {
@@ -19,11 +21,13 @@ const loginUser = async (email, password) => {
     const isValid = await compare(password, user.password);
 
     if (!isValid) {
-      throw error("invalid user");
+      throw new Error("invalid user");
     }
 
     return user;
-  } catch (error) {}
+  } catch (error) {
+    console.log("error on login", error);
+  }
 };
 
 module.exports = {

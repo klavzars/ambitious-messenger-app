@@ -3,16 +3,16 @@ const { generateToken } = require("./jwt");
 const bcrypt = require("bcryptjs");
 
 const login = async (req, res, next) => {
-  let { username, password } = req.body;
+  let { email, password } = req.body;
 
   //check if the password is the same
-  const user = loginUser(username);
+  const user = await loginUser(email, password);
 
   //then generateToken
   const { token, expires } = generateToken(user);
 
   // include cookie in response
-  // TODO: should we add a maxAge on the cookie, the same as the token expiration?
+  // TODO: should we add a maxAge on the cookie, the same as the token expiration? A: No actually had a look into it and we can just clear the cookie of the JWT is expired, but we should still think about how long the JWT itself should last
   res
     .type("json")
     .cookie("token", token, { httpOnly: true }) // NOTE: in production, set secure: true
@@ -43,7 +43,14 @@ const register = async (req, res, next) => {
     });
 };
 
+
+const logout = async (req, res, next) => {
+  res.clearCookie("token");
+
+  res.status(200).send({ message: "logout successful" });
+};
+
 //change Password method
 const changePassword = async (req, res, next) => {};
 
-module.exports = { login, register, changePassword };
+module.exports = { login, logout, register, changePassword };
