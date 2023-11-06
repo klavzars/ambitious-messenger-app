@@ -42,7 +42,13 @@ const Chats = () => {
         <Contacts />
       </div>
       <div className={styles.main}>
-        {isChatOpened ? <Chat /> : <div className={styles.chatPlaceholder}>Select a chat</div>}
+        {isChatOpened ? (
+          <Chat />
+        ) : (
+          <div className={styles.chatPlaceholder}>
+            <p>Please select a chat.</p>
+          </div>
+        )}
       </div>
     </div>
   );
