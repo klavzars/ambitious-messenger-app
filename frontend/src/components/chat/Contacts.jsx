@@ -22,37 +22,37 @@ const DUMMY_DATA = [
     id: 3,
     username: "Jane Smith",
     lastText: "Hey there!",
-    timestamp: "1d",
+    timestamp: "10m",
   },
   {
     id: 4,
     username: "Michael Johnson",
     lastText: "How's it going?",
-    timestamp: "2d",
+    timestamp: "2h",
   },
   {
     id: 5,
     username: "Emily Wilson",
     lastText: "What's for lunch?",
-    timestamp: "3d",
+    timestamp: "3h",
   },
   {
     id: 6,
     username: "David Lee",
     lastText: "I'll be there in 5 minutes",
-    timestamp: "1m",
+    timestamp: "1d",
   },
   {
     id: 7,
     username: "John Doe",
     lastText: "Whassup man",
-    timestamp: "2m",
+    timestamp: "2d",
   },
   {
     id: 8,
     username: "Jane Smith",
     lastText: "Hey there!",
-    timestamp: "1d",
+    timestamp: "5d",
   },
 ];
 
