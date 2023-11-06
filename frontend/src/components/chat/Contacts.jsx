@@ -1,6 +1,7 @@
 import styles from "./Contacts.module.scss";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import { MdMoreVert } from "react-icons/md";
+
+import Dropdown from "../Dropdown";
 
 // temporary
 import defaultUserPic from "../../assets/default_user_1.png";
@@ -86,9 +87,7 @@ function Contacts() {
           <button className={`${styles.buttonNewChat} ${styles.button}`}>
             <FaRegPenToSquare className={`${styles.buttonIcon} ${styles.buttonIcon__newChat}`} />
           </button>
-          <button className={`${styles.buttonOptions} ${styles.button}`}>
-            <MdMoreVert className={`${styles.buttonIcon} ${styles.buttonIcon__options}`} />
-          </button>
+          <Dropdown />
         </div>
       </header>
       <div className={styles.contactsContainer}>{contacts}</div>
