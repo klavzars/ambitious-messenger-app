@@ -43,7 +43,14 @@ const register = async (req, res, next) => {
     });
 };
 
+
+const logout = async (req, res, next) => {
+  res.clearCookie("token");
+
+  res.status(200).send({ message: "logout successful" });
+};
+
 //change Password method
 const changePassword = async (req, res, next) => {};
 
-module.exports = { login, register, changePassword };
+module.exports = { login, logout, register, changePassword };
