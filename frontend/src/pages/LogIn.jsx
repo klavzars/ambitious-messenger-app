@@ -14,10 +14,6 @@ import { Link } from "react-router-dom";
 // simple email validation
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
-// simple password validation - must be 8 characters and include one
-// of each: lowercase letter, uppercase letter, number, special character
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
-
 function LogIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
