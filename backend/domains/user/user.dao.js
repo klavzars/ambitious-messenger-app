@@ -1,55 +1,76 @@
 //@prisma/client
 const { PrismaClient } = require("@prisma/client");
+const { logError } = require("../../lib/error/errorHandler");
 const prisma = new PrismaClient();
 
 // Get user profile
 const getUserProfile = async (userId) => {
-  return await prisma.user.findUnique({
+  try {
+    return await prisma.user.findUnique({
       where: {
-          user_id: userId,
+        user_id: userId,
       },
       select: {
-          username: true,
-          email: true,
+        username: true,
+        email: true,
       },
-  });
+    });
+  } catch (error) {
+    logError(error);
+  }
 };
 
 // Get all user profiles
 const getAllUserProfiles = async () => {
-  return await prisma.user.findMany();
+  try {
+    return await prisma.user.findMany();
+  } catch (error) {
+    logError(error);
+  }
 };
 
 const get = async (username) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      username: username,
-    },
-  });
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        username: username,
+      },
+    });
 
-  return user;
+    return user;
+  } catch (error) {
+    logError(error);
+  }
 };
 
 const getByEmail = async (email) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      email: email,
-    },
-  });
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
 
-  return user;
+    return user;
+  } catch (error) {
+    logError(error);
+  }
 };
 
 const create = async (email, password, username) => {
-  const user = await prisma.user.create({
-    data: {
-      email,
-      username,
-      password,
-    },
-  });
+  try {
+    const user = await prisma.user.create({
+      data: {
+        email,
+        username,
+        password,
+      },
+    });
 
-  return user;
+    return user;
+  } catch (error) {
+    logError(error);
+  }
 };
 
 const update = async () => {};
