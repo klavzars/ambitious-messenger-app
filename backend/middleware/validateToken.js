@@ -25,6 +25,8 @@ const validateToken = (req, res, next) => {
         return res.status(401).json({ message: "Invalid Token, Please Login" });
       } else {
         // move on to the controller
+        console.log("decoded", decoded);
+        req.user = decoded.payload;
         next();
       }
     }

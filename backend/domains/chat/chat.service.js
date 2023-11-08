@@ -1,14 +1,24 @@
 const { HTTP404Error, HTTP400Error } = require("../../lib/error/customErrors");
 const { getUser } = require("../user/user.service");
-const { create, add, get, getSingle, remove, findMemberId } = require("./chat.dao");
+const { create, add, get, getSingle, remove, findMemberId, getExistingPrivate } = require("./chat.dao");
 
-const createChat = async (isPrivate, members, user = "briantwene") => {
+const createChat = async (isPrivate, members, user) => {
   try {
     //will first check if room its private
     // TODO implement your own personal chat room for you only
 
     // since this is a new chat, would want the user to be added as a member in both cases
     const userWithMembers = [user, ...members];
+
+    // check if the members exist
+    if (isPrivate) {
+      const existingChat = await getExistingPrivate(userWithMembers);
+      console.log("existingChat", existingChat);
+
+      if (existingChat.length > 0) {
+        throw new HTTP400Error("Chat already exists");
+      }
+    }
 
     //then create the chat, get the id
     const newChat = await create(isPrivate);

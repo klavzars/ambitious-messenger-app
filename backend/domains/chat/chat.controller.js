@@ -6,10 +6,11 @@ const createChat = async (req, res, next) => {
     // TODO will decide weather to create private or group chats based on
     // TODO add make this a protected route to get the user requesting this
     const { isPrivate, members } = req.body;
+    const { user } = req;
 
     //run the room creation service function
 
-    const chat = await chatService.createChat(isPrivate, members);
+    const chat = await chatService.createChat(isPrivate, members, user.username);
 
     res.status(200).send(chat);
   } catch (error) {

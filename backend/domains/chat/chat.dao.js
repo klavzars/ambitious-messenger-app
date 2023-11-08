@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const { logError } = require("../../lib/error/errorHandler");
 const prisma = new PrismaClient();
 
 // TODO check if user should add a name when creating the room on frontend
@@ -65,6 +66,27 @@ const get = async (username) => {
   return chats;
 };
 
+const getExistingPrivate = async (members) => {
+  try {
+    const chats = await prisma.chat.findMany({
+      where: {
+        is_private: true,
+        member: {
+          every: {
+            username: {
+              in: members,
+            },
+          },
+        },
+      },
+    });
+
+    return chats;
+  } catch (error) {
+    logError(error);
+  }
+};
+
 const getMember = async (chat_id, username) => {
   const member = await prisma.member.findFirst({
     where: {
@@ -86,15 +108,14 @@ const getSingle = async (chat_id) => {
   return chat;
 };
 
-
 const remove = async (member_id) => {
   const deletedMember = await prisma.member.delete({
     where: {
-      id: member_id
+      id: member_id,
     },
   });
 
   return deletedMember;
 };
 
-module.exports = { create, add, get, getSingle, remove };
+module.exports = { create, add, get, getSingle, remove, getExistingPrivate };
