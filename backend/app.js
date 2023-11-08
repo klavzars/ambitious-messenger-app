@@ -26,6 +26,10 @@ app.use("/auth", authRouter);
 app.use("/chat", chatRouter);
 
 
+app.use(logErrorMiddleware);
+app.use(returnResponse);
+
+
 app.get("/", (req, res) => {
   res.send("Welcome to the backend of Ambitious Messenger 😎");
 });

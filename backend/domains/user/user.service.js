@@ -1,5 +1,5 @@
 //import userData
-const { HTTP404Error } = require("../../lib/error/customErrors");
+const { HTTP404Error, HTTP400Error } = require("../../lib/error/customErrors");
 const userDao = require("./user.dao");
 
 // Fetch user profile by userId
@@ -51,11 +51,11 @@ const createUser = async (email, password, username) => {
     const hasSameUsername = await userDao.get(username);
 
     if (isExistingUser) {
-      throw new Error("User already exists");
+      throw new HTTP400Error("User already exists");
     }
 
     if (hasSameUsername) {
-      throw new Error("Username taken");
+      throw new HTTP400Error("Username taken");
     }
 
     //if not create the user and return
