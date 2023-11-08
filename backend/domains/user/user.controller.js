@@ -8,7 +8,7 @@ const getUserProfile = async (req, res) => {
     const userProfile = await userService.getUserProfile(userId);
     res.json(userProfile);
   } catch (error) {
-    res.status(500).json({ error: 'Failed 222 to fetch user profile' });
+    next(error);
   }
 };
 
@@ -17,7 +17,7 @@ const getAllUserProfiles = async (req, res) => {
     const allUsers = await userService.getAllUserProfiles();
     res.json(allUsers);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch all user profiles' });
+    next(error);
   }
 };
 

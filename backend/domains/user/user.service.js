@@ -1,21 +1,33 @@
 //import userData
-const { HTTP404Error } = require("../../lib/error/customErrors");
+const { HTTP404Error, HTTP400Error } = require("../../lib/error/customErrors");
 const userDao = require("./user.dao");
 
 // Fetch user profile by userId
 const getUserProfile = async (userId) => {
-  return await userDao.getUserProfile(userId);
+  try {
+    const userProfile = await userDao.getUserProfile(userId);
+    if (!userProfile) throw new HTTP404Error("User Profile not found");
+    return userProfile;
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Get all user profiles
 const getAllUserProfiles = async () => {
-  return await userDao.getAllUserProfiles();
+  try {
+    const userProfiles = await userDao.getAllUserProfiles();
+    if (!userProfiles) throw new HTTP404Error("User Profiles not found");
+    return userProfiles;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getUserByEmail = async (email) => {
   try {
     const user = userDao.getByEmail(email);
-    if (!user) throw new HTTP404Error("user not found");
+    if (!user) throw new HTTP404Error("User not found");
 
     return user;
   } catch (error) {
@@ -26,7 +38,7 @@ const getUserByEmail = async (email) => {
 const getUser = async (username) => {
   try {
     const user = await userDao.get(username);
-    if (!user) throw error("user not found");
+    if (!user) throw new HTTP404Error("User not found");
 
     return user;
   } catch (error) {}
@@ -38,13 +50,12 @@ const createUser = async (email, password, username) => {
     const isExistingUser = await userDao.getByEmail(email);
     const hasSameUsername = await userDao.get(username);
 
-    //console.log(isExistingUser, hasSameUsername);
     if (isExistingUser) {
-      throw new Error("user already exists");
+      throw new HTTP400Error("User already exists");
     }
 
     if (hasSameUsername) {
-      throw new Error("username taken");
+      throw new HTTP400Error("Username taken");
     }
 
     //if not create the user and return
