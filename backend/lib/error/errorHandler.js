@@ -19,16 +19,16 @@ const returnResponse = (err, req, res, next) => {
   let msg;
   let code;
 
-  // console.log(err.message)
+
   if (err.statusCode) {
     code = err.statusCode;
-    msg = err.message;
+    msg = err.name;
   } else {
     code = 500;
     msg = "Internal Server Error";
   }
 
-  res.status(code).send(msg);
+  res.status(code).send({ message: msg });
 };
 
 // function for checking if the error is an operational

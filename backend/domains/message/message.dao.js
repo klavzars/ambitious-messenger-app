@@ -1,4 +1,5 @@
 const {PrismaClient} = require('@prisma/client');
+const { logError } = require("../../lib/error/errorHandler");
 
 const prisma = new PrismaClient();
 
@@ -11,20 +12,19 @@ const prisma = new PrismaClient();
 
 // Create new message
 const createMessage = async (from, message_text, sent, chat_id) => {
-    try {
-        const message = await prisma.message.create({
-            data: {
-                from,
-                message_text,
-                sent,
-                chat_id
-            },
-        });
-        return message;
-    } catch (error) {
-        console.error(error)
-        throw new Error('Faile234d to create message');
-    }
+  try {
+    const message = await prisma.message.create({
+      data: {
+        from,
+        message_text,
+        sent,
+        chat_id,
+      },
+    });
+    return message;
+  } catch (error) {
+    logError(error);
+  }
 };
 
 // Get all historical messages.
@@ -33,7 +33,7 @@ const getAllMessages = async () => {
         const messages = await prisma.message.findMany();
         return messages;
     } catch (error) {
-        throw new Error('Failed to fetch messages');
+        logError(error);
     }
 };
 
@@ -46,7 +46,7 @@ const updateMessage = async (id, message_text) => {
         });
         return updatedMessage;
     } catch (error) {
-        throw new Error('Failed to update message');
+        logError(error);
     }
 };
 
@@ -55,7 +55,7 @@ const deleteMessage = async (id) => {
     try {
         await prisma.message.delete({ where: { id } });
     } catch (error) {
-        throw new Error('Failed to delete message');
+        logError(error);
     }
 };
 
@@ -64,7 +64,7 @@ const deleteMultipleMessages = async (messageIds) => {
     try {
         await prisma.message.deleteMany( { where: { id: { in: messageIds } }});
     } catch (error) {
-        throw new Error('Failed to delete messages');
+        logError(error);
     }
 };
 

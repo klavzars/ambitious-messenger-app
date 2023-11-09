@@ -45,14 +45,19 @@ const deleteMember = async (memberId) => {
   // TODO: Implement handling for 1:1 chats
   // TODO: Decide whether to update the leave time or completely delete the member
 
-  // Remove the member directly using the provided memberId
-  const deletedMember = await remove(memberId);
+  try {
+    // Remove the member directly using the provided memberId
+    const deletedMember = await remove(memberId);
 
-  if (!deletedMember) {
-    throw new HTTP404Error("Member not found or unable to remove.");
+    if (!deletedMember) {
+      throw new HTTP404Error("Member not found or unable to remove.");
+    }
+    return deletedMember;
+  } catch (error) {
+    throw error;
   }
 
-  return deletedMember;
+
 };
 
 //get all chats based off username
