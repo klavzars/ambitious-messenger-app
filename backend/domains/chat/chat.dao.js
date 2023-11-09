@@ -142,4 +142,19 @@ const remove = async (member_id) => {
   }
 };
 
-module.exports = { create, add, get, getSingle, remove, getExistingPrivate };
+const findExistingMember = (chat_id, username) => {
+  try {
+    const member = prisma.member.findFirst({
+      where: {
+        chat_id,
+        username,
+      },
+    });
+
+    return member;
+  } catch (error) {
+    logError(error);
+  }
+};
+
+module.exports = { create, add, get, getSingle, remove, getExistingPrivate, findExistingMember };

@@ -18,7 +18,15 @@ const createChat = async (req, res, next) => {
   }
 };
 
-const addMember = (req, res) => {};
+const addMember = async (req, res, next) => {
+  try {
+    const { chatId, username } = req.body;
+
+    const member = await chatService.addMember(chatId, username);
+  } catch (error) {
+    next(error);
+  }
+};
 
 const getUserChats = async (req, res, next) => {
   try {

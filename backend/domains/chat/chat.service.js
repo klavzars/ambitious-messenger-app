@@ -1,6 +1,15 @@
 const { HTTP404Error, HTTP400Error } = require("../../lib/error/customErrors");
 const { getUser } = require("../user/user.service");
-const { create, add, get, getSingle, remove, findMemberId, getExistingPrivate } = require("./chat.dao");
+const {
+  create,
+  add,
+  get,
+  getSingle,
+  remove,
+  findMemberId,
+  getExistingPrivate,
+  findExistingMember,
+} = require("./chat.dao");
 
 const createChat = async (isPrivate, members, user) => {
   try {
@@ -32,12 +41,16 @@ const createChat = async (isPrivate, members, user) => {
   }
 };
 
-// TODO will need to make sure that duplicates arent created
+// TODO will need to make sure that duplicates arent created or could be handled on the frontend
 const addMember = async (members, chatId) => {
-  // take the members and add it to a chat
-  const newMembers = await add(members, chatId);
+  try {
+    // take the members and add it to a chat
+    const newMembers = await add(members, chatId);
 
-  return newMembers;
+    return newMembers;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const deleteMember = async (memberId) => {
