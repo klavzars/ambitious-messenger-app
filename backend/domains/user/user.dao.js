@@ -23,7 +23,11 @@ const getUserProfile = async (userId) => {
 // Get all user profiles
 const getAllUserProfiles = async () => {
   try {
-    return await prisma.user.findMany();
+    return await prisma.user.findMany({
+      select: {
+        username: true,
+      },
+    });
   } catch (error) {
     logError(error);
   }

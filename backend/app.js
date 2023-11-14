@@ -2,13 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("./logger");
-const { isOperationalError, logErrorMiddleware, returnResponse } = require("./lib/error/errorHandler");
+const { isOperationalError, logErrorMiddleware, returnResponse, logError } = require("./lib/error/errorHandler");
 
 //routes
 const authRouter = require("./domains/auth/auth.api");
 const chatRouter = require("./domains/chat/chat.api");
-const messageRouter = require('./domains/message/message.api');
-const userProfileRouter = require('./domains/user/user.api');
+const messageRouter = require("./domains/message/message.api");
+const userProfileRouter = require("./domains/user/user.api");
 const cookieParser = require("cookie-parser");
 
 const port = 4202;
@@ -19,8 +19,8 @@ app.use(cors({ origin: "http://localhost:5173" }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use("/messages",messageRouter);
-app.use("/users",userProfileRouter);
+app.use("/messages", messageRouter);
+app.use("/user", userProfileRouter);
 app.use("/allusers",userProfileRouter);
 app.use("/auth", authRouter);
 app.use("/chat", chatRouter);
