@@ -1,0 +1,132 @@
+@import "../../sass_utilities/variables";
+
+.newChat {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+
+  &__title {
+  }
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  background-color: $color-secondary-bright;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  width: 90%;
+  font-size: 1rem;
+  font-family: $font-family;
+  align-self: center;
+  margin-bottom: 1rem;
+
+  overflow-x: auto;
+
+  &__selectedUser {
+    background-color: $color-primary;
+    color: $color-secondary-bright;
+    padding: 0.1rem 0.5rem;
+    margin-right: 0.3rem;
+    border-radius: inherit;
+
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  &__username {
+    margin-left: 0.1rem;
+    white-space: nowrap;
+  }
+
+  &__close {
+    margin-left: 0.3rem;
+    cursor: pointer;
+  }
+
+  &__input {
+    border: none;
+    display: inline-block;
+    background-color: transparent;
+    margin-left: 0.3rem;
+    flex-grow: 1;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+
+  &__clear {
+    cursor: pointer;
+    background-color: transparent;
+    height: 100%;
+    display: flex;
+    align-self: center;
+    margin-left: 0.7rem;
+
+    &Button {
+      background-color: transparent;
+      border: none;
+      color: $color-secondary-dark;
+      height: 1.2rem;
+      width: auto;
+    }
+  }
+}
+
+.userList {
+  list-style-type: none;
+  padding: 0 2rem;
+  margin: 0;
+
+  &__leftContainer {
+    display: flex;
+  }
+
+  &__imageContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  &__img {
+    height: 2rem;
+    width: auto;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+
+    &__username {
+    }
+  }
+
+  &__checkbox {
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+}
+
+.createChat {
+  display: flex;
+  justify-content: flex-end;
+
+  &__button {
+    background-color: $color-primary;
+    border: none;
+    color: $color-text-bright;
+    font-weight: $font-semibold;
+    color: $color-secondary-bright;
+    padding: 0.5rem 2rem;
+    border-radius: 999px;
+    align-self: center;
+    margin: 1.5rem 1rem;
+    cursor: pointer;
+  }
+}

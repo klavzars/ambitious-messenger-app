@@ -42,10 +42,10 @@ const logout = async () => {
   return response.data;
 };
 
-const userService = {
+const authService = {
   login,
   register,
   logout,
 };
 
-export default userService;
+export default authService;
