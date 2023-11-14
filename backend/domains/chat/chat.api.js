@@ -5,7 +5,7 @@ const validateToken = require("../../middleware/validateToken");
 
 // TODO add verify middleware to these endpoints
 // creating chat
-router.post("/", chatController.createChat);
+router.post("/", validateToken, chatController.createChat);
 
 //add user to existing group chat
 router.post("/:chat_id/members", chatController.addMember);
