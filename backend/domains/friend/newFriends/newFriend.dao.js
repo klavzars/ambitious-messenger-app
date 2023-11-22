@@ -42,10 +42,20 @@ const declineFriendRequest = async (userId, requestId) => {
   await prisma.friendRequests.delete({ where: { id: requestId, receiver_id: userId } });
 };
 
+//move/delete a friends
+const moveFriendMessege = async (userId) => {
+  try {
+      await prisma.message.delete({ where: { userId } });
+  } catch (error) {
+      logError(error);
+  }
+};
+
 module.exports = {
   isFriendshipLimitExceeded,
   createFriendRequest,
   getAllFriendships,
   acceptFriendRequest,
   declineFriendRequest,
+  moveFriendMessege,
 };

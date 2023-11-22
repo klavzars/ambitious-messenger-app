@@ -28,9 +28,22 @@ const declineRequest = async (userId, requestId) => {
   await friendsDao.declineFriendRequest(userId, requestId);
 };
 
+//move/delete a friends
+const moveFriend = async (userId)=>{
+  try {
+    const moveFriendMessege = await friendsDao.moveFriendMessege(userId);
+    if (!moveFriendMessege) {
+      throw new HTTP400Error("Failed to move friend");
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   sendRequest,
   getFriendList,
   acceptRequest,
   declineRequest,
+  moveFriend,
 };

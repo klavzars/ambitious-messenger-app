@@ -24,6 +24,7 @@ app.use("/users",userProfileRouter);
 app.use("/allusers",userProfileRouter);
 app.use("/auth", authRouter);
 app.use("/chat", chatRouter);
+app.use("/friends", friendsRouter);
 
 
 app.use(logErrorMiddleware);

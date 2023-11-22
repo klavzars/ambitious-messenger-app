@@ -44,9 +44,21 @@ const declineRequest = async (req, res) => {
   }
 };
 
+//move/delete a friends
+const moveFriend = async(req, res) => {
+  try {
+    const { userId } = parseInt(req.params.id);
+    await friendsService.moveFriend(userId);
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   sendRequest,
   getFriendList,
   acceptRequest,
   declineRequest,
+  moveFriend,
 };
