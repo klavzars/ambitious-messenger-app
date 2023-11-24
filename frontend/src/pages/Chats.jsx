@@ -4,6 +4,8 @@ import Contacts from "../components/chat/Contacts";
 import Chat from "../components/chat/Chat";
 import styles from "./Chats.module.scss";
 import NewChat from "../components/chat/NewChat";
+import { useDispatch } from "react-redux";
+import { WEBSOCKET_CONNECT, WEBSOCKET_DISCONNECT } from "../features/users/websocket/ActionTypes";
 
 const mobileBreakpoint = 992;
 
@@ -13,6 +15,8 @@ const Chats = () => {
   // this is a bit shady for now, I am still thinking about a better way to do this
   const isChatOpened = (chatId ? true : false) && chatId !== "new";
   const isOnNewChat = chatId === "new";
+
+  const dispatch = useDispatch();
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= mobileBreakpoint);
 
@@ -25,6 +29,14 @@ const Chats = () => {
 
     return () => {
       window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+
+  // websocket connection - this would ideally be in the container for the rest of the app when SSR is added
+  useEffect(() => {
+    dispatch({ type: WEBSOCKET_CONNECT });
+    return () => {
+      dispatch({ type: WEBSOCKET_DISCONNECT });
     };
   }, []);
 

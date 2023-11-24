@@ -21,6 +21,7 @@ const createMessage = async (from, message_text, sent, chat_id) => {
         chat_id,
       },
     });
+    console.log("Message created:", message);
     return message;
   } catch (error) {
     logError(error);
