@@ -14,9 +14,10 @@ const sendRequest = async (req, res) => {
 // getFriendList
 const getFriendList = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const userId = parseInt(req.params.user_id);
     const friends = await friendsService.getFriendList(userId);
     res.json(friends);
+    console.log(friends);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch friend list' });
   }
@@ -25,8 +26,9 @@ const getFriendList = async (req, res) => {
 // acceptRequest
 const acceptRequest = async (req, res) => {
   try {
-    const { userId, requestId } = req.params;
-    const result = await friendsService.acceptRequest(userId, requestId);
+    const requestId = parseInt(req.params.request_id);
+    const { user_id, friend_id } = req.body;
+    const result = await friendsService.acceptRequest(requestId, user_id, friend_id);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: 'Failed to accept friend request' });
@@ -36,8 +38,8 @@ const acceptRequest = async (req, res) => {
 // declineRequest
 const declineRequest = async (req, res) => {
   try {
-    const { userId, requestId } = req.params;
-    await friendsService.declineRequest(userId, requestId);
+    const requestId = parseInt(req.params.request_id);
+    await friendsService.declineRequest(requestId);
     res.status(204).end();
   } catch (error) {
     res.status(500).json({ error: 'Failed to decline friend request' });
@@ -45,7 +47,7 @@ const declineRequest = async (req, res) => {
 };
 
 //move/delete a friends
-const moveFriend = async(req, res) => {
+const moveFriend = async (req, res) => {
   try {
     const { userId } = parseInt(req.params.id);
     await friendsService.moveFriend(userId);

@@ -2,9 +2,16 @@ const friendsDao = require('./newFriend.dao');
 
 // sendRequest
 const sendRequest = async (senderId, receiverId) => {
+  // Validate the request: 1. wrong request: do not send request to self.
+  if (senderId === receiverId) {
+    throw new Error('Cannot send request to yourself!.');
+  }
+  //Validate the request: 1. wrong request: if A is Friend of B, B can't send request to A
+
+  // Validate the request: 2. friendship limit is exceeded
   const isLimited = await friendsDao.isFriendshipLimitExceeded(senderId);
   if (isLimited) {
-    throw new Error('Friendship limit exceeded');
+    throw new Error('Friendship limit exceeded!');
   }
   //Create a request log in the database
   const requestLog = await friendsDao.createFriendRequest(senderId, receiverId);
@@ -18,14 +25,14 @@ const getFriendList = async (userId) => {
 };
 
 // acceptRequest
-const acceptRequest = async (userId, requestId) => {
-  const updatedFriendship = await friendsDao.acceptFriendRequest(userId, requestId);
+const acceptRequest = async (requestId,user_id, friend_id) => {
+  const updatedFriendship = await friendsDao.acceptFriendRequest(requestId,user_id, friend_id);
   return updatedFriendship;
 };
 
 // declineRequest
-const declineRequest = async (userId, requestId) => {
-  await friendsDao.declineFriendRequest(userId, requestId);
+const declineRequest = async (requestId) => {
+  await friendsDao.declineFriendRequest(requestId);
 };
 
 //move/delete a friends

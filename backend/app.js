@@ -9,6 +9,7 @@ const authRouter = require("./domains/auth/auth.api");
 const chatRouter = require("./domains/chat/chat.api");
 const messageRouter = require('./domains/message/message.api');
 const userProfileRouter = require('./domains/user/user.api');
+const friendsRouter = require('./domains/friend/newFriends/newFriend.api');
 const cookieParser = require("cookie-parser");
 
 const port = 4202;
@@ -51,7 +52,7 @@ process.on("uncaughtException", (error) => {
 
 app.listen(port, (err) => {
   if (err) {
-    console.error(error);
+    console.error(err);
   }
   console.log(`server is running 🏃💨 @ port ${port}`);
 });
