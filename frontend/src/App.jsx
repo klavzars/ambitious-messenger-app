@@ -45,7 +45,6 @@ function App() {
           <Route path="*" element={<Navigate to="/chats" replace />} />
           <Route path="/chats" element={<Chats />} />
           <Route path="/chats/:chatId" element={<Chats />} />
-          <Route path="/chats/new" element={<NewChat />}></Route>
         </Route>
       </Routes>
     </>

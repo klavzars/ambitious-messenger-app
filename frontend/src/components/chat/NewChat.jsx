@@ -8,6 +8,8 @@ import { reset as resetChatState } from "../../features/chats/chatSlice";
 import { createChat } from "../../features/chats/chatSlice";
 import { reset as resetFriendsState } from "../../features/friends/friendsSlice";
 import { getAllFriends } from "../../features/friends/friendsSlice";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 // temporary
 import defaultUserPic from "../../assets/default_user_1.png";
@@ -105,56 +107,72 @@ function NewChat() {
   };
 
   return (
-    <div className={styles.newChat}>
-      <div className={styles.searchContainer} ref={searchScrollRef}>
-        {selectedUsers.length > 0 &&
-          selectedUsers.map((user) => (
-            <div key={user.username} className={styles.searchContainer__selectedUser}>
-              <span key={user.username} className={styles.searchContainer__username}>
-                {`${user.username}`}
-              </span>
-              <RxCross2 className={styles.searchContainer__close} onClick={() => handleRemoveUser(user.username)} />
-            </div>
-          ))}
-        <input
-          type="text"
-          value={searchText}
-          onChange={handleSearchChange}
-          placeholder="Search or start new chat"
-          className={styles.searchContainer__input}
-        />
-        <button className={styles.searchContainer__clear} onClick={handleClearInput}>
-          <RxCross2 className={styles.searchContainer__clearButton} />
-        </button>
-      </div>
-      <ul className={styles.userList}>
-        {filteredUsers.map((user) => (
-          <li key={user.username} className={styles.userList__item}>
-            <div className={styles.userList__leftContainer}>
-              <div className={styles.userList__imageContainer}>
-                <img className={styles.userList__img} src={defaultUserPic} alt={"" /* TODO make this dynamic*/} />
+    <div className={styles.pageContainer}>
+      <header className={styles.header}>
+        <Link to={"/chats" /*TODO implement actual 'back' functionality with history*/} className={styles.link}>
+          <button className={`${styles.buttonBack} ${styles.button}`}>
+            <MdKeyboardArrowLeft className={`${styles.buttonIcon} ${styles.buttonIcon__back}`} />
+          </button>
+        </Link>
+        <div className={styles.leftSideContainer}>
+          <div className={styles.headingContainer}>
+            <h2 className={styles.heading}>New chat</h2>
+          </div>
+        </div>
+        <div className={styles.buttonsContainer}></div>
+      </header>
+
+      <div className={styles.newChat}>
+        <div className={styles.searchContainer} ref={searchScrollRef}>
+          {selectedUsers.length > 0 &&
+            selectedUsers.map((user) => (
+              <div key={user.username} className={styles.searchContainer__selectedUser}>
+                <span key={user.username} className={styles.searchContainer__username}>
+                  {`${user.username}`}
+                </span>
+                <RxCross2 className={styles.searchContainer__close} onClick={() => handleRemoveUser(user.username)} />
               </div>
-              <span className={styles.userList__username}>{user.username}</span>
-            </div>
-            <input
-              type="checkbox"
-              key={user.username}
-              checked={selectedUsers.some((selectedUser) => selectedUser.username === user.username)}
-              onChange={() => handleUserCheckboxChange(user)}
-              className={styles.userList__checkbox}
-            />
-          </li>
-        ))}
-      </ul>
-      <div className={styles.createChat}>
-        <button
-          className={styles.createChat__button}
-          onClick={handleCreateChat}
-          disabled={false /* TODO */}
-          type="submit"
-        >
-          Create Chat
-        </button>
+            ))}
+          <input
+            type="text"
+            value={searchText}
+            onChange={handleSearchChange}
+            placeholder="Search friends"
+            className={styles.searchContainer__input}
+          />
+          <button className={styles.searchContainer__clear} onClick={handleClearInput}>
+            <RxCross2 className={styles.searchContainer__clearButton} />
+          </button>
+        </div>
+        <ul className={styles.userList}>
+          {filteredUsers.map((user) => (
+            <li key={user.username} className={styles.userList__item} onClick={() => handleUserCheckboxChange(user)}>
+              <div className={styles.userList__leftContainer}>
+                <div className={styles.userList__imageContainer}>
+                  <img className={styles.userList__img} src={defaultUserPic} alt={"" /* TODO make this dynamic*/} />
+                </div>
+                <span className={styles.userList__username}>{user.username}</span>
+              </div>
+              <input
+                type="checkbox"
+                key={user.username}
+                checked={selectedUsers.some((selectedUser) => selectedUser.username === user.username)}
+                // onChange={() => handleUserCheckboxChange(user)}
+                className={styles.userList__checkbox}
+              />
+            </li>
+          ))}
+        </ul>
+        <div className={styles.createChat}>
+          <button
+            className={styles.createChat__button}
+            onClick={handleCreateChat}
+            disabled={false /* TODO */}
+            type="submit"
+          >
+            Create Chat
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import styles from "./Contacts.module.scss";
 import { FaRegPenToSquare } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 import Dropdown from "../Dropdown";
 
@@ -84,9 +85,11 @@ function Contacts() {
           </div>
         </div>
         <div className={styles.buttonsContainer}>
-          <button className={`${styles.buttonNewChat} ${styles.button}`}>
-            <FaRegPenToSquare className={`${styles.buttonIcon} ${styles.buttonIcon__newChat}`} />
-          </button>
+          <Link to={"/chats/new"}>
+            <button className={`${styles.buttonNewChat} ${styles.button}`}>
+              <FaRegPenToSquare className={`${styles.buttonIcon} ${styles.buttonIcon__newChat}`} />
+            </button>
+          </Link>
           <Dropdown />
         </div>
       </header>
