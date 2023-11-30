@@ -3,7 +3,7 @@ import logo from "../assets/ambitious_logo_blue.svg";
 import { useState } from "react";
 import TextInputGroup from "../components/TextInputGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { register, reset } from "../features/users/userSlice";
+import { register, reset } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -24,7 +24,7 @@ const usernameRegex = /^[a-zA-Z0-9_\-\.@]+$/;
 function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status: userStatus, error: userError } = useSelector((state) => state.users);
+  const { status: userStatus, error: userError } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (userStatus === "failed") {
