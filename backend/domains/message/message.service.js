@@ -60,6 +60,7 @@ const deleteMessage = async (messageId) => {
     if (!deletedMessage) {
       throw new HTTP400Error("Failed to delete message");
     }
+    return deletedMessage;
   } catch (error) {
     throw error;
   }

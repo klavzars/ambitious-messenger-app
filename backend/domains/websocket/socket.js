@@ -1,8 +1,8 @@
-// domains/websocket/socket.api.js
+const cookie = require("cookie");
 
 const socketIO = require("socket.io");
 const { createMessage, updateMessage } = require("../message/message.service");
-const { deleteMessage } = require("../message/message.dao");
+const { deleteMessage } = require("../message/message.service");
 
 const initializeSocket = (server) => {
   const onlineUsers = {};
@@ -21,39 +21,47 @@ const initializeSocket = (server) => {
     });
 
     // --- Authentication Events ---
+
+    // TODO find a way to use middle ware to do proper authentication ASAP
     socket.on("auth", (data) => {
-      // Example: Validate authentication
-      const isAuthenticated = true; // Implement your authentication logic
-      if (isAuthenticated) {
-        // Add the user to the online users list
-        onlineUsers[socket.id] = data.username;
-        socket.emit("auth-success", "Authentication successful");
-      } else {
-        socket.emit("auth-fail", "Authentication failed");
-      }
+      onlineUsers[data.username] = socket.id;
+      console.log("Online users:", onlineUsers);
     });
 
     // --- Message Events ---
     socket.on("message-send", async (message) => {
-      // Example: Store the message in the database
-      const { from, message_text, sent, chat_id } = message;
+      const { from, message_text, sent, chat_id, to } = message;
       console.log("Received message:", message);
-      // Implement your logic to save the message in the database
       const date = new Date().toISOString();
       const saveMessage = await createMessage(from, message_text, date, chat_id);
       console.log("Message saved:", saveMessage);
-      // Broadcast the message to all connected clients
-      io.emit("message-received", saveMessage);
+      //send users in the to variable an array
+      for (const user of to) {
+        const toSocketId = onlineUsers[user];
+        if (!toSocketId) {
+          console.log("User is not online:", user);
+          continue;
+        }
+        socket.to(toSocketId).emit("message-received", saveMessage);
+      }
+      socket.emit("message-received", saveMessage);
     });
 
     socket.on("message-delete", async (message) => {
-      // Example: Implement logic to delete the message
       console.log("Delete message with ID:", message);
       const { id } = message;
-      // Implement your logic to delete the message from the database
-      await deleteMessage(id);
-      // Broadcast the event to all connected clients
-      io.emit("message-deleted", { msg: "success" });
+
+      const deletedMessage = await deleteMessage(id);
+      for (const user of to) {
+        const toSocketId = onlineUsers[user];
+        if (!toSocketId) {
+          console.log("User is not online:", user);
+          continue;
+        }
+        socket.to(toSocketId).emit("message-deleted", saveMessage);
+      }
+
+      socket.emit("message-deleted", deletedMessage);
     });
 
     socket.on("message-update", async (newMessage) => {
@@ -62,8 +70,15 @@ const initializeSocket = (server) => {
       const { id, updated_text } = newMessage;
       // Implement your logic to update the message in the database
       const updatedMessage = await updateMessage(id, updated_text);
-      // Broadcast the updated message to all connected clients
-      io.emit("message-updated", updatedMessage);
+      for (const user of to) {
+        const toSocketId = onlineUsers[user];
+        if (!toSocketId) {
+          console.log("User is not online:", user);
+          continue;
+        }
+        socket.to(toSocketId).emit("message-updated", updatedMessage);
+      }
+      socket.emit("message-updated", updatedMessage);
     });
 
     // --- Friend Request Events ---

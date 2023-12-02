@@ -5,7 +5,9 @@ import Chat from "../components/chat/Chat";
 import styles from "./Chats.module.scss";
 import NewChat from "../components/chat/NewChat";
 import { useDispatch } from "react-redux";
-import { WEBSOCKET_CONNECT, WEBSOCKET_DISCONNECT } from "../features/users/websocket/ActionTypes";
+
+import { socketActions } from "../features/websocket/socketSlice";
+const { connecting, disconnected, connected } = socketActions;
 
 const mobileBreakpoint = 992;
 
@@ -34,9 +36,9 @@ const Chats = () => {
 
   // websocket connection - this would ideally be in the container for the rest of the app when SSR is added
   useEffect(() => {
-    dispatch({ type: WEBSOCKET_CONNECT });
+    dispatch(connecting());
     return () => {
-      dispatch({ type: WEBSOCKET_DISCONNECT });
+      dispatch(disconnected());
     };
   }, []);
 
