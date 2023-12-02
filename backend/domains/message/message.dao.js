@@ -29,13 +29,16 @@ const createMessage = async (from, message_text, sent, chat_id) => {
 };
 
 // Get all historical messages.
-const getAllMessages = async () => {
-    try {
-        const messages = await prisma.message.findMany();
-        return messages;
-    } catch (error) {
-        logError(error);
-    }
+const getAllMessages = async (chat_id) => {
+  try {
+    const messages = await prisma.message.findMany({
+      where: { chat_id },
+      orderBy: { sent: "asc" },
+    });
+    return messages;
+  } catch (error) {
+    logError(error);
+  }
 };
 
 // Update
