@@ -7,7 +7,8 @@ router.get('/:user_id', friendsController.getFriendList);
 router.put('/accept/:request_id', friendsController.acceptRequest);
 router.put('/decline/:request_id', friendsController.declineRequest);
 
-//move/delete a friends
-router.put('/move/:friend_id', friendsController.moveFriend);
+//remove/delete a friends
+//API: remove?userId=?&friendId=?
+router.put('/remove', friendsController.removeFriend);
 
 module.exports = router;

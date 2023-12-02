@@ -19,7 +19,7 @@ const createFriendRequest = async (senderId, receiverId) => {
 
 // Get all friendships for a user
 const getAllFriendships = async (userId) => {
-  const friendships = await prisma.friendships.findUnique({
+  const friendships = await prisma.friendships.findMany({
     where: {
       OR: [{ user_id: userId }, { friend_id: userId }],
       status: 1,
@@ -29,27 +29,31 @@ const getAllFriendships = async (userId) => {
 };
 
 // Accept a friend request
-const acceptFriendRequest = async (requestId,user_id, friend_id) => {
+const acceptFriendRequest = async (requestId, user_id, friend_id) => {
   const updatedFriendship = await prisma.friendships.create({
-   // where: { id: requestId},
-    data: { user_id:user_id,friend_id: friend_id ,status: 1 },
+    // where: { id: requestId},
+    data: { user_id: user_id, friend_id: friend_id, status: 1 },
   });
   return updatedFriendship;
 };
 
 // Decline a friend request
 const declineFriendRequest = async (requestId) => {
-  await prisma.friendRequests.delete({ 
-    where: { id: requestId } });
+  await prisma.friendRequests.delete({
+    where: { id: requestId }
+  });
 };
 
-//move/delete a friends
-const moveFriendMessege = async (userId) => {
-  try {
-      await prisma.message.delete({ where: { userId } });
-  } catch (error) {
-      logError(error);
-  }
+//remove/delete a friends
+const removeFriendFromDao = async (currentUserId, friendIdToRemove) => {
+  await prisma.friendships.deleteMany({
+    where: {
+      AND: [
+        { user_id: currentUserId },
+        { friend_id: friendIdToRemove }
+      ]
+    }
+  });
 };
 
 module.exports = {
@@ -58,5 +62,5 @@ module.exports = {
   getAllFriendships,
   acceptFriendRequest,
   declineFriendRequest,
-  moveFriendMessege,
+  removeFriendFromDao,
 };

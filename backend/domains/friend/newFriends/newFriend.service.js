@@ -25,8 +25,8 @@ const getFriendList = async (userId) => {
 };
 
 // acceptRequest
-const acceptRequest = async (requestId,user_id, friend_id) => {
-  const updatedFriendship = await friendsDao.acceptFriendRequest(requestId,user_id, friend_id);
+const acceptRequest = async (requestId, user_id, friend_id) => {
+  const updatedFriendship = await friendsDao.acceptFriendRequest(requestId, user_id, friend_id);
   return updatedFriendship;
 };
 
@@ -35,16 +35,9 @@ const declineRequest = async (requestId) => {
   await friendsDao.declineFriendRequest(requestId);
 };
 
-//move/delete a friends
-const moveFriend = async (userId)=>{
-  try {
-    const moveFriendMessege = await friendsDao.moveFriendMessege(userId);
-    if (!moveFriendMessege) {
-      throw new HTTP400Error("Failed to move friend");
-    }
-  } catch (error) {
-    throw error;
-  }
+//remove/delete a friends
+const removeFriendMessage = async (currentUserId, friendIdToRemove) => {
+  const removeFriend = await friendsDao.removeFriendFromDao(currentUserId, friendIdToRemove);
 };
 
 module.exports = {
@@ -52,5 +45,5 @@ module.exports = {
   getFriendList,
   acceptRequest,
   declineRequest,
-  moveFriend,
+  removeFriendMessage,
 };

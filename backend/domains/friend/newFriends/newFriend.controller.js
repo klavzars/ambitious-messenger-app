@@ -17,7 +17,6 @@ const getFriendList = async (req, res) => {
     const userId = parseInt(req.params.user_id);
     const friends = await friendsService.getFriendList(userId);
     res.json(friends);
-    console.log(friends);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch friend list' });
   }
@@ -46,14 +45,15 @@ const declineRequest = async (req, res) => {
   }
 };
 
-//move/delete a friends
-const moveFriend = async (req, res) => {
+//remove/delete a friends
+const removeFriend = async (req, res) => {
   try {
-    const { userId } = parseInt(req.params.id);
-    await friendsService.moveFriend(userId);
+    const currentUserId = parseInt(req.query.userId);
+    const friendIdToRemove = parseInt(req.query.friendId);
+    await friendsService.removeFriendMessage(currentUserId, friendIdToRemove);
     res.status(204).end();
   } catch (error) {
-    next(error);
+    res.status(500).json({ error: 'Failed123 to remove friend' });
   }
 };
 
@@ -62,5 +62,5 @@ module.exports = {
   getFriendList,
   acceptRequest,
   declineRequest,
-  moveFriend,
+  removeFriend,
 };
