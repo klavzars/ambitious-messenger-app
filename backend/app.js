@@ -8,8 +8,9 @@ const { isOperationalError, logErrorMiddleware, returnResponse, logError } = req
 //routes
 const authRouter = require("./domains/auth/auth.api");
 const chatRouter = require("./domains/chat/chat.api");
-const messageRouter = require("./domains/message/message.api");
-const userProfileRouter = require("./domains/user/user.api");
+const messageRouter = require('./domains/message/message.api');
+const userProfileRouter = require('./domains/user/user.api');
+const friendsRouter = require('./domains/friend/newFriends/newFriend.api');
 const cookieParser = require("cookie-parser");
 const initializeSocket = require("./domains/websocket/socket");
 
@@ -27,6 +28,7 @@ app.use("/user", userProfileRouter);
 app.use("/allusers", userProfileRouter);
 app.use("/auth", authRouter);
 app.use("/chat", chatRouter);
+app.use("/friends", friendsRouter);
 
 app.use(logErrorMiddleware);
 app.use(returnResponse);
@@ -53,7 +55,7 @@ initializeSocket(server);
 
 server.listen(port, (err) => {
   if (err) {
-    console.error(error);
+    console.error(err);
   }
   console.log(`server is running 🏃💨 @ port ${port}`);
 });
