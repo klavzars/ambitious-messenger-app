@@ -3,7 +3,7 @@ import logo from "../assets/ambitious_logo_blue.svg";
 import { useState } from "react";
 import TextInputGroup from "../components/TextInputGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../features/users/userSlice";
+import { login, reset } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -17,7 +17,7 @@ const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 function LogIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status: userStatus, error: userError } = useSelector((state) => state.users);
+  const { status: userStatus, error: userError } = useSelector((state) => state.auth);
   useEffect(() => {
     if (userStatus === "failed") {
       // TODO show error

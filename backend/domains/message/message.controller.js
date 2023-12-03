@@ -23,10 +23,11 @@ const createMessage = async (req, res) => {
 };
 
 // Get all historical messages
-const getHistoryMessages = async (req, res) => {
+const getChatMessages = async (req, res) => {
+  // TODO APPLY SCHEMA VALIDATION HERE
+  const chat_id = parseInt(req.params.chat_id);
   try {
-    const messages = await messageService.getAllMessages();
-    //console.log(messages)
+    const messages = await messageService.getChatMessages(chat_id);
     res.json(messages);
   } catch (error) {
     next(error);
@@ -71,9 +72,9 @@ const deleteMultipleMessages = async (req, res) => {
 };
 
 module.exports = {
-    createMessage,
-    getHistoryMessages,
-    updateMessage,
-    deleteMessage,
-    deleteMultipleMessages
+  createMessage,
+  getChatMessages,
+  updateMessage,
+  deleteMessage,
+  deleteMultipleMessages,
 };

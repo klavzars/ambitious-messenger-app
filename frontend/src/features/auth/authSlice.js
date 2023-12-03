@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import userService from "./userService";
+import authService from "./authService";
 
 export const login = createAsyncThunk("auth/login", async (userLoginData, thunkAPI) => {
   try {
-    return await userService.login(userLoginData);
+    return await authService.login(userLoginData);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -13,7 +13,7 @@ export const login = createAsyncThunk("auth/login", async (userLoginData, thunkA
 
 export const register = createAsyncThunk("auth/register", async (userRegistrationData, thunkAPI) => {
   try {
-    return await userService.register(userRegistrationData);
+    return await authService.register(userRegistrationData);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -23,7 +23,7 @@ export const register = createAsyncThunk("auth/register", async (userRegistratio
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    return await userService.logout();
+    return await authService.logout();
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -37,8 +37,8 @@ const initialState = {
   authStatus: "undetermined", // 'undetermined', 'auth', 'unauth'
 };
 
-export const userSlice = createSlice({
-  name: "users",
+export const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
     reset: (state) => {
@@ -89,5 +89,5 @@ export const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
-export const { reset, setAuthStatus } = userSlice.actions;
+export default authSlice.reducer;
+export const { reset, setAuthStatus } = authSlice.actions;

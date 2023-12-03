@@ -78,6 +78,27 @@ const get = async (username) => {
   }
 };
 
+const getExistingPrivate = async (members) => {
+  try {
+    const chats = await prisma.chat.findMany({
+      where: {
+        is_private: true,
+        member: {
+          every: {
+            username: {
+              in: members,
+            },
+          },
+        },
+      },
+    });
+
+    return chats;
+  } catch (error) {
+    logError(error);
+  }
+};
+
 const getMember = async (chat_id, username) => {
   try {
     const member = await prisma.member.findFirst({
@@ -121,4 +142,19 @@ const remove = async (member_id) => {
   }
 };
 
-module.exports = { create, add, get, getSingle, remove };
+const findExistingMember = (chat_id, username) => {
+  try {
+    const member = prisma.member.findFirst({
+      where: {
+        chat_id,
+        username,
+      },
+    });
+
+    return member;
+  } catch (error) {
+    logError(error);
+  }
+};
+
+module.exports = { create, add, get, getSingle, remove, getExistingPrivate, findExistingMember };
