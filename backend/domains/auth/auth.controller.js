@@ -21,7 +21,7 @@ const login = async (req, res, next) => {
       .send({
         user: {
           username: user.username,
-          // user_id: registeredUser.user_id, // TODO: do we need to send the user_id back to the client? probably not right?
+          user_id: user.user_id,
         },
         expires,
         isAuthSuccessful: true,
@@ -48,7 +48,7 @@ const register = async (req, res, next) => {
       .send({
         user: {
           username: registeredUser.username,
-          // user_id: registeredUser.user_id, // TODO: do we need to send the user_id back to the client?  probably not right?
+          user_id: registeredUser.user_id,
         },
         expires,
         isAuthSuccessful: true,
