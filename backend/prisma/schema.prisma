@@ -31,6 +31,7 @@ model message {
   from         String
   message_text String?
   sent         DateTime? @db.Timestamp(6)
+  isEdited     Boolean   @default(false) //update a message is true
   chat_id      Int?
   chat         chat?     @relation(fields: [chat_id], references: [chat_id], onDelete: NoAction, onUpdate: NoAction)
   user         user?     @relation(fields: [from], references: [username], onDelete: NoAction, onUpdate: NoAction)
