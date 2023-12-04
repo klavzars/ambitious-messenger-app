@@ -2,13 +2,13 @@ import styles from "./Dropdown.module.scss";
 import { useState, useEffect } from "react";
 import { MdMoreVert } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, reset } from "../features/users/userSlice";
+import { logout, reset } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
 function Dropdown() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status: userStatus, error: userError } = useSelector((state) => state.users);
+  const { status: userStatus, error: userError } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

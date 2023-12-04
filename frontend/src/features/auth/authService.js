@@ -17,6 +17,8 @@ const login = async (userLoginData) => {
 
   if (response.data && response.data.isAuthSuccessful && response.data.expires) {
     localStorage.setItem("tokenExpires", response.data.expires);
+    localStorage.setItem("username", response.data.user.username);
+    localStorage.setItem("userId", response.data.user.user_id);
   }
 
   return response.data;
@@ -27,6 +29,8 @@ const register = async (userRegistrationData) => {
 
   if (response.data && response.data.isAuthSuccessful && response.data.expires) {
     localStorage.setItem("tokenExpires", response.data.expires);
+    localStorage.setItem("username", response.data.user.username);
+    localStorage.setItem("userId", response.data.user.user_id);
   }
 
   return response.data;
@@ -37,15 +41,17 @@ const logout = async () => {
 
   if (response.status >= 200 && response.status < 300) {
     localStorage.removeItem("tokenExpires");
+    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
   }
 
   return response.data;
 };
 
-const userService = {
+const authService = {
   login,
   register,
   logout,
 };
 
-export default userService;
+export default authService;

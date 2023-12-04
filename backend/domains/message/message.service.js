@@ -23,10 +23,10 @@ const createMessage = async (from, message_text, sent, chat_id) => {
   }
 };
 
-// Get all historical messages
-const getAllMessages = async () => {
+// Get all messages for specific chat
+const getChatMessages = async (chat_id) => {
   try {
-    const messages = await messageDao.getAllMessages();
+    const messages = await messageDao.getAllMessages(chat_id);
 
     if (!messages) {
       throw new HTTP400Error("Failed to get messages");
@@ -60,6 +60,7 @@ const deleteMessage = async (messageId) => {
     if (!deletedMessage) {
       throw new HTTP400Error("Failed to delete message");
     }
+    return deletedMessage;
   } catch (error) {
     throw error;
   }
@@ -79,7 +80,7 @@ const deleteMultipleMessages = async (messageIds) => {
 
 module.exports = {
   createMessage,
-  getAllMessages,
+  getChatMessages,
   updateMessage,
   deleteMessage,
   deleteMultipleMessages
