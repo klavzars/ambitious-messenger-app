@@ -18,7 +18,14 @@ const login = async (req, res, next) => {
     res
       .type("json")
       .cookie("token", token, { httpOnly: true }) // NOTE: in production, set secure: true
-      .send({ expires, isAuthSuccessful: true, msg: "login success" });
+      .send({
+        user: {
+          username: user.username,
+          user_id: user.user_id,
+        },
+        expires,
+        isAuthSuccessful: true,
+      });
   } catch (error) {
     next(error);
   }
@@ -45,7 +52,6 @@ const register = async (req, res, next) => {
         },
         expires,
         isAuthSuccessful: true,
-        msg: "register success",
       });
   } catch (error) {
     next(error);
@@ -55,7 +61,7 @@ const register = async (req, res, next) => {
 const logout = async (req, res, next) => {
   res.clearCookie("token");
 
-  res.status(200).send({ message: "logout successful" });
+  res.status(200).send();
 };
 
 //change Password method
