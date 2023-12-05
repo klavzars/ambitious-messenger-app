@@ -11,9 +11,10 @@ const getBaseUrl = () => {
 };
 
 const API_URL_CHAT = `${getBaseUrl()}/chat`;
+const prefix = "/chat";
 
 const createChat = async (newChatData) => {
-  const response = await axios.post(`${API_URL_CHAT}/`, newChatData);
+  const response = await axios.post(prefix, newChatData);
 
   return response.data;
 };

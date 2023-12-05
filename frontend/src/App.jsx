@@ -11,12 +11,14 @@ import ProtectedRoute from "./components/routing/ProtectedRoute";
 import PublicRoute from "./components/routing/PublicRoute";
 import Chats from "./pages/Chats";
 import NewChat from "./components/chat/NewChat";
+import { fetcher } from "./app/fetcher";
 
 function App() {
   const { authStatus } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   // check if user is authenticated on page reload
+  //  TODO NOTE: I think we should make an API call to check if the token is valid
   useEffect(() => {
     // get token expiration timestamp from localStorage
     const expirationTimestamp = localStorage.getItem("tokenExpires");
@@ -42,6 +44,10 @@ function App() {
       dispatch(setAuthStatus("unauth"));
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    fetcher("/chat/briantwene").then(console.log).catch(console.error);
+  }, []);
 
   return (
     <>
