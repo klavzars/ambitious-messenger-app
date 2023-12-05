@@ -18,6 +18,7 @@ function App() {
   const dispatch = useDispatch();
 
   // check if user is authenticated on page reload
+  //  TODO NOTE: I think we should make an API call to check if the token is valid
   useEffect(() => {
     // get token expiration timestamp from localStorage
     const expirationTimestamp = localStorage.getItem("tokenExpires");
