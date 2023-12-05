@@ -11,6 +11,7 @@ const getBaseUrl = () => {
 };
 
 const API_URL_AUTH = `${getBaseUrl()}/user`;
+const prefix = "/user";
 
 const userService = {};
 

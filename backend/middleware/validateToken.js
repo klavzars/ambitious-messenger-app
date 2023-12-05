@@ -5,8 +5,8 @@ const config = require("../config");
 const validateToken = (req, res, next) => {
   const { jwt } = config;
   //get the token out of the auth header
-  const token = req.cookies.token;
-
+  const token = req.signedCookies.token;
+  console.log("token", token);
   verify(
     token,
     jwt.secret,
@@ -31,6 +31,7 @@ const validateToken = (req, res, next) => {
       }
     }
   );
+
 };
 
 module.exports = validateToken;
