@@ -66,7 +66,13 @@ const get = async (username) => {
         },
       },
       include: {
-        member: true, // Include the member details for each chat
+        member: true,
+        message: {
+          take: 1,
+          orderBy: {
+            sent: "desc",
+          },
+        }, // Include the member details for each chat
       },
     });
 

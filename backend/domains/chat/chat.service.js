@@ -83,6 +83,7 @@ const getChats = async (username) => {
     const formattedChats = chats.map((chat) => {
       // just get the usernames of the people in the room
       const formattedMembers = chat.member.map((member) => member.username);
+      const [last_message] = chat.message;
       let chat_name;
 
       // modify the name based on if...
@@ -109,6 +110,7 @@ const getChats = async (username) => {
         chat_name: chat_name,
         is_private: chat.is_private,
         members: formattedMembers,
+        last_message: last_message,
       };
     });
     return formattedChats;
