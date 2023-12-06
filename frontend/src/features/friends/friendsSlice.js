@@ -11,6 +11,16 @@ export const getAllFriends = createAsyncThunk("friends/getAllFriends", async (_,
   }
 });
 
+export const addFriend = createAsyncThunk("friends/addFriend", async (username, thunkAPI) => {
+  try {
+    return await friendsService.addFriend(username);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 const initialState = {
   status: "idle",
   error: null,
@@ -38,6 +48,15 @@ export const friendsSlice = createSlice({
       .addCase(getAllFriends.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(addFriend.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addFriend.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(addFriend.rejected, (state) => {
+        state.status = "failed";
       });
   },
 });

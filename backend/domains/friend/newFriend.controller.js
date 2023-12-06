@@ -3,18 +3,31 @@ const friendsService = require('./newFriend.service');
 // sendRequest
 const sendRequest = async (req, res) => {
   try {
-    const { senderId, receiverId } = req.body;
-    const result = await friendsService.sendRequest(senderId, receiverId);
+    const username = req.body;
+    //{ senderId, receiverId } = req.body;
+    const senderId = req.user.id; // Extract sender ID from decoded JWT
+    const result = await friendsService.sendRequest(senderId, username);
     res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ error: 'Failed to send friend request' });
   }
 };
 
+//getAllFriendRequests status:0 pending
+const friendRequests = async (req, res) => {
+  try {
+    const userId = req.user.id; // Extract user ID from decoded JWT
+    const requests = await friendsService.getAllFriendRequests(userId);
+    res.status(200).json(requests);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to get friend requests' });
+  }
+};
+
 // getFriendList
 const getFriendList = async (req, res) => {
   try {
-    const userId = parseInt(req.params.user_id);
+    const userId = req.user.id; // Extract sender ID from decoded JWT
     const friends = await friendsService.getFriendList(userId);
     res.json(friends);
   } catch (error) {
@@ -26,7 +39,8 @@ const getFriendList = async (req, res) => {
 const acceptRequest = async (req, res) => {
   try {
     const requestId = parseInt(req.params.request_id);
-    const { user_id, friend_id } = req.body;
+    const user_id = req.user.id; // Extract sender ID from decoded JWT
+    const { friend_id } = req.body; // ? maybe it is a friendName, need convert it to friendID from DAO?
     const result = await friendsService.acceptRequest(requestId, user_id, friend_id);
     res.json(result);
   } catch (error) {
@@ -48,8 +62,8 @@ const declineRequest = async (req, res) => {
 //remove/delete a friends
 const removeFriend = async (req, res) => {
   try {
-    const currentUserId = parseInt(req.query.userId);
-    const friendIdToRemove = parseInt(req.query.friendId);
+    const currentUserId = req.user.id; // Extract sender ID from decoded JWT
+    const friendIdToRemove = req.body; // ? maybe it is a friendName, need convert it to friendID from DAO?
     await friendsService.removeFriendMessage(currentUserId, friendIdToRemove);
     res.status(204).end();
   } catch (error) {
@@ -59,6 +73,7 @@ const removeFriend = async (req, res) => {
 
 module.exports = {
   sendRequest,
+  friendRequests,
   getFriendList,
   acceptRequest,
   declineRequest,

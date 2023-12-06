@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { MdMoreVert } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Dropdown() {
   const dispatch = useDispatch();
@@ -44,12 +44,17 @@ function Dropdown() {
       </button>
       {isOpen && (
         <div className={styles.dropdown}>
+          <Link to="/add-friend">
+            <button className={`${styles.dropdown__button} ${styles.dropdown__addFriend}`} onClick={handleSettings}>
+              Add Friend
+            </button>
+          </Link>
           <button className={`${styles.dropdown__button} ${styles.dropdown__logout}`} onClick={handleLogout}>
             Logout
           </button>
-          <button className={`${styles.dropdown__button} ${styles.dropdown__settings}`} onClick={handleSettings}>
+          {/* <button className={`${styles.dropdown__button} ${styles.dropdown__settings}`} onClick={handleSettings}>
             Settings
-          </button>
+          </button> */}
         </div>
       )}
     </>
