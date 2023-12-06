@@ -29,6 +29,17 @@ const createFriendRequest = async (senderId, receiverId) => {
   return requestLog;
 };
 
+//getAllFriendRequests status:0 pending
+const getAllPendingRequests = async (userId) => {
+  const requests = await prisma.friendRequests.findMany({
+    where: {
+      receiver_id: userId,
+      status: 0, // 0: Pending
+    },
+  });
+  return requests;
+};
+
 // Get all friendships for a user
 const getAllFriendships = async (userId) => {
   const friendships = await prisma.friendships.findMany({
@@ -44,15 +55,16 @@ const getAllFriendships = async (userId) => {
 const acceptFriendRequest = async (requestId, user_id, friend_id) => {
   const updatedFriendship = await prisma.friendships.create({
     // where: { id: requestId},?? do need write the 'requestId' to friendship
-    data: { user_id: user_id, friend_id: friend_id, status: 1 },
+    data: { user_id: user_id, friend_id: friend_id, status: 1 }, //1: Accepted
   });
   return updatedFriendship;
 };
 
 // Decline a friend request
 const declineFriendRequest = async (requestId) => {
-  await prisma.friendRequests.delete({
-    where: { id: requestId }
+  await prisma.friendRequests.update({
+    where: { id: requestId },
+    data:{status:2 } //2: Declined
   });
 };
 
@@ -72,6 +84,7 @@ module.exports = {
   getUserIdByUsername,
   isFriendshipLimitExceeded,
   createFriendRequest,
+  getAllPendingRequests,
   getAllFriendships,
   acceptFriendRequest,
   declineFriendRequest,

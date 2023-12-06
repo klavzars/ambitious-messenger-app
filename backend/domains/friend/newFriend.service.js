@@ -17,12 +17,22 @@ const sendRequest = async (senderId, receiverUsername) => {
     if (isLimited) {
       throw new Error('Friendship limit exceeded!');
     }
-    
+
     //Create a request log in the database
     const requestLog = await friendsDao.createFriendRequest(senderId, receiverId);
     return requestLog;
   } catch (error) {
     throw new Error('Failed to send friend request');
+  }
+};
+
+//getAllFriendRequests status:0 pending
+const getAllFriendRequests = async (userId) => {
+  try {
+    const requests = await friendsDao.getAllPendingRequests(userId);
+    return requests;
+  } catch (error) {
+    throw new Error('Failed to get friend requests');
   }
 };
 
@@ -50,6 +60,7 @@ const removeFriendMessage = async (currentUserId, friendIdToRemove) => {
 
 module.exports = {
   sendRequest,
+  getAllFriendRequests,
   getFriendList,
   acceptRequest,
   declineRequest,
