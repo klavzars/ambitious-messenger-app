@@ -4,9 +4,11 @@ import Contacts from "../components/chat/Contacts";
 import Chat from "../components/chat/Chat";
 import styles from "./Chats.module.scss";
 import NewChat from "../components/chat/NewChat";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { socketActions } from "../features/websocket/socketSlice";
+import Call from "../components/call/Call";
+import { inactive } from "../features/chats/chatSlice";
 const { connecting, disconnected, connected } = socketActions;
 
 const mobileBreakpoint = 992;
@@ -19,6 +21,7 @@ const Chats = () => {
   const isOnNewChat = chatId === "new";
 
   const dispatch = useDispatch();
+  const { callPanelStatus } = useSelector((state) => state.chats);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= mobileBreakpoint);
 
@@ -42,6 +45,15 @@ const Chats = () => {
     };
   }, []);
 
+  const isCallPanelActive = () => {
+    if (callPanelStatus == "active") {
+      console.log("something ran here");
+      return <Call />;
+    }
+
+    return <></>;
+  };
+
   const contactsViewMobile = (
     <div className={styles.container}>
       <Contacts />
@@ -50,6 +62,7 @@ const Chats = () => {
 
   const chatViewMobile = (
     <div className={styles.container}>
+      {isCallPanelActive()}
       <Chat />
     </div>
   );
@@ -68,7 +81,10 @@ const Chats = () => {
       <div className={styles.main}>
         {!isOnNewChat &&
           (isChatOpened ? (
-            <Chat />
+            <>
+              {isCallPanelActive()}
+              <Chat />
+            </>
           ) : (
             <div className={styles.chatPlaceholder}>
               <p>Please select a chat.</p>

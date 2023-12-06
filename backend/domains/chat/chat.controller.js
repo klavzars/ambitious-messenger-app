@@ -34,7 +34,6 @@ const getUserChats = async (req, res, next) => {
 
     const chats = await chatService.getChats(username);
 
-    console.log("chats-controller", chats);
 
     res.status(200).send(chats);
   } catch (error) {

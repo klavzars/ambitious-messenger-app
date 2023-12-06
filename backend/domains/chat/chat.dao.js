@@ -76,7 +76,7 @@ const get = async (username) => {
       },
     });
 
-    console.log("chats", chats);
+
 
     return chats;
   } catch (error) {

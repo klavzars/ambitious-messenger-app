@@ -14,6 +14,7 @@ export const createChat = createAsyncThunk("chat/create", async (newChatData, th
 const initialState = {
   status: "idle",
   error: null,
+  callPanelStatus: "inactive",
 };
 
 export const chatSlice = createSlice({
@@ -23,6 +24,15 @@ export const chatSlice = createSlice({
     reset: (state) => {
       state.status = "idle";
       state.error = null;
+    },
+    active: (state) => {
+      state.callPanelStatus = "active";
+    },
+    inactive: (state) => {
+      state.callPanelStatus = "inactive";
+    },
+    minimised: (state) => {
+      state.callPanelStatus = "minimised";
     },
   },
   extraReducers: (builder) => {
@@ -41,4 +51,4 @@ export const chatSlice = createSlice({
 });
 
 export default chatSlice.reducer;
-export const { reset } = chatSlice.actions;
+export const { reset, active, inactive, minimised } = chatSlice.actions;

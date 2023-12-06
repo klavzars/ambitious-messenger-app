@@ -3,13 +3,35 @@ const cookie = require("cookie");
 const socketIO = require("socket.io");
 const { createMessage, updateMessage } = require("../message/message.service");
 const { deleteMessage } = require("../message/message.service");
+const cookieParser = require("cookie-parser");
+const config = require("../../config");
+const socketWrapper = require("../../middleware/socketWrapper");
+const { verifyToken } = require("../auth/jwt");
 
 const initializeSocket = (server) => {
   const onlineUsers = {};
   const io = socketIO(server, {
     cors: {
       origin: "http://localhost:5173",
+      credentials: true,
     },
+  });
+
+  //middleware for authentication
+  io.use(socketWrapper(cookieParser(config.jwt.secret)));
+
+  io.use(async (socket, next) => {
+    try {
+      const token = socket.request.signedCookies.token;
+      if (!token) {
+        return next(new Error("Authentication error"));
+      }
+
+      await verifyToken(token);
+      next();
+    } catch (error) {
+      next(new Error("Authentication error"));
+    }
   });
 
   io.on("connection", (socket) => {
@@ -107,6 +129,25 @@ const initializeSocket = (server) => {
 
       // Broadcast the decline to all connected clients
       io.emit("invitation-declined", invitation);
+    });
+
+    // --- Call Events ---
+    socket.on("call-request-send", ({ to, offer }) => {
+      io.to(to).emit("call-request-recv", { from: socket.id, offer });
+    });
+
+    socket.on("call-request-accepted", ({ to, ans }) => {
+      io.to(to).emit("call-request-accepted", { from: socket.id, ans });
+    });
+
+    socket.on("call-negotiation-needed", ({ to, offer }) => {
+      console.log("call-negotiation-needed", offer);
+      io.to(to).emit("call-negotiation-needed", { from: socket.id, offer });
+    });
+
+    socket.on("call-negotiation-final", ({ to, ans }) => {
+      console.log("call-negotiation-final", ans);
+      io.to(to).emit("call-negotiation-done", { from: socket.id, ans });
     });
   });
 

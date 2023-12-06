@@ -1,0 +1,48 @@
+
+
+@use "../../sass_utilities/variables" as variables;
+@use "../../sass_utilities/mixins" as mixins;
+
+.container {
+ display: flex;
+ justify-content: space-evenly;
+ height: min-content;
+ padding: 2rem;
+ border-top: 1px solid variables.$color-primary;
+}
+
+
+.minimised {
+    @extend .container;
+    flex: 1;
+    height: 100%;
+    align-items: center;
+    padding: 0;
+}
+
+
+
+
+.button {
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: variables.$color-primary;
+    cursor: pointer;
+    outline: none;
+    height: mixins.em(48);
+    width: mixins.em(48);
+    border-radius: 50%;
+    font-size: mixins.em(32);
+    color: white;
+    transition: color 0.3s ease-in-out;
+
+
+    &__sm {
+        @extend .button;
+        height: 32px;
+        width: 32px;
+        font-size: mixins.em(16);
+    }
+}

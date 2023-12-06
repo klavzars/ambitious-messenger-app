@@ -7,9 +7,9 @@ module.exports = pino(
     formatters: {
       level: (label) => {
         return { level: label.toUpperCase() };
-      }
+      },
     },
-    timestamp: pino.stdTimeFunctions.isoTime
+    timestamp: pino.stdTimeFunctions.isoTime,
   },
-  pino.destination(`${__dirname}/logs/app.log`)
+  pino.destination({ dest: `${__dirname}/logs/app.log`, sync: true })
 );

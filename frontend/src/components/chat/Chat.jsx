@@ -6,6 +6,9 @@ import Message from "./Message";
 
 // temporary
 import defaultUserPic from "../../assets/default_user_1.png";
+import { useSelector } from "react-redux";
+import { minimised } from "../../features/chats/chatSlice";
+import Call from "../call/Call";
 
 const DUMMY_MESSAGES = [
   {
@@ -77,6 +80,8 @@ const DUMMY_MESSAGES = [
 function Chat() {
   const scrollableContainerRef = useRef(null);
 
+  const { callPanelStatus } = useSelector((state) => state.chats);
+
   useEffect(() => {
     const scrollableContainer = scrollableContainerRef.current;
 
@@ -88,6 +93,7 @@ function Chat() {
   return (
     <div className={styles.pageContainer}>
       <ChatHeader profilePic={defaultUserPic} name="John Doe" status={true} />
+      {callPanelStatus === "minimised" && <Call />}
       <div className={styles.scrollContainer} ref={scrollableContainerRef}>
         <div className={styles.conversationContainer}>
           {DUMMY_MESSAGES.map((message) => (
