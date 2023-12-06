@@ -5,11 +5,22 @@ const sendRequest = async (req, res) => {
   try {
     const username = req.body;
     //{ senderId, receiverId } = req.body;
-    const senderId =req.user.id; // Extract sender ID from decoded JWT
+    const senderId = req.user.id; // Extract sender ID from decoded JWT
     const result = await friendsService.sendRequest(senderId, username);
     res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ error: 'Failed to send friend request' });
+  }
+};
+
+//getAllFriendRequests status:0 pending
+const friendRequests = async (req, res) => {
+  try {
+    const userId = req.user.id; // Extract user ID from decoded JWT
+    const requests = await friendsService.getAllFriendRequests(userId);
+    res.status(200).json(requests);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to get friend requests' });
   }
 };
 
@@ -29,7 +40,7 @@ const acceptRequest = async (req, res) => {
   try {
     const requestId = parseInt(req.params.request_id);
     const user_id = req.user.id; // Extract sender ID from decoded JWT
-    const {friend_id } = req.body; // ? maybe it is a friendName, need convert it to friendID from DAO?
+    const { friend_id } = req.body; // ? maybe it is a friendName, need convert it to friendID from DAO?
     const result = await friendsService.acceptRequest(requestId, user_id, friend_id);
     res.json(result);
   } catch (error) {
@@ -62,6 +73,7 @@ const removeFriend = async (req, res) => {
 
 module.exports = {
   sendRequest,
+  friendRequests,
   getFriendList,
   acceptRequest,
   declineRequest,
