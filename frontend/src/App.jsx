@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/routing/ProtectedRoute";
 import PublicRoute from "./components/routing/PublicRoute";
 import Chats from "./pages/Chats";
 import NewChat from "./components/chat/NewChat";
+import AddFriend from "./components/chat/AddFriend";
 import { fetcher } from "./app/fetcher";
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path="*" element={<Navigate to="/chats" replace />} />
           <Route path="/chats" element={<Chats />} />
           <Route path="/chats/:chatId" element={<Chats />} />
+          <Route path="/add-friend" element={<AddFriend />} />
         </Route>
       </Routes>
     </>

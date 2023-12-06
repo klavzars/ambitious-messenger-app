@@ -11,7 +11,7 @@ const getBaseUrl = () => {
     : `${window.location.protocol}//${window.location.hostname}`;
 };
 
-const prefix = "/user"; // TEMP !!
+const prefix = "/friends";
 const API_URL_FRIENDS = `${getBaseUrl()}/users`; // TEMP !!
 
 const getAllFriends = async () => {
@@ -20,8 +20,15 @@ const getAllFriends = async () => {
   return response.data;
 };
 
+const addFriend = async (username) => {
+  const response = await axios.post(`${prefix}/request`, { username: username });
+
+  return response.data;
+};
+
 const friendsService = {
   getAllFriends,
+  addFriend,
 };
 
 export default friendsService;
