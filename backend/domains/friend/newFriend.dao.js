@@ -1,6 +1,18 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+// Get user ID by username
+const getUserIdByUsername = async (username) => {
+  const user = await prisma.user.findUnique({
+    where: { username },
+    select: { user_id: true },
+  });
+  if (!user) {
+    throw new Error('User not found');
+  }
+  return user.user_id;
+};
+
 // Check if friendship limit is exceeded
 const isFriendshipLimitExceeded = async (userId) => {
   const friendshipCount = await prisma.friendships.count({
@@ -31,7 +43,7 @@ const getAllFriendships = async (userId) => {
 // Accept a friend request
 const acceptFriendRequest = async (requestId, user_id, friend_id) => {
   const updatedFriendship = await prisma.friendships.create({
-    // where: { id: requestId},
+    // where: { id: requestId},?? do need write the 'requestId' to friendship
     data: { user_id: user_id, friend_id: friend_id, status: 1 },
   });
   return updatedFriendship;
@@ -57,6 +69,7 @@ const removeFriendFromDao = async (currentUserId, friendIdToRemove) => {
 };
 
 module.exports = {
+  getUserIdByUsername,
   isFriendshipLimitExceeded,
   createFriendRequest,
   getAllFriendships,
