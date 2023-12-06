@@ -66,11 +66,38 @@ const get = async (username) => {
         },
       },
       include: {
-        member: true, // Include the member details for each chat
+        member: true,
+        message: {
+          take: 1,
+          orderBy: {
+            sent: "desc",
+          },
+        }, // Include the member details for each chat
       },
     });
 
     console.log("chats", chats);
+
+    return chats;
+  } catch (error) {
+    logError(error);
+  }
+};
+
+const getExistingPrivate = async (members) => {
+  try {
+    const chats = await prisma.chat.findMany({
+      where: {
+        is_private: true,
+        member: {
+          every: {
+            username: {
+              in: members,
+            },
+          },
+        },
+      },
+    });
 
     return chats;
   } catch (error) {
@@ -121,4 +148,19 @@ const remove = async (member_id) => {
   }
 };
 
-module.exports = { create, add, get, getSingle, remove };
+const findExistingMember = (chat_id, username) => {
+  try {
+    const member = prisma.member.findFirst({
+      where: {
+        chat_id,
+        username,
+      },
+    });
+
+    return member;
+  } catch (error) {
+    logError(error);
+  }
+};
+
+module.exports = { create, add, get, getSingle, remove, getExistingPrivate, findExistingMember };

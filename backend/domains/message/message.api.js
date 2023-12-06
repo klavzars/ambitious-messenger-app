@@ -13,8 +13,8 @@ const messagesController = require('./message.controller');
 // Create new message (HTTP POST)
 router.post('/', messagesController.createMessage);
 
-// getHistoryMessages (HTTP GET)
-router.get('/', messagesController.getHistoryMessages);
+// getChatMessages (HTTP GET)
+router.get("/:chat_id", messagesController.getChatMessages);
 
 // updateMessage (HTTP PUT)
 router.put('/:id', messagesController.updateMessage);

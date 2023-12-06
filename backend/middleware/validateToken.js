@@ -5,8 +5,8 @@ const config = require("../config");
 const validateToken = (req, res, next) => {
   const { jwt } = config;
   //get the token out of the auth header
-  const token = req.cookies.token;
-
+  const token = req.signedCookies.token;
+  console.log("token", token);
   verify(
     token,
     jwt.secret,
@@ -25,10 +25,13 @@ const validateToken = (req, res, next) => {
         return res.status(401).json({ message: "Invalid Token, Please Login" });
       } else {
         // move on to the controller
+        console.log("decoded", decoded);
+        req.user = decoded.payload;
         next();
       }
     }
   );
+
 };
 
 module.exports = validateToken;

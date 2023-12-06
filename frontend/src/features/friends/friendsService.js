@@ -1,4 +1,5 @@
 import axios from "axios";
+import { fetcher } from "../../app/fetcher";
 
 // TODO  - write sth like this for dynamic urls
 // const API_URL = `${getBaseUrl()}/api/auth`;
@@ -10,16 +11,17 @@ const getBaseUrl = () => {
     : `${window.location.protocol}//${window.location.hostname}`;
 };
 
-const API_URL_FRIENDS = `${getBaseUrl()}/friends`;
+const prefix = "/friends";
+const API_URL_FRIENDS = `${getBaseUrl()}/users`; // TEMP !!
 
 const getAllFriends = async () => {
-  const response = await axios.get(`${API_URL_FRIENDS}`);
+  const response = await fetcher.get(prefix);
 
   return response.data;
 };
 
 const addFriend = async (username) => {
-  const response = await axios.post(`${API_URL_FRIENDS}/request`, { username: username });
+  const response = await axios.post(`${prefix}/request`, { username: username });
 
   return response.data;
 };

@@ -1,14 +1,33 @@
 const { HTTP404Error, HTTP400Error } = require("../../lib/error/customErrors");
 const { getUser } = require("../user/user.service");
-const { create, add, get, getSingle, remove, findMemberId } = require("./chat.dao");
+const {
+  create,
+  add,
+  get,
+  getSingle,
+  remove,
+  findMemberId,
+  getExistingPrivate,
+  findExistingMember,
+} = require("./chat.dao");
 
-const createChat = async (isPrivate, members, user = "briantwene") => {
+const createChat = async (isPrivate, members, user) => {
   try {
     //will first check if room its private
     // TODO implement your own personal chat room for you only
 
     // since this is a new chat, would want the user to be added as a member in both cases
     const userWithMembers = [user, ...members];
+
+    // check if the members exist
+    if (isPrivate) {
+      const existingChat = await getExistingPrivate(userWithMembers);
+      console.log("existingChat", existingChat);
+
+      if (existingChat.length > 0) {
+        throw new HTTP400Error("Chat already exists");
+      }
+    }
 
     //then create the chat, get the id
     const newChat = await create(isPrivate);
@@ -22,12 +41,16 @@ const createChat = async (isPrivate, members, user = "briantwene") => {
   }
 };
 
-// TODO will need to make sure that duplicates arent created
+// TODO will need to make sure that duplicates arent created or could be handled on the frontend
 const addMember = async (members, chatId) => {
-  // take the members and add it to a chat
-  const newMembers = await add(members, chatId);
+  try {
+    // take the members and add it to a chat
+    const newMembers = await add(members, chatId);
 
-  return newMembers;
+    return newMembers;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const deleteMember = async (memberId) => {
@@ -60,6 +83,7 @@ const getChats = async (username) => {
     const formattedChats = chats.map((chat) => {
       // just get the usernames of the people in the room
       const formattedMembers = chat.member.map((member) => member.username);
+      const [last_message] = chat.message;
       let chat_name;
 
       // modify the name based on if...
@@ -86,6 +110,7 @@ const getChats = async (username) => {
         chat_name: chat_name,
         is_private: chat.is_private,
         members: formattedMembers,
+        last_message: last_message,
       };
     });
     return formattedChats;
