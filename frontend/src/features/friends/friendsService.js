@@ -10,7 +10,7 @@ const getBaseUrl = () => {
     : `${window.location.protocol}//${window.location.hostname}`;
 };
 
-const API_URL_FRIENDS = `${getBaseUrl()}/users`; // TEMP !!
+const API_URL_FRIENDS = `${getBaseUrl()}/friends`;
 
 const getAllFriends = async () => {
   const response = await axios.get(`${API_URL_FRIENDS}`);
@@ -18,8 +18,15 @@ const getAllFriends = async () => {
   return response.data;
 };
 
+const addFriend = async (username) => {
+  const response = await axios.post(`${API_URL_FRIENDS}/request`, { username: username });
+
+  return response.data;
+};
+
 const friendsService = {
   getAllFriends,
+  addFriend,
 };
 
 export default friendsService;
