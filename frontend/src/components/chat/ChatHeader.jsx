@@ -3,18 +3,26 @@ import { GoDotFill, GoDot } from "react-icons/go";
 import styles from "./ChatHeader.module.scss";
 import { useDispatch } from "react-redux";
 import { active } from "../../features/chats/chatSlice";
+import { useNavigate } from "react-router-dom";
+
+
 
 function ChatHeader(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const openCallPanel = (e) => {
     console.log(e);
     dispatch(active());
+  }
+
+  const handleNavigateBack = () => {
+    navigate("/chats");
   };
 
   return (
     <header className={styles.header}>
-      <button className={`${styles.buttonBack} ${styles.button}`}>
+      <button className={`${styles.buttonBack} ${styles.button}`} onClick={handleNavigateBack}>
         <MdKeyboardArrowLeft className={`${styles.buttonIcon} ${styles.buttonIcon__back}`} />
       </button>
       <div className={styles.imgContainer}>

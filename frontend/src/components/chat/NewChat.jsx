@@ -109,7 +109,7 @@ function NewChat() {
   return (
     <div className={styles.pageContainer}>
       <header className={styles.header}>
-        <Link to={"/chats" /*TODO implement actual 'back' functionality with history*/} className={styles.link}>
+        <Link to={"/chats"} className={styles.link}>
           <button className={`${styles.buttonBack} ${styles.button}`}>
             <MdKeyboardArrowLeft className={`${styles.buttonIcon} ${styles.buttonIcon__back}`} />
           </button>
