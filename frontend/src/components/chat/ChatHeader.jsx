@@ -1,11 +1,18 @@
 import { MdKeyboardArrowLeft, MdMoreVert, MdLocalPhone } from "react-icons/md";
 import { GoDotFill, GoDot } from "react-icons/go";
 import styles from "./ChatHeader.module.scss";
+import { useNavigate } from "react-router-dom";
 
 function ChatHeader(props) {
+  const navigate = useNavigate();
+
+  const handleNavigateBack = () => {
+    navigate("/chats");
+  };
+
   return (
     <header className={styles.header}>
-      <button className={`${styles.buttonBack} ${styles.button}`}>
+      <button className={`${styles.buttonBack} ${styles.button}`} onClick={handleNavigateBack}>
         <MdKeyboardArrowLeft className={`${styles.buttonIcon} ${styles.buttonIcon__back}`} />
       </button>
       <div className={styles.imgContainer}>

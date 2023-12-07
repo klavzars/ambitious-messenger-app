@@ -46,7 +46,7 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    fetcher("/chat/briantwene").then(console.log).catch(console.error);
+    // fetcher("/chat/briantwene").then(console.log).catch(console.error);
   }, []);
 
   return (
