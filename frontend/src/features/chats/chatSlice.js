@@ -11,9 +11,20 @@ export const createChat = createAsyncThunk("chat/create", async (newChatData, th
   }
 });
 
+export const getAllChats = createAsyncThunk("chat/getAll", async (_, thunkAPI) => {
+  try {
+    return await chatService.getAllChats();
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 const initialState = {
   status: "idle",
   error: null,
+  allUserChats: [],
 };
 
 export const chatSlice = createSlice({
@@ -34,6 +45,17 @@ export const chatSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(createChat.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(getAllChats.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getAllChats.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.allUserChats = action.payload;
+      })
+      .addCase(getAllChats.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
