@@ -11,7 +11,7 @@ router.post("/", validateToken, chatController.createChat);
 router.post("/:chat_id/members", chatController.addMember);
 
 // getting all chats
-router.get("/:username", validateToken, chatController.getUserChats);
+router.get("/", validateToken, chatController.getUserChats);
 
 // TODO need to figure how out how this can be implemented, might involve schema mods
 // delete
