@@ -1,10 +1,20 @@
 import { MdKeyboardArrowLeft, MdMoreVert, MdLocalPhone } from "react-icons/md";
 import { GoDotFill, GoDot } from "react-icons/go";
 import styles from "./ChatHeader.module.scss";
+import { useDispatch } from "react-redux";
+import { active } from "../../features/chats/chatSlice";
 import { useNavigate } from "react-router-dom";
+
+
 
 function ChatHeader(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const openCallPanel = (e) => {
+    console.log(e);
+    dispatch(active());
+  }
 
   const handleNavigateBack = () => {
     navigate("/chats");
@@ -25,7 +35,7 @@ function ChatHeader(props) {
           <span className={styles.status__text}>{props.status ? "Online" : "Offline"}</span>
         </div>
       </div>
-      <button className={`${styles.buttonVoice} ${styles.button}`}>
+      <button onClick={openCallPanel} className={`${styles.buttonVoice} ${styles.button}`}>
         <MdLocalPhone className={`${styles.buttonIcon} ${styles.buttonIcon__phone}`} />
       </button>
       <button className={`${styles.buttonOptions} ${styles.button}`}>

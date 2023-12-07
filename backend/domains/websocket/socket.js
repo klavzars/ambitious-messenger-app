@@ -3,13 +3,40 @@ const cookie = require("cookie");
 const socketIO = require("socket.io");
 const { createMessage, updateMessage } = require("../message/message.service");
 const { deleteMessage } = require("../message/message.service");
+const cookieParser = require("cookie-parser");
+const config = require("../../config");
+const socketWrapper = require("../../middleware/socketWrapper");
+const { verifyToken } = require("../auth/jwt");
 
 const initializeSocket = (server) => {
   const onlineUsers = {};
   const io = socketIO(server, {
     cors: {
       origin: "http://localhost:5173",
+      credentials: true,
     },
+  });
+
+  //middleware for authentication
+  io.use(socketWrapper(cookieParser(config.jwt.secret)));
+
+  io.use(async (socket, next) => {
+    try {
+      const token = socket.request.signedCookies.token;
+      if (!token) {
+        return next(new Error("Authentication error"));
+      }
+
+      const decoded = await verifyToken(token);
+      onlineUsers[decoded.payload.username] = socket.id;
+      console.log("onlineUsers", onlineUsers);
+
+      socket.user = decoded.payload.username;
+      console.log("socket.user", socket.user);
+      next();
+    } catch (error) {
+      next(new Error("Authentication error"));
+    }
   });
 
   io.on("connection", (socket) => {
@@ -18,14 +45,7 @@ const initializeSocket = (server) => {
     // --- Connection Events ---
     socket.on("disconnect", () => {
       console.log("User disconnected:", socket.id);
-    });
-
-    // --- Authentication Events ---
-
-    // TODO find a way to use middle ware to do proper authentication ASAP
-    socket.on("auth", (data) => {
-      onlineUsers[data.username] = socket.id;
-      console.log("Online users:", onlineUsers);
+      delete onlineUsers[socket.id];
     });
 
     // --- Message Events ---
@@ -107,6 +127,25 @@ const initializeSocket = (server) => {
 
       // Broadcast the decline to all connected clients
       io.emit("invitation-declined", invitation);
+    });
+
+    // --- Call Events ---
+    socket.on("call-request-send", ({ to, offer }) => {
+      io.to(onlineUsers[to]).emit("call-request-recv", { from: socket.user, offer });
+    });
+
+    socket.on("call-request-accepted", ({ to, res }) => {
+      io.to(onlineUsers[to]).emit("call-request-accepted", { from: socket.user, res });
+    });
+
+    socket.on("call-negotiation-needed", ({ to, offer }) => {
+      console.log("call-negotiation-needed", offer);
+      io.to(onlineUsers[to]).emit("call-negotiation-needed", { from: socket.user, offer });
+    });
+
+    socket.on("call-negotiation-final", ({ to, ans }) => {
+      console.log("call-negotiation-final", ans);
+      io.to(onlineUsers[to]).emit("call-negotiation-done", { from: socket.user, ans });
     });
   });
 

@@ -24,6 +24,7 @@ export const getAllChats = createAsyncThunk("chat/getAll", async (_, thunkAPI) =
 const initialState = {
   status: "idle",
   error: null,
+  callPanelStatus: "inactive",
   allUserChats: [],
 };
 
@@ -34,6 +35,15 @@ export const chatSlice = createSlice({
     reset: (state) => {
       state.status = "idle";
       state.error = null;
+    },
+    active: (state) => {
+      state.callPanelStatus = "active";
+    },
+    inactive: (state) => {
+      state.callPanelStatus = "inactive";
+    },
+    minimised: (state) => {
+      state.callPanelStatus = "minimised";
     },
   },
   extraReducers: (builder) => {
@@ -63,4 +73,4 @@ export const chatSlice = createSlice({
 });
 
 export default chatSlice.reducer;
-export const { reset } = chatSlice.actions;
+export const { reset, active, inactive, minimised } = chatSlice.actions;

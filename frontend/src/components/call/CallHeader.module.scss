@@ -1,0 +1,42 @@
+@use"../../sass_utilities/mixins" as mixins;
+
+.container {
+    padding: 0rem 1rem;
+    display: flex;
+    align-items: center ;
+    border: solid 1px #ccc;
+    justify-content: space-between;
+    
+}
+
+.minimised {
+    @extend .container;
+    flex-direction: row-reverse;
+    column-gap: 1rem;
+}
+
+.button {
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    font-size: mixins.em(24);
+  
+    transition: color 0.3s ease-in-out;
+}
+
+.status {
+    font-weight: 600;
+    font-size: mixins.em(24);
+    color: #333;
+}
+
+.title {
+}
+

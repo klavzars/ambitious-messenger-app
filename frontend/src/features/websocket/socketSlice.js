@@ -32,6 +32,18 @@ const socketSlice = createSlice({
     friendInvite: (state, action) => {
       return;
     },
+    callRequestSend: (state, action) => {
+      return;
+    },
+    callRequestAccepted: (state, action) => {
+      return;
+    },
+    peerNegotiationNeeded: (state, action) => {
+      return;
+    },
+    peerNegotiationDone: (state, action) => {
+      return;
+    },
   },
 });
 
