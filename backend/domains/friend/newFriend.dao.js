@@ -37,7 +37,12 @@ const getAllPendingRequests = async (userId) => {
       status: 0, // 0: Pending
     },
     select: {
-      sender: true,
+      sender: {
+        select: {
+          username: true,
+        },
+      },
+      id: true,
       sender_id: true,
       receiver_id: true,
       status: true,
