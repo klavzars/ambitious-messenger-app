@@ -27,7 +27,12 @@ const initializeSocket = (server) => {
         return next(new Error("Authentication error"));
       }
 
-      await verifyToken(token);
+      const decoded = await verifyToken(token);
+      onlineUsers[decoded.payload.username] = socket.id;
+      console.log("onlineUsers", onlineUsers);
+
+      socket.user = decoded.payload.username;
+      console.log("socket.user", socket.user);
       next();
     } catch (error) {
       next(new Error("Authentication error"));
@@ -40,14 +45,7 @@ const initializeSocket = (server) => {
     // --- Connection Events ---
     socket.on("disconnect", () => {
       console.log("User disconnected:", socket.id);
-    });
-
-    // --- Authentication Events ---
-
-    // TODO find a way to use middle ware to do proper authentication ASAP
-    socket.on("auth", (data) => {
-      onlineUsers[data.username] = socket.id;
-      console.log("Online users:", onlineUsers);
+      delete onlineUsers[socket.id];
     });
 
     // --- Message Events ---
@@ -133,21 +131,21 @@ const initializeSocket = (server) => {
 
     // --- Call Events ---
     socket.on("call-request-send", ({ to, offer }) => {
-      io.to(to).emit("call-request-recv", { from: socket.id, offer });
+      io.to(onlineUsers[to]).emit("call-request-recv", { from: socket.user, offer });
     });
 
-    socket.on("call-request-accepted", ({ to, ans }) => {
-      io.to(to).emit("call-request-accepted", { from: socket.id, ans });
+    socket.on("call-request-accepted", ({ to, res }) => {
+      io.to(onlineUsers[to]).emit("call-request-accepted", { from: socket.user, res });
     });
 
     socket.on("call-negotiation-needed", ({ to, offer }) => {
       console.log("call-negotiation-needed", offer);
-      io.to(to).emit("call-negotiation-needed", { from: socket.id, offer });
+      io.to(onlineUsers[to]).emit("call-negotiation-needed", { from: socket.user, offer });
     });
 
     socket.on("call-negotiation-final", ({ to, ans }) => {
       console.log("call-negotiation-final", ans);
-      io.to(to).emit("call-negotiation-done", { from: socket.id, ans });
+      io.to(onlineUsers[to]).emit("call-negotiation-done", { from: socket.user, ans });
     });
   });
 

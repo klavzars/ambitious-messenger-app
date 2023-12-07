@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { socketActions } from "../features/websocket/socketSlice";
 import Call from "../components/call/Call";
 import { inactive } from "../features/chats/chatSlice";
+import useIsMobile from "../hooks/useIsMobile";
 const { connecting, disconnected, connected } = socketActions;
 
 const mobileBreakpoint = 992;
@@ -23,19 +24,7 @@ const Chats = () => {
   const dispatch = useDispatch();
   const { callPanelStatus } = useSelector((state) => state.chats);
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= mobileBreakpoint);
-
-  const handleWindowSizeChange = () => {
-    setIsMobile(window.innerWidth <= mobileBreakpoint);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleWindowSizeChange);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowSizeChange);
-    };
-  }, []);
+  const isMobile = useIsMobile();
 
   // websocket connection - this would ideally be in the container for the rest of the app when SSR is added
   useEffect(() => {

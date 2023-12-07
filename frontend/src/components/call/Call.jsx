@@ -3,10 +3,13 @@ import { inactive, minimised } from "../../features/chats/chatSlice";
 import styles from "./Call.module.scss";
 import CallHeader from "./CallHeader";
 import CallControls from "./CallControls";
+import CallVideo from "./CallVideo";
+import useIsMobile from "../../hooks/useIsMobile";
 
 const Call = () => {
   const dispatch = useDispatch();
   const { callPanelStatus } = useSelector((state) => state.chats);
+  const isMobile = useIsMobile();
 
   const onMinimise = () => {
     dispatch(minimised());
@@ -33,7 +36,12 @@ const Call = () => {
   return (
     <div className={containerStyle}>
       <CallHeader />
-      {callPanelStatus === "active" && <div className={styles.callContainer}>video feed here/ profile pic</div>}
+      {callPanelStatus === "active" && (
+        <div className={isMobile ? styles.callContainer__mobile : styles.callContainer}>
+          <CallVideo name="You" />
+          <CallVideo name="John Doe" />
+        </div>
+      )}
       <CallControls />
     </div>
   );

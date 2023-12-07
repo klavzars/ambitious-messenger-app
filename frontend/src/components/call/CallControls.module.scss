@@ -45,4 +45,8 @@
         width: 32px;
         font-size: mixins.em(16);
     }
+
+    &__red {
+        background: rgb(255, 36, 36);
+    }
 }
