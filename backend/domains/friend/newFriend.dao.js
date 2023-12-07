@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 // Get user ID by username
@@ -8,7 +8,7 @@ const getUserIdByUsername = async (username) => {
     select: { user_id: true },
   });
   if (!user) {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
   return user.user_id;
 };
@@ -35,6 +35,18 @@ const getAllPendingRequests = async (userId) => {
     where: {
       receiver_id: userId,
       status: 0, // 0: Pending
+    },
+    select: {
+      sender: {
+        select: {
+          username: true,
+        },
+      },
+      id: true,
+      sender_id: true,
+      receiver_id: true,
+      status: true,
+      created_at: true,
     },
   });
   return requests;
@@ -64,7 +76,7 @@ const acceptFriendRequest = async (requestId, user_id, friend_id) => {
 const declineFriendRequest = async (requestId) => {
   await prisma.friendRequests.update({
     where: { id: requestId },
-    data:{status:2 } //2: Declined
+    data: { status: 2 }, //2: Declined
   });
 };
 
@@ -72,11 +84,8 @@ const declineFriendRequest = async (requestId) => {
 const removeFriendFromDao = async (currentUserId, friendIdToRemove) => {
   await prisma.friendships.deleteMany({
     where: {
-      AND: [
-        { user_id: currentUserId },
-        { friend_id: friendIdToRemove }
-      ]
-    }
+      AND: [{ user_id: currentUserId }, { friend_id: friendIdToRemove }],
+    },
   });
 };
 
