@@ -36,6 +36,13 @@ const getAllPendingRequests = async (userId) => {
       receiver_id: userId,
       status: 0, // 0: Pending
     },
+    select: {
+      sender: true,
+      sender_id: true,
+      receiver_id: true,
+      status: true,
+      created_at: true,
+    },
   });
   return requests;
 };
@@ -64,7 +71,7 @@ const acceptFriendRequest = async (requestId, user_id, friend_id) => {
 const declineFriendRequest = async (requestId) => {
   await prisma.friendRequests.update({
     where: { id: requestId },
-    data:{status:2 } //2: Declined
+    data: { status: 2 } //2: Declined
   });
 };
 
