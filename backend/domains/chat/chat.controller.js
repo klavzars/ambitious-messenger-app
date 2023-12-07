@@ -30,7 +30,8 @@ const addMember = async (req, res, next) => {
 
 const getUserChats = async (req, res, next) => {
   try {
-    const { username } = req.params;
+    const { username } = req.user;
+
 
     const chats = await chatService.getChats(username);
 

@@ -11,7 +11,7 @@ const validateToken = async (req, res, next) => {
   try {
     const decodedToken = await verifyToken(token);
 
-    req.user = decodedToken;
+    req.user = decodedToken.payload;
 
     next();
   } catch (error) {
