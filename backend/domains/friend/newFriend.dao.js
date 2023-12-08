@@ -58,6 +58,10 @@ const getAllFriendships = async (userId) => {
       OR: [{ user_id: userId }, { friend_id: userId }],
       status: 1,
     },
+    select: {
+      id: true,
+      friend: { select: { user_id: true, username: true }, },
+    },
   });
   return friendships;
 };
