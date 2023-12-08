@@ -6,13 +6,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { addFriend, reset } from "../../features/friends/friendsSlice";
+import { getAllFriendRequests, acceptFriendRequest, declineFriendRequest } from "../../features/friends/friendsSlice";
 
 import defaultUserPic from "../../assets/default_user_1.png";
 
 function FriendRequests() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status: friendStatus, error: friendError } = useSelector((state) => state.friends);
+  const { status: friendStatus, error: friendError, friendRequests } = useSelector((state) => state.friends);
+
+  useEffect(() => {
+    dispatch(getAllFriendRequests());
+  }, [dispatch]);
+
+  const handleAcceptRequest = (request) => {
+    dispatch(acceptFriendRequest({ id: request.id, senderId: request.sender_id }));
+  };
+
+  const handleDeclineRequest = (request) => {
+    dispatch(declineFriendRequest(request.id));
+  };
 
   return (
     <div className={styles.pageContainer}>
@@ -31,78 +44,44 @@ function FriendRequests() {
 
       <div className={styles.requestListContainer}>
         <ul className={styles.requestList}>
-          <li key={""} className={styles.requestList__item} onClick={() => handleUserCheckboxChange(user)}>
-            <div className={styles.requestList__leftContainer}>
-              <div className={styles.requestList__imageContainer}>
-                <img className={styles.requestList__img} src={defaultUserPic} alt={"" /* TODO make this dynamic*/} />
+          {friendRequests.map((request) => (
+            <li key={request.id} className={styles.requestList__item}>
+              <div className={styles.requestList__leftContainer}>
+                <div className={styles.requestList__imageContainer}>
+                  <img className={styles.requestList__img} src={defaultUserPic} alt={"" /* TODO make this dynamic*/} />
+                </div>
               </div>
-            </div>
-            <div className={styles.requestList__rightContainer}>
-              <span className={styles.requestList__username}>{"asdasdas"}</span>
-              <div className={styles.requestActions}>
-                <button
-                  className={`${styles.requestActions__button} ${styles.requestActions__buttonAccept}`}
-                  disabled={false /* TODO */}
-                >
-                  Accept
-                </button>
-                <button
-                  className={`${styles.requestActions__button} ${styles.requestActions__buttonDecline}`}
-                  disabled={false /* TODO */}
-                >
-                  Decline
-                </button>
+              <div className={styles.requestList__rightContainer}>
+                <span className={styles.requestList__username}>{request.sender.username}</span>
+                <div className={styles.requestActions}>
+                  {!request.currentStatus && (
+                    <button
+                      className={`${styles.requestActions__button} ${styles.requestActions__buttonAccept}`}
+                      disabled={false /* TODO */}
+                      onClick={() => handleAcceptRequest(request)}
+                    >
+                      Accept
+                    </button>
+                  )}
+                  {!request.currentStatus && (
+                    <button
+                      className={`${styles.requestActions__button} ${styles.requestActions__buttonDecline}`}
+                      disabled={false /* TODO */}
+                      onClick={() => handleDeclineRequest(request)}
+                    >
+                      Decline
+                    </button>
+                  )}
+                  {request.currentStatus === "accepted" && (
+                    <p className={`${styles.alert} ${styles.alertValid}`}>Friend request accepted.</p>
+                  )}
+                  {request.currentStatus === "declined" && (
+                    <p className={`${styles.alert} ${styles.alertInvalid}`}>Friend request declined.</p>
+                  )}
+                </div>
               </div>
-            </div>
-          </li>
-          <li key={""} className={styles.requestList__item} onClick={() => handleUserCheckboxChange(user)}>
-            <div className={styles.requestList__leftContainer}>
-              <div className={styles.requestList__imageContainer}>
-                <img className={styles.requestList__img} src={defaultUserPic} alt={"" /* TODO make this dynamic*/} />
-              </div>
-            </div>
-            <div className={styles.requestList__rightContainer}>
-              <span className={styles.requestList__username}>{"asdasdas"}</span>
-              <div className={styles.requestActions}>
-                <button
-                  className={`${styles.requestActions__button} ${styles.requestActions__buttonAccept}`}
-                  disabled={false /* TODO */}
-                >
-                  Accept
-                </button>
-                <button
-                  className={`${styles.requestActions__button} ${styles.requestActions__buttonDecline}`}
-                  disabled={false /* TODO */}
-                >
-                  Decline
-                </button>
-              </div>
-            </div>
-          </li>
-          <li key={""} className={styles.requestList__item} onClick={() => handleUserCheckboxChange(user)}>
-            <div className={styles.requestList__leftContainer}>
-              <div className={styles.requestList__imageContainer}>
-                <img className={styles.requestList__img} src={defaultUserPic} alt={"" /* TODO make this dynamic*/} />
-              </div>
-            </div>
-            <div className={styles.requestList__rightContainer}>
-              <span className={styles.requestList__username}>{"asdasdas"}</span>
-              <div className={styles.requestActions}>
-                <button
-                  className={`${styles.requestActions__button} ${styles.requestActions__buttonAccept}`}
-                  disabled={false /* TODO */}
-                >
-                  Accept
-                </button>
-                <button
-                  className={`${styles.requestActions__button} ${styles.requestActions__buttonDecline}`}
-                  disabled={false /* TODO */}
-                >
-                  Decline
-                </button>
-              </div>
-            </div>
-          </li>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

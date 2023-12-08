@@ -113,11 +113,13 @@
     flex-direction: column;
     justify-content: center;
   }
+
+  &__username {
+    margin-bottom: 0.5rem;
+  }
 }
 
 .requestActions {
-  margin-top: 0.5rem;
-
   &__button {
     background-color: $color-primary;
     border: none;
@@ -137,5 +139,18 @@
       background-color: $color-secondary-bright;
       color: $color-text;
     }
+  }
+}
+
+.alert {
+  font-weight: $font-semibold;
+  margin: 0;
+
+  &Valid {
+    color: $color-success;
+  }
+
+  &Invalid {
+    color: $color-invalid;
   }
 }
