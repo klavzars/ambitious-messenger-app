@@ -21,10 +21,41 @@ export const addFriend = createAsyncThunk("friends/addFriend", async (username, 
   }
 });
 
+export const getAllFriendRequests = createAsyncThunk("friends/getAllFriendRequests", async (_, thunkAPI) => {
+  try {
+    return await friendsService.getAllFriendRequests();
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const acceptFriendRequest = createAsyncThunk("friends/acceptFriendRequest", async (requestData, thunkAPI) => {
+  try {
+    return await friendsService.acceptFriendRequest(requestData);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const declineFriendRequest = createAsyncThunk("friends/declineFriendRequest", async (requestId, thunkAPI) => {
+  try {
+    return await friendsService.declineFriendRequest(requestId);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 const initialState = {
   status: "idle",
   error: null,
   friendsList: [],
+  friendRequests: [],
 };
 
 export const friendsSlice = createSlice({
@@ -57,6 +88,49 @@ export const friendsSlice = createSlice({
       })
       .addCase(addFriend.rejected, (state) => {
         state.status = "failed";
+      })
+      .addCase(getAllFriendRequests.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getAllFriendRequests.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.friendRequests = action.payload;
+      })
+      .addCase(getAllFriendRequests.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(acceptFriendRequest.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(acceptFriendRequest.fulfilled, (state, action) => {
+        state.status = "succeeded";
+
+        const index = state.friendRequests.findIndex((request) => request.id === action.meta.arg.id);
+
+        if (index !== -1) {
+          state.friendRequests[index].currentStatus = "accepted";
+        }
+      })
+      .addCase(acceptFriendRequest.rejected, (state) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(declineFriendRequest.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(declineFriendRequest.fulfilled, (state, action) => {
+        state.status = "succeeded";
+
+        const index = state.friendRequests.findIndex((request) => request.id === action.meta.arg);
+
+        if (index !== -1) {
+          state.friendRequests[index].currentStatus = "declined";
+        }
+      })
+      .addCase(declineFriendRequest.rejected, (state) => {
+        state.status = "failed";
+        state.error = action.payload;
       });
   },
 });

@@ -56,9 +56,6 @@ function NewChat() {
     setSearchText(event.target.value);
   };
 
-  // TODO: possibly improve search
-  // NOTE: this is a very simple search implementation,
-  // should be an api call to the backend or sth
   const filteredUsers = friendsList.filter((user) => user.username.toLowerCase().includes(searchText.toLowerCase()));
 
   const handleUserCheckboxChange = (userId) => {
