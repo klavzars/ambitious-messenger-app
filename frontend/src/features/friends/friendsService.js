@@ -21,7 +21,25 @@ const getAllFriends = async () => {
 };
 
 const addFriend = async (username) => {
-  const response = await axios.post(`${prefix}/request`, { username: username });
+  const response = await fetcher.post(`${prefix}/request`, { username: username });
+
+  return response.data;
+};
+
+const getAllFriendRequests = async () => {
+  const response = await fetcher.get(`${prefix}/friendRequests`);
+
+  return response.data;
+};
+
+const acceptFriendRequest = async (requestData) => {
+  const response = await fetcher.put(`${prefix}/accept/${requestData.id}`, { friend_id: requestData.senderId });
+
+  return response.data;
+};
+
+const declineFriendRequest = async (requestId) => {
+  const response = await fetcher.put(`${prefix}/decline/${requestId}`);
 
   return response.data;
 };
@@ -29,6 +47,9 @@ const addFriend = async (username) => {
 const friendsService = {
   getAllFriends,
   addFriend,
+  getAllFriendRequests,
+  acceptFriendRequest,
+  declineFriendRequest,
 };
 
 export default friendsService;
