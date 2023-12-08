@@ -49,6 +49,11 @@ function Dropdown() {
               Add Friend
             </button>
           </Link>
+          <Link to="/friend-requests">
+            <button className={`${styles.dropdown__button} ${styles.dropdown__addFriend}`} onClick={handleSettings}>
+              Friend Requests
+            </button>
+          </Link>
           <button className={`${styles.dropdown__button} ${styles.dropdown__logout}`} onClick={handleLogout}>
             Logout
           </button>

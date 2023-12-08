@@ -23,7 +23,10 @@ export const getAllChats = createAsyncThunk("chat/getAll", async (_, thunkAPI) =
 
 const initialState = {
   status: "idle",
+  newChatStatus: "idle",
   error: null,
+  newChatError: null,
+  newChatId: null,
   callPanelStatus: "inactive",
   allUserChats: [],
 };
@@ -35,6 +38,10 @@ export const chatSlice = createSlice({
     reset: (state) => {
       state.status = "idle";
       state.error = null;
+    },
+    resetNewChat: (state) => {
+      state.newChatStatus = "idle";
+      state.newChatError = null;
     },
     active: (state) => {
       state.callPanelStatus = "active";
@@ -49,14 +56,16 @@ export const chatSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createChat.pending, (state) => {
-        state.status = "loading";
+        state.newChatStatus = "loading";
       })
       .addCase(createChat.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.newChatStatus = "succeeded";
+        console.log(action.payload.newChat.chat_id);
+        state.newChatId = action.payload.newChat.chat_id;
       })
       .addCase(createChat.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
+        state.newChatStatus = "failed";
+        state.newChatError = action.payload;
       })
       .addCase(getAllChats.pending, (state) => {
         state.status = "loading";
@@ -73,4 +82,4 @@ export const chatSlice = createSlice({
 });
 
 export default chatSlice.reducer;
-export const { reset, active, inactive, minimised } = chatSlice.actions;
+export const { reset, resetNewChat, active, inactive, minimised } = chatSlice.actions;
