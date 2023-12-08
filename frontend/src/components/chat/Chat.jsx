@@ -6,9 +6,14 @@ import Message from "./Message";
 
 // temporary
 import defaultUserPic from "../../assets/default_user_1.png";
-import { useSelector } from "react-redux";
-import { minimised } from "../../features/chats/chatSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { active, minimised } from "../../features/chats/chatSlice";
 import Call from "../call/Call";
+import { createSelector, current } from "@reduxjs/toolkit";
+import Modal from "../Modal";
+import { modalClose } from "../../features/user/userSlice";
+import { MdCall, MdCallEnd, MdLocalPhone } from "react-icons/md";
+import { rtcActions } from "../../features/webrtc/rtcSlice";
 
 const DUMMY_MESSAGES = [
   {
@@ -77,10 +82,42 @@ const DUMMY_MESSAGES = [
   },
 ];
 
+const selectAllUserChats = (state) => state.chats.allUserChats;
+const selectCurrentChat = (state) => state.chats.currentChat;
+const selectMessagesByChatId = (state) => state.messages.byChatId;
+
+const selectCurrentChatInfo = createSelector([selectAllUserChats, selectCurrentChat], (allUserChats, currentChat) =>
+  allUserChats.find((chat) => chat.chat_id === currentChat)
+);
+
+const selectCurrentChatMessages = createSelector(
+  [selectMessagesByChatId, selectCurrentChat],
+  (messagesByChatId, currentChat) => messagesByChatId[currentChat] || []
+);
+
 function Chat() {
   const scrollableContainerRef = useRef(null);
+  const dispatch = useDispatch();
+  const callPanelStatus = useSelector((state) => state.chats.callPanelStatus);
+  const currentChat = useSelector((state) => state.chats.currentChat);
+  const isModalOpen = useSelector((state) => state.users.modalOpen);
 
-  const { callPanelStatus } = useSelector((state) => state.chats);
+  const closeModal = () => {
+    dispatch(modalClose());
+  };
+
+  const acceptCall = () => {
+    dispatch(active());
+    dispatch(modalClose());
+    dispatch(rtcActions.handleReceivingCall());
+  };
+
+  const declineCall = () => {
+    dispatch(modalClose());
+  };
+
+  const currentChatInfo = useSelector(selectCurrentChatInfo);
+  const messages = useSelector(selectCurrentChatMessages);
 
   useEffect(() => {
     const scrollableContainer = scrollableContainerRef.current;
@@ -88,24 +125,48 @@ function Chat() {
     if (scrollableContainer) {
       scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
     }
-  }, []);
+  }, [messages]);
 
   return (
     <div className={styles.pageContainer}>
-      <ChatHeader profilePic={defaultUserPic} name="John Doe" status={true} />
+      <Modal open={isModalOpen} close={closeModal}>
+        <div className={styles.callPrompt}>
+          <div className={styles.callPrompt__image}>
+            <img src={defaultUserPic} className={styles.callPrompt__img} alt="" />
+          </div>
+        </div>
+        <div className={styles.callPrompt__name}>John Doe</div>
+        <div className={styles.callPrompt__container}>
+          <button onClick={declineCall} className={styles.callPrompt__reject}>
+            <MdCallEnd /> <span>Decline</span>
+          </button>
+          <button onClick={acceptCall} className={styles.callPrompt__accept}>
+            <MdLocalPhone />
+            <span>Accept</span>
+          </button>
+        </div>
+      </Modal>
+      <ChatHeader profilePic={defaultUserPic} name={currentChatInfo?.chat_name} and status={true} />
       {callPanelStatus === "minimised" && <Call />}
       <div className={styles.scrollContainer} ref={scrollableContainerRef}>
         <div className={styles.conversationContainer}>
-          {DUMMY_MESSAGES.map((message) => (
-            <Message
-              key={message.id}
-              type={message.type}
-              picture={message.picture}
-              username={message.username}
-              timestamp={message.timestamp}
-              message={message.message}
-            />
-          ))}
+          {messages.map((message, index) => {
+            const previousMessage = index > 0 ? messages[index - 1] : null;
+            return (
+              <Message
+                key={message.id}
+                type={message.type}
+                picture={defaultUserPic}
+                //picture={message.picture}
+                username={message.from}
+                timestamp={message.sent}
+                message={message.message_text}
+                from={message.from}
+                isEdited={message.isEdited}
+                previousMessage={previousMessage}
+              />
+            );
+          })}
         </div>
       </div>
       <MessageInput />

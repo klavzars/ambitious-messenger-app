@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   connected: false,
   description: null,
+  offer: null,
 };
 
 const rtcSlice = createSlice({
@@ -16,6 +17,8 @@ const rtcSlice = createSlice({
     handleInboundNegotiation: (state) => {},
     handleNegotiationFinal: (state) => {},
     setStreams: (state) => {},
+    setLocalStream: (state) => {},
+    setRemoteStream: (state) => {},
     createConnection: (state) => {
       state.connected = true;
     },
@@ -30,6 +33,11 @@ const rtcSlice = createSlice({
     },
     setLocalDescription: (state, action) => {},
     setRemoteDescription: (state, action) => {},
+    setOffer: (state, action) => {},
+    disconnectRTC: (state) => {
+      state.connected = false;
+    },
+    handleNewIceCandidate: (state, action) => {},
   },
 });
 

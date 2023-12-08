@@ -28,6 +28,7 @@ const initialState = {
   newChatError: null,
   newChatId: null,
   callPanelStatus: "inactive",
+  currentChat: null,
   allUserChats: [],
 };
 
@@ -51,6 +52,9 @@ export const chatSlice = createSlice({
     },
     minimised: (state) => {
       state.callPanelStatus = "minimised";
+    },
+    currentChat: (state, action) => {
+      state.currentChat = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -82,4 +86,4 @@ export const chatSlice = createSlice({
 });
 
 export default chatSlice.reducer;
-export const { reset, resetNewChat, active, inactive, minimised } = chatSlice.actions;
+export const { reset, active, inactive, minimised, currentChat, resetNewChat } = chatSlice.actions;

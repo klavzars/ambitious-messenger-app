@@ -28,7 +28,10 @@ const getChatMessages = async (req, res) => {
   const chat_id = parseInt(req.params.chat_id);
   try {
     const messages = await messageService.getChatMessages(chat_id);
-    res.json(messages);
+    res.json({
+      chat_id,
+      messages,
+    });
   } catch (error) {
     next(error);
   }

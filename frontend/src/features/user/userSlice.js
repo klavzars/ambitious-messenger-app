@@ -6,6 +6,7 @@ const initialState = {
   error: null,
   username: null,
   userId: null,
+  modalOpen: false,
 };
 
 export const userSlice = createSlice({
@@ -19,6 +20,12 @@ export const userSlice = createSlice({
     setUserData: (state, action) => {
       state.username = action.payload.username;
       state.userId = action.payload.userId;
+    },
+    modalOpen: (state, action) => {
+      state.modalOpen = true;
+    },
+    modalClose: (state, action) => {
+      state.modalOpen = false;
     },
   },
   extraReducers: (builder) => {
@@ -41,4 +48,4 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { reset, setUserData } = userSlice.actions;
+export const { reset, setUserData, modalOpen, modalClose } = userSlice.actions;

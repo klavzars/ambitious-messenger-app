@@ -8,7 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 function Dropdown() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status: userStatus, error: userError } = useSelector((state) => state.auth);
+  const userStatus = useSelector((state) => state.auth.status);
+  const userError = useSelector((state) => state.auth.error);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ function Dropdown() {
         dispatch(reset());
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userStatus, navigate, userError]);
 
   const toggleDropdown = () => {

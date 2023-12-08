@@ -27,7 +27,7 @@ const friendRequests = async (req, res) => {
 // getFriendList
 const getFriendList = async (req, res) => {
   try {
-    const userId = req.user.userId; // Extract sender ID from decoded JWT
+    const userId = req.user.userId; // Extract userId from decoded JWT
     const friends = await friendsService.getFriendList(userId);
     res.json(friends);
   } catch (error) {
@@ -62,12 +62,13 @@ const declineRequest = async (req, res) => {
 //remove/delete a friends
 const removeFriend = async (req, res) => {
   try {
-    const currentUserId = req.user.userId; // Extract sender ID from decoded JWT
+    const currentUserId = req.user.userId; // Extract userID from decoded JWT
     const friendIdToRemove = req.body; // ? maybe it is a friendName, need convert it to friendID from DAO?
     await friendsService.removeFriendMessage(currentUserId, friendIdToRemove);
+    console.log(friendIdToRemove);
     res.status(204).end();
   } catch (error) {
-    res.status(500).json({ error: "Failed123 to remove friend" });
+    res.status(500).json({ error: "Failed to remove friend" });
   }
 };
 

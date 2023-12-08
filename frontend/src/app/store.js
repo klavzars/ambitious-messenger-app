@@ -4,8 +4,11 @@ import chatSlice from "../features/chats/chatSlice";
 import socketSlice from "../features/websocket/socketSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { socketMiddleWare } from "../features/websocket/websocketMiddleware";
-import { createWebsocket } from "../features/websocket/createWebsocket";
+
 import userSlice from "../features/user/userSlice";
+import messageSlice from "../features/messages/messageSlice";
+import { rtcMiddleware } from "../features/webrtc/rtcMiddleware";
+import rtcSlice from "../features/webrtc/rtcSlice";
 
 export default configureStore({
   reducer: {
@@ -14,6 +17,8 @@ export default configureStore({
     users: userSlice,
     chats: chatSlice,
     socket: socketSlice,
+    messages: messageSlice,
+    rtc: rtcSlice,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(socketMiddleWare(createWebsocket())),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(socketMiddleWare, rtcMiddleware()),
 });

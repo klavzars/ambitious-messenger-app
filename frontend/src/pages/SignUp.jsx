@@ -19,6 +19,7 @@ const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
 
 // allows letters and numbers as well as _-.@ special characters
+// eslint-disable-next-line no-useless-escape
 const usernameRegex = /^[a-zA-Z0-9_\-\.@]+$/;
 
 function SignUp() {

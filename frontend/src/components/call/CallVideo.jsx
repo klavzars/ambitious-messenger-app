@@ -15,7 +15,7 @@ const CallVideo = ({ name, stream }) => {
   return (
     <div className={styles.video}>
       <div className={styles.name}>{name}</div>
-      <video ref={videoRef} autoPlay playsInline></video>
+      <video className={styles.videoelement} ref={videoRef} autoPlay playsInline></video>
     </div>
   );
 };
