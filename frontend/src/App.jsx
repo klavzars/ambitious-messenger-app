@@ -13,6 +13,11 @@ import Chats from "./pages/Chats";
 
 import AddFriend from "./components/chat/AddFriend";
 
+
+import { fetcher } from "./app/fetcher";
+import FriendRequests from "./components/friends/FriendRequests";
+
+
 function App() {
   const authStatus = useSelector((state) => state.auth.authStatus);
   const dispatch = useDispatch();
@@ -61,6 +66,7 @@ function App() {
           <Route path="/chats" element={<Chats />} />
           <Route path="/chats/:chatId" element={<Chats />} />
           <Route path="/add-friend" element={<AddFriend />} />
+          <Route path="/friend-requests" element={<FriendRequests />} />
         </Route>
       </Routes>
     </>
