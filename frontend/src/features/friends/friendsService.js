@@ -12,10 +12,14 @@ const getBaseUrl = () => {
 };
 
 const prefix = "/friends";
+const prefixTemp = "/user"; // TEMP !!
+
 const API_URL_FRIENDS = `${getBaseUrl()}/users`; // TEMP !!
 
 const getAllFriends = async () => {
-  const response = await fetcher.get(prefix);
+  const response = await fetcher.get(`${prefix}/friendList`);
+
+  // const response = await fetcher.get(prefixTemp);
 
   return response.data;
 };

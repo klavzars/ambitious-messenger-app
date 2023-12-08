@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { reset as resetChatState } from "../../features/chats/chatSlice";
+import { resetNewChat as resetChatState } from "../../features/chats/chatSlice";
 import { createChat } from "../../features/chats/chatSlice";
 import { reset as resetFriendsState } from "../../features/friends/friendsSlice";
 import { getAllFriends } from "../../features/friends/friendsSlice";
@@ -17,7 +17,7 @@ import defaultUserPic from "../../assets/default_user_1.png";
 function NewChat() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status: chatStatus, error: chatError } = useSelector((state) => state.chats);
+  const { newChatStatus: chatStatus, newChatError: chatError, newChatId } = useSelector((state) => state.chats);
   const { status: friendsStatus, error: friendsError, friendsList } = useSelector((state) => state.friends);
 
   const [searchText, setSearchText] = useState("");
@@ -36,7 +36,12 @@ function NewChat() {
     }
     // TODO this will need some additional checks
     if (chatStatus === "succeeded") {
-      navigate("/chats");
+      if (newChatId) {
+        console.log("New chat created");
+        navigate(`/chats/${newChatId}`);
+      } else {
+        navigate("/chats");
+      }
 
       return () => {
         dispatch(resetChatState());
@@ -56,14 +61,18 @@ function NewChat() {
     setSearchText(event.target.value);
   };
 
-  const filteredUsers = friendsList.filter((user) => user.username.toLowerCase().includes(searchText.toLowerCase()));
+  const filteredUsers = friendsList.filter((user) =>
+    user.friend.username.toLowerCase().includes(searchText.toLowerCase())
+  );
 
-  const handleUserCheckboxChange = (userId) => {
+  const handleUserCheckboxChange = (user) => {
+    console.log(user);
     setSelectedUsers((prevSelectedUsers) => {
-      const userIndex = prevSelectedUsers.findIndex((prevUserId) => prevUserId === userId);
+      const userIndex = prevSelectedUsers.findIndex((prevUser) => prevUser.friend.username === user.friend.username);
       if (userIndex === -1) {
         // User not found, add the user
-        return [...prevSelectedUsers, userId];
+        console.log("User not found, add the user");
+        return [...prevSelectedUsers, user];
       } else {
         // User found, remove the user from the array
         const updatedUsers = [...prevSelectedUsers];
@@ -73,9 +82,9 @@ function NewChat() {
     });
   };
 
-  const handleRemoveUser = (userId) => {
+  const handleRemoveUser = (user) => {
     setSelectedUsers((prevSelectedUsers) => {
-      const userIndex = prevSelectedUsers.findIndex((prevUserId) => prevUserId === userId);
+      const userIndex = prevSelectedUsers.findIndex((prevUser) => prevUser.username === user.username);
 
       const updatedUsers = [...prevSelectedUsers];
       updatedUsers.splice(userIndex, 1);
@@ -123,11 +132,11 @@ function NewChat() {
         <div className={styles.searchContainer} ref={searchScrollRef}>
           {selectedUsers.length > 0 &&
             selectedUsers.map((user) => (
-              <div key={user.username} className={styles.searchContainer__selectedUser}>
-                <span key={user.username} className={styles.searchContainer__username}>
-                  {`${user.username}`}
+              <div key={user.friend.username} className={styles.searchContainer__selectedUser}>
+                <span key={user.friend.username} className={styles.searchContainer__username}>
+                  {`${user.friend.username}`}
                 </span>
-                <RxCross2 className={styles.searchContainer__close} onClick={() => handleRemoveUser(user.username)} />
+                <RxCross2 className={styles.searchContainer__close} onClick={() => handleRemoveUser(user)} />
               </div>
             ))}
           <input
@@ -143,18 +152,22 @@ function NewChat() {
         </div>
         <ul className={styles.userList}>
           {filteredUsers.map((user) => (
-            <li key={user.username} className={styles.userList__item} onClick={() => handleUserCheckboxChange(user)}>
+            <li
+              key={user.friend.username}
+              className={styles.userList__item}
+              onClick={() => handleUserCheckboxChange(user)}
+            >
               <div className={styles.userList__leftContainer}>
                 <div className={styles.userList__imageContainer}>
                   <img className={styles.userList__img} src={defaultUserPic} alt={"" /* TODO make this dynamic*/} />
                 </div>
-                <span className={styles.userList__username}>{user.username}</span>
+                <span className={styles.userList__username}>{user.friend.username}</span>
               </div>
               <input
                 type="checkbox"
-                key={user.username}
-                checked={selectedUsers.some((selectedUser) => selectedUser.username === user.username)}
-                // onChange={() => handleUserCheckboxChange(user)}
+                key={user.friend.username}
+                checked={selectedUsers.some((selectedUser) => selectedUser.friend.username === user.friend.username)}
+                onChange={() => {}}
                 className={styles.userList__checkbox}
               />
             </li>
