@@ -5,8 +5,8 @@ const validateToken = require("../../middleware/validateToken");
 
 // TODO add verify middleware to these endpoints
 
-router.post("/request", validateToken, friendsController.sendRequest);
-router.get("/", validateToken, friendsController.getFriendList);
+router.post('/request',validateToken, friendsController.sendRequest);
+router.get('/friendList', validateToken,friendsController.getFriendList);
 
 router.put("/accept/:request_id", validateToken, friendsController.acceptRequest);
 router.put("/decline/:request_id", friendsController.declineRequest);
