@@ -5,10 +5,15 @@ import CallHeader from "./CallHeader";
 import CallControls from "./CallControls";
 import CallVideo from "./CallVideo";
 import useIsMobile from "../../hooks/useIsMobile";
+import { streamEmitter } from "../../features/webrtc/rtcMiddleware";
+
+import { useContext, useEffect, useState } from "react";
+import { MediaStreamContext } from "../../context/MediaStreamContext";
 
 const Call = () => {
+  const streams = useContext(MediaStreamContext);
   const dispatch = useDispatch();
-  const { callPanelStatus } = useSelector((state) => state.chats);
+  const callPanelStatus = useSelector((state) => state.chats.callPanelStatus);
   const isMobile = useIsMobile();
 
   const onMinimise = () => {
@@ -19,6 +24,7 @@ const Call = () => {
   };
 
   let containerStyle;
+  const videoContainerStyle = isMobile ? styles.callContainer__mobile : styles.callContainer;
 
   switch (callPanelStatus) {
     case "minimised":
@@ -36,12 +42,12 @@ const Call = () => {
   return (
     <div className={containerStyle}>
       <CallHeader />
-      {callPanelStatus === "active" && (
-        <div className={isMobile ? styles.callContainer__mobile : styles.callContainer}>
-          <CallVideo name="You" />
-          <CallVideo name="John Doe" />
-        </div>
-      )}
+
+      <div className={`${videoContainerStyle} ${callPanelStatus === "minimised" && styles.inactive}`}>
+        <CallVideo stream={streams.localStream} name="You" />
+        <CallVideo stream={streams.remoteStream} name="John Doe" />
+      </div>
+
       <CallControls />
     </div>
   );

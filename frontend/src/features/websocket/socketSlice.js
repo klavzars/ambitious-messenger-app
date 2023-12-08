@@ -44,6 +44,7 @@ const socketSlice = createSlice({
     peerNegotiationDone: (state, action) => {
       return;
     },
+    sendIceCandidate: (state, action) => {},
   },
 });
 

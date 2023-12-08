@@ -7,7 +7,7 @@ import { minimised } from "../../features/chats/chatSlice";
 
 const CallHeader = () => {
   const dispatch = useDispatch();
-  const { callPanelStatus } = useSelector((state) => state.chats);
+  const callPanelStatus = useSelector((state) => state.chats.callPanelStatus);
 
   const onMinimise = () => {
     dispatch(minimised());

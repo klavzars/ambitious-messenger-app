@@ -58,13 +58,17 @@ const initializeSocket = (server) => {
       //send users in the to variable an array
       for (const user of to) {
         const toSocketId = onlineUsers[user];
+        console.log("toSocketId", toSocketId);
         if (!toSocketId) {
           console.log("User is not online:", user);
           continue;
         }
-        socket.to(toSocketId).emit("message-received", saveMessage);
+        if (user !== from) {
+          socket.to(toSocketId).emit("message-received", saveMessage);
+        }
       }
       socket.emit("message-received", saveMessage);
+      //socket.emit("message-received", saveMessage);
     });
 
     socket.on("message-delete", async (message) => {
@@ -131,11 +135,13 @@ const initializeSocket = (server) => {
 
     // --- Call Events ---
     socket.on("call-request-send", ({ to, offer }) => {
+      console.log("call-request-send", offer);
       io.to(onlineUsers[to]).emit("call-request-recv", { from: socket.user, offer });
     });
 
-    socket.on("call-request-accepted", ({ to, res }) => {
-      io.to(onlineUsers[to]).emit("call-request-accepted", { from: socket.user, res });
+    socket.on("call-request-accepted", ({ to, answer }) => {
+      console.log("call-request-accepted", answer);
+      io.to(onlineUsers[to]).emit("call-request-accepted", { from: socket.user, answer });
     });
 
     socket.on("call-negotiation-needed", ({ to, offer }) => {
@@ -146,6 +152,11 @@ const initializeSocket = (server) => {
     socket.on("call-negotiation-final", ({ to, ans }) => {
       console.log("call-negotiation-final", ans);
       io.to(onlineUsers[to]).emit("call-negotiation-done", { from: socket.user, ans });
+    });
+
+    socket.on("send-ice-candidate", ({ to, candidate }) => {
+      console.log("send-ice-candidate", candidate);
+      io.to(onlineUsers[to]).emit("new-ice-candidate", { from: socket.user, candidate });
     });
   });
 

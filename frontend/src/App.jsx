@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import LogIn from "./pages/LogIn";
@@ -10,13 +10,16 @@ import { Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import PublicRoute from "./components/routing/PublicRoute";
 import Chats from "./pages/Chats";
-import NewChat from "./components/chat/NewChat";
+
 import AddFriend from "./components/chat/AddFriend";
+
+
 import { fetcher } from "./app/fetcher";
 import FriendRequests from "./components/friends/FriendRequests";
 
+
 function App() {
-  const { authStatus } = useSelector((state) => state.auth);
+  const authStatus = useSelector((state) => state.auth.authStatus);
   const dispatch = useDispatch();
 
   // check if user is authenticated on page reload

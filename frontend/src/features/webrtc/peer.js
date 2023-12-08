@@ -7,14 +7,17 @@ class Peer {
             urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"],
           },
         ],
-        iceCandidatePoolSize: 10,
       });
     }
+
+    this.offer = null;
+    this.targetPeer = null;
   }
 
-  async getAnswer(offer) {
+  // at this stage there should have been an offer from the other peer stored
+  async getAnswer() {
     if (this.peer) {
-      await this.peer.setRemoteDescription(offer);
+      await this.peer.setRemoteDescription(this.offer);
       const answer = await this.peer.createAnswer();
       await this.peer.setLocalDescription(answer);
       return answer;
@@ -31,7 +34,13 @@ class Peer {
 
   async setLocalDescription(description) {
     if (this.peer) {
-      await this.peer.setLocalDescription(description);
+      await this.peer.setLocalDescription(description).then(() => console.log("set local description done"));
+    }
+  }
+
+  async setRemoteDescription(description) {
+    if (this.peer) {
+      await this.peer.setRemoteDescription(description).then(() => console.log("set remote description done"));
     }
   }
 
@@ -40,6 +49,24 @@ class Peer {
       await this.peer.addIceCandidate(candidate);
     }
   }
+
+  getStoredOffer() {
+    return this.offer; // Retrieve the stored offer
+  } //
+
+  setStoredOffer(offer) {
+    this.offer = offer; // Store the offer
+  }
+
+  setTargetPeer(targetPeer) {
+    this.targetPeer = targetPeer;
+  }
+
+  getTargetPeer() {
+    return this.targetPeer;
+  }
+
+  // ...
 }
 
 export default Peer;

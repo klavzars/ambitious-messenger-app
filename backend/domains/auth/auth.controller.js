@@ -17,7 +17,11 @@ const login = async (req, res, next) => {
     // TODO: should we add a maxAge on the cookie, the same as the token expiration? A: No actually had a look into it and we can just clear the cookie of the JWT is expired, but we should still think about how long the JWT itself should last
     res
       .type("json")
-      .cookie("token", token, { httpOnly: true, signed: true }) // NOTE: in production, set secure: true
+      .cookie("token", token, {
+        httpOnly: true,
+        signed: true,
+        // sameSite: "None" // this doesnt work in brave browser unless server is https
+      }) // NOTE: in production, set secure: true and sameSite: "None"
       .send({
         user: {
           username: user.username,
