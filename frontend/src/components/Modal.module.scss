@@ -1,0 +1,74 @@
+@use "../sass_utilities/mixins" as mixins;
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00000099;
+  }
+  
+  .modalMain {
+    position: fixed;
+    background: white;
+    width: 80vw;  // Adjust this to your desired width
+    height: 80vw;
+    max-width: 35rem;
+    max-height: 35rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+  }
+  
+  .displayNone {
+    display: none;
+  }
+  
+  .displayBlock {
+    display: block;
+  }
+  
+  .modalHead {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: mixins.em(16);
+  }
+  
+  .modalBody {
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+
+  .card {
+    width: 12rem;
+    background: lightgrey;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .btnContainer {
+    width: 10rem;
+    padding-bottom: 2rem;
+  }
+  
+  .btn {
+    background-color: #405cf5;
+    border-radius: 6px;
+    border-width: 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: 100%;
+    height: 44px;
+    line-height: 1.15;
+    margin: 12px 0 0;
+    padding: 0 25px;
+    text-align: center;
+    width: 100%;
+  }

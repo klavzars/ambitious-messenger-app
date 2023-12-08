@@ -1,4 +1,6 @@
+@use "../../sass_utilities/mixins" as mixins;
 @import "../../sass_utilities/variables";
+
 
 // TODO: rewrite this to reduce code duplication
 
@@ -20,7 +22,7 @@
   }
 
   &__imageContainer {
-    width: 15%;
+    width: mixins.em(32);
     max-width: 4rem;
     padding: 0.2rem 0.7rem;
     display: flex;
@@ -58,6 +60,7 @@
   }
 
   &__content {
+    word-wrap: break-word;
     background-color: $color-secondary-bright;
     color: $color-text;
     padding: 0.7rem 1rem;
@@ -87,7 +90,7 @@
   }
 
   &__imageContainer {
-    width: 15%;
+    width: mixins.em(32);
     max-width: 4rem;
     padding: 0.2rem 0.7rem;
     display: flex;
@@ -125,6 +128,7 @@
   }
 
   &__content {
+    word-wrap: break-word;
     background-color: $color-primary;
     color: $color-secondary-bright;
     padding: 0.7rem 1rem;
