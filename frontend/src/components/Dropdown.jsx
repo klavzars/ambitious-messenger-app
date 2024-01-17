@@ -46,12 +46,12 @@ function Dropdown() {
       </button>
       {isOpen && (
         <div className={styles.dropdown}>
-          <Link to="/add-friend">
+          <Link to="/chats/add-friend">
             <button className={`${styles.dropdown__button} ${styles.dropdown__addFriend}`} onClick={handleSettings}>
               Add Friend
             </button>
           </Link>
-          <Link to="/friend-requests">
+          <Link to="/chats/friend-requests">
             <button className={`${styles.dropdown__button} ${styles.dropdown__addFriend}`} onClick={handleSettings}>
               Friend Requests
             </button>

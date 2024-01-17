@@ -119,7 +119,7 @@ function LogIn() {
                 className={styles.login__FormGroupLast}
                 isLast={true}
               />
-              <Link to={""} className={`${styles.login__resetPasswordLink} ${styles.login__link}`}>
+              <Link to={"/chats"} className={`${styles.login__resetPasswordLink} ${styles.login__link}`}>
                 Forgot your password?
               </Link>
               <button className={styles.login__button} disabled={userStatus === "loading"} type="submit">
