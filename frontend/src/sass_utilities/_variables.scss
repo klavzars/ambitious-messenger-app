@@ -5,10 +5,10 @@ $color-primary-dark: #125067;
 
 $color-secondary: #adadad;
 $color-secondary-bright: #f7f7f7;
-$color-secondary-dark: #363636;
+$color-secondary-dark: #646464;
 
 $color-text: #111111;
-$color-text-bright: #33373d;
+$color-text-bright: #747474;
 
 $color-invalid: #dd1c1a;
 $color-success: #168f16;
@@ -16,9 +16,10 @@ $color-success: #168f16;
 // font weight variables
 $font-light: 300;
 $font-regular: 400;
-$font-semibold: 600;
+$font-semibold: 500;
 $font-bold: 800;
 
-$font-small: 0.85rem;
+$font-small: 0.8rem;
+$font-small-medium: 0.9rem;
 
 $font-family: Poppins, sans-serif;

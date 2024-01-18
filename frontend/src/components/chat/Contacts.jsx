@@ -3,7 +3,9 @@ import { FaRegPenToSquare } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllChats } from "../../features/chats/chatSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { RxCross2 } from "react-icons/rx";
+import { IoSearch } from "react-icons/io5";
 
 import Dropdown from "../Dropdown";
 
@@ -25,8 +27,22 @@ function Contacts() {
     navigate(`/chats/${chatId}`);
   };
 
+  const { chatId } = useParams();
+
+  // TODO - is this a bad practice?
+  const isChatOpen = (mappedChatId) => {
+    if (!chatId) {
+      return false;
+    }
+    return mappedChatId == chatId;
+  };
+
   const contacts = allUserChats.map((chat) => (
-    <div className={styles.contact} key={chat.chat_id} onClick={() => handleOpenChat(chat.chat_id)}>
+    <div
+      className={`${styles.contact} ${isChatOpen(chat.chat_id) && styles.contactActive}`}
+      key={chat.chat_id}
+      onClick={() => handleOpenChat(chat.chat_id)}
+    >
       <div className={styles.contact__imageContainer}>
         <img className={styles.contact__img} src={defaultUserPic} alt={"" /* TODO make this dynamic*/} />
       </div>
@@ -40,8 +56,7 @@ function Contacts() {
           </p>
         </div>
         <div className={styles.contact__right}>
-          {/* <span className={styles.contact__time}>{contact.timestamp}</span> */}
-          {/* TODO !!!*/}
+          <span className={styles.contact__time}>5m</span>
         </div>
       </div>
     </div>
@@ -49,21 +64,40 @@ function Contacts() {
 
   return (
     <div className={styles.pageContainer}>
-      <header className={styles.header}>
-        <div className={styles.leftSideContainer}>
-          <div className={styles.headingContainer}>
-            <h2 className={styles.heading}>Chats</h2>
+      <div className={styles.topContainer}>
+        <header className={styles.header}>
+          <div className={styles.leftSideContainer}>
+            <div className={styles.headingContainer}>
+              <h2 className={styles.heading}>Messages</h2>
+            </div>
           </div>
+          <div className={styles.buttonsContainer}>
+            <Link to={"/chats/new"}>
+              <button className={`${styles.buttonNewChat} ${styles.button}`}>
+                <FaRegPenToSquare className={`${styles.buttonIcon} ${styles.buttonIcon__newChat}`} />
+              </button>
+            </Link>
+            <Dropdown />
+          </div>
+        </header>
+        <div className={styles.searchBar}>
+          <span className={styles.searchBar__searchIcon}>
+            <IoSearch className={styles.searchBar__searchIconImg} />
+          </span>
+
+          <input
+            type="text"
+            // value={friendUsername}
+            // onChange={friendUsernameChangedHandler}
+            // onBlur={friendUsernameBlurHandler}
+            placeholder="Search"
+            className={styles.searchBar__input}
+          />
+          <button className={styles.searchBar__clear} onClick={() => {}}>
+            <RxCross2 className={styles.searchBar__clearButton} />
+          </button>
         </div>
-        <div className={styles.buttonsContainer}>
-          <Link to={"/chats/new"}>
-            <button className={`${styles.buttonNewChat} ${styles.button}`}>
-              <FaRegPenToSquare className={`${styles.buttonIcon} ${styles.buttonIcon__newChat}`} />
-            </button>
-          </Link>
-          <Dropdown />
-        </div>
-      </header>
+      </div>
       <div className={styles.contactsContainer}>{contacts}</div>
     </div>
   );

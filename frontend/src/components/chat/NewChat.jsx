@@ -25,9 +25,9 @@ function NewChat() {
 
   const searchScrollRef = useRef(null);
 
-  useEffect(() => {
-    dispatch(getAllFriends());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getAllFriends());
+  // }, []);
 
   useEffect(() => {
     if (chatStatus === "failed") {
@@ -61,9 +61,20 @@ function NewChat() {
     setSearchText(event.target.value);
   };
 
-  const filteredUsers = friendsList.filter((user) =>
-    user.friend.username.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const users = [
+    { friend: { username: "john_doe" } },
+    { friend: { username: "alice_smith" } },
+    { friend: { username: "bob_jones" } },
+    { friend: { username: "emma_watson" } },
+    { friend: { username: "michael_jackson" } },
+    { friend: { username: "sarah_connor" } },
+    { friend: { username: "peter_parker" } },
+    { friend: { username: "laura_croft" } },
+    { friend: { username: "bruce_wayne" } },
+    { friend: { username: "diana_prince" } },
+  ];
+
+  const filteredUsers = users.filter((user) => user.friend.username.toLowerCase().includes(searchText.toLowerCase()));
 
   const handleUserCheckboxChange = (user) => {
     console.log(user);
