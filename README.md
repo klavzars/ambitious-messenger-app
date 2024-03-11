@@ -1,8 +1,8 @@
 <p align="center">
-    <img src="assets/repo_banner.svg"/>
+    <img width="50%" src="assets/repo_banner.svg"/>
 </p>
 
-**A modern web messaging application**
+### A Modern Web Messaging Application
 
 Started out as a group project during our Web Application Architectures module at TU Dublin, alongside two classmates. Then came the inevitable urge to polish it up whenever the stars aligned and time permitted (spoiler alert: it's not always easy to find that time).
 
