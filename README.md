@@ -4,114 +4,25 @@
 
 **A modern web messaging application**
 
-## Run Database container
+Started out as a group project during our Web Application Architectures module at TU Dublin, alongside two classmates. Then came the inevitable urge to polish it up whenever the stars aligned and time permitted (spoiler alert: it's not always easy to find that time).
 
-Clone the project
+_Still a work in progress... because perfection takes time, and so does debugging._
 
-```bash
-  git clone https://github.com/briantwene/ambitious-bishes.git
-```
+## Screenshots 📸
 
-Go to the `database` folder
+Coming soon.
 
-```bash
-  cd database
-```
+## Features💡
 
-Create a docker volume called `db_data`
+- **User Authentication**: Register, login and logout mechanisms for secure access.
+- **Friend network**: Send, receive, accept or decline friend requests.
+- **Real-time Chat**: Text communication between two users via websockets.
 
-```bash
-  docker volume create db_data
-```
+_More features coming soon._
 
-Then, start the container
+## Tech stack 🛠️
 
-```bash
-  docker compose up
-```
-
-The database should be running
-
-Next, is to get prisma working, the schema is there already
-
-Install dependencies (**make sure that you're in `/backend`**)
-
-```bash
-  npm install
-```
-
-now run the following to generate the prisma client
-
-```bash
-  npx prisma generate
-```
-
-**OR**
-
-**You probably wont have to do this, but @briantwene will let you know**
-
-if the prisma schema has changed (if a table has been added or modified) run this
-
-```bash
-  npx prisma migrate dev
-```
-
-**Then**
-
-One last thing would be to create an .env file in /backend and add the following:
-
-```bash
-# Database configuration
-DATABASE_URL=postgresql://username:password@localhost:5432/databasename?schema=public
-```
-
-The username, password and database can be found in `docker-compose.yml`
-
-## React app setup
-
-1. Install dependencies
-
-```bash
-  cd frontend
-  npm install
-```
-
-2. Run dev build
-
-```bash
-  npm run dev
-```
-
-### Notes
-
-#### Sass variables
-
-Here is a list of the current Sass variables:
-
-```scss
-$color-primary: #0881a3;
-$color-primary-bright: #84d2e8;
-$color-primary-dark: #125067;
-
-$color-secondary: #adadad;
-$color-secondary-bright: #f7f7f7;
-$color-secondary-dark: #363636;
-
-$color-text: #111111;
-$color-text-bright: #33373d;
-
-$color-invalid: #dd1c1a;
-
-$font-light: 300;
-$font-regular: 400;
-$font-semibold: 600;
-$font-bold: 800;
-
-$font-small: 0.85rem;
-```
-
-To use them just import the `variables.scss ` file in the modules.scss file, for example:
-
-```scss
-@import "./sass_utilities/variables.scss";
-```
+- [React](https://react.dev/)
+- [Express](https://expressjs.com/)
+- [Prisma ORM](https://www.prisma.io/)
+- [PostgreSQL](https://www.postgresql.org/)
