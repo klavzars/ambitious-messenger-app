@@ -135,7 +135,8 @@
     background-color: transparent;
     height: 100%;
     display: flex;
-    align-self: center;
+    flex-direction: column;
+    justify-content: center;
     margin-left: 0.7rem;
 
     &Button {
@@ -189,17 +190,5 @@
 .createChat {
   display: flex;
   justify-content: flex-end;
-
-  &__button {
-    background-color: $color-primary;
-    border: none;
-    color: $color-text-bright;
-    font-weight: $font-semibold;
-    color: $color-secondary-bright;
-    padding: 0.5rem 2rem;
-    border-radius: 999px;
-    align-self: center;
-    margin: 1.5rem 1rem;
-    cursor: pointer;
-  }
+  margin: 1.5rem 1rem;
 }

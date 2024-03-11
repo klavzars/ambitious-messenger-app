@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 
 // temporary
 import defaultUserPic from "../../assets/default_user_1.png";
+import HeaderPlain from "../friends/HeaderPlain";
+import ButtonCTA from "../ui/ButtonCTA";
 
 function NewChat() {
   const dispatch = useDispatch();
@@ -109,6 +111,7 @@ function NewChat() {
   };
 
   const handleCreateChat = () => {
+    console.log("create chat");
     if (selectedUsers.length === 0) {
       // TODO show error
       console.log("No users selected");
@@ -119,26 +122,13 @@ function NewChat() {
       isPrivate: false, // TODO
       members: selectedUsers.map((user) => user.username),
     };
-    console.log(newChatData);
+    // console.log(newChatData);
     dispatch(createChat(newChatData));
   };
 
   return (
     <div className={styles.pageContainer}>
-      <header className={styles.header}>
-        <Link to={"/chats"} className={styles.link}>
-          <button className={`${styles.buttonBack} ${styles.button}`}>
-            <MdKeyboardArrowLeft className={`${styles.buttonIcon} ${styles.buttonIcon__back}`} />
-          </button>
-        </Link>
-        <div className={styles.leftSideContainer}>
-          <div className={styles.headingContainer}>
-            <h2 className={styles.heading}>New chat</h2>
-          </div>
-        </div>
-        <div className={styles.buttonsContainer}></div>
-      </header>
-
+      <HeaderPlain title="New Chat" />
       <div className={styles.newChat}>
         <div className={styles.searchContainer} ref={searchScrollRef}>
           {selectedUsers.length > 0 &&
@@ -185,14 +175,7 @@ function NewChat() {
           ))}
         </ul>
         <div className={styles.createChat}>
-          <button
-            className={styles.createChat__button}
-            onClick={handleCreateChat}
-            disabled={false /* TODO */}
-            type="submit"
-          >
-            Create Chat
-          </button>
+          <ButtonCTA label="Create Chat" onClick={handleCreateChat} className={styles.createChat__button} />
         </div>
       </div>
     </div>

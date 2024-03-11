@@ -1,0 +1,13 @@
+@import "../../sass_utilities/variables";
+
+.button {
+  background-color: $color-primary;
+  border: none;
+  color: $color-text-bright;
+  font-weight: $font-semibold;
+  color: $color-secondary-bright;
+  padding: 0.5rem 2rem;
+  border-radius: 999px;
+  align-self: center;
+  cursor: pointer;
+}

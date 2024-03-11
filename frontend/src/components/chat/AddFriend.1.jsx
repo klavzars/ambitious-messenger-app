@@ -1,13 +1,13 @@
 import styles from "./AddFriend.module.scss";
 import { RxCross2 } from "react-icons/rx";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { addFriend, reset } from "../../features/friends/friendsSlice";
-import HeaderPlain from "../friends/HeaderPlain";
-import ButtonCTA from "../ui/ButtonCTA";
 
-function AddFriend() {
+export function AddFriend() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { status: friendStatus, error: friendError } = useSelector((state) => state.friends);
@@ -24,7 +24,6 @@ function AddFriend() {
     // TODO this will need some additional checks
     if (friendStatus === "succeeded") {
       // navigate("/chats");
-
       return () => {
         dispatch(reset());
       };
@@ -65,7 +64,18 @@ function AddFriend() {
 
   return (
     <div className={styles.pageContainer}>
-      <HeaderPlain title="Add Friend" />
+      <header className={styles.header}>
+        <Link to={"/chats"} className={styles.link}>
+          <button className={`${styles.buttonBack} ${styles.button}`}>
+            <MdKeyboardArrowLeft className={`${styles.buttonIcon} ${styles.buttonIcon__back}`} />
+          </button>
+        </Link>
+        <div className={styles.leftSideContainer}>
+          <div className={styles.headingContainer}>
+            <h2 className={styles.heading}>Add friend</h2>
+          </div>
+        </div>
+      </header>
       <div className={styles.addFriendContainer}>
         <div className={styles.friendInputContainer}>
           <p className={styles.label}>You can add friends by entering their username.</p>
@@ -90,11 +100,11 @@ function AddFriend() {
           <p className={`${styles.alert} ${styles.alertInvalid}`}>User with the specified username doesn't exist.</p>
         )}
         <div className={styles.addFriend}>
-          <ButtonCTA className={styles.addFriend__button} label="Add Friend" onClick={addFriendHandler} />
+          <button className={styles.addFriend__button} onClick={addFriendHandler} disabled={false /* TODO */}>
+            Add friend
+          </button>
         </div>
       </div>
     </div>
   );
 }
-
-export default AddFriend;

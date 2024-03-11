@@ -3,32 +3,38 @@ import { Outlet, useParams } from "react-router-dom";
 import Contacts from "../components/chat/Contacts";
 import styles from "./Chats.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-
 import { socketActions } from "../features/websocket/socketSlice";
-import Call from "../components/call/Call";
-const { connecting, disconnected, connected } = socketActions;
+
+import { loadMessages } from "../features/messages/messageSlice";
+import { currentChat } from "../features/chats/chatSlice";
+const { connecting, disconnected } = socketActions;
 
 const Chats = () => {
+  const { chatId } = useParams();
+  const socketStatus = useSelector((state) => state.socket.isConnected);
+
   const dispatch = useDispatch();
-  const { callPanelStatus } = useSelector((state) => state.chats);
+
+  // DO A DISPATCH HERE TO get the chat messages and to set the current chat
+
+  useEffect(() => {
+    console.log("DISPATCH loadMessages");
+    dispatch(loadMessages(chatId));
+    dispatch(currentChat(Number(chatId)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatId, dispatch]);
 
   // TODO - move this
   // websocket connection - this would ideally be in the container for the rest of the app when SSR is added
   useEffect(() => {
     dispatch(connecting());
     return () => {
-      dispatch(disconnected());
+      // TODO IF CHECK SAM CE JE CONNECTED LETS GOOOOOOOO
+      if (socketStatus) {
+        dispatch(disconnected());
+      }
     };
   }, []);
-
-  const isCallPanelActive = () => {
-    if (callPanelStatus == "active") {
-      console.log("something ran here");
-      return <Call />;
-    }
-
-    return <></>;
-  };
 
   return (
     <div className={styles.container}>

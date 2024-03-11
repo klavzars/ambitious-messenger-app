@@ -11,7 +11,9 @@ function MessageInput() {
   const currentChat = useSelector((state) => state.chats.currentChat);
   const currentChatInfo = useSelector((state) => state.chats.allUserChats.find((chat) => chat.chat_id === currentChat));
   const user = useSelector((state) => state.users.username);
-  console.log("currentChatInfo", currentChatInfo);
+
+  // console.log("currentChatInfo", currentChatInfo);
+
   const dispatch = useDispatch();
   const sendMessage = () => {
     const newMessage = {
@@ -22,7 +24,6 @@ function MessageInput() {
     };
 
     dispatch(socketActions.messageSend(newMessage));
-    console.log("sending message", message);
   };
 
   const onChange = ({ target }) => {

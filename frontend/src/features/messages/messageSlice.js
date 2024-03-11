@@ -41,14 +41,14 @@ const messagesSlice = createSlice({
     builder
       .addCase(loadMessages.fulfilled, (state, action) => {
         const { chat_id, messages } = action.payload;
-        console.log("loadMessages fulfilled", action);
+        // console.log("loadMessages fulfilled", action);
         state.byChatId[chat_id] = messages;
       })
       .addCase(loadMessages.rejected, (state, action) => {
-        console.log("loadMessages rejected", action);
+        // console.log("loadMessages rejected", action);
       })
       .addCase(loadMessages.pending, (state, action) => {
-        console.log("loadMessages pending", action);
+        // console.log("loadMessages pending", action);
       });
   },
 });

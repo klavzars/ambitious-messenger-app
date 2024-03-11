@@ -6,6 +6,7 @@ import { modalOpen } from "../user/userSlice";
 const {
   connected,
   connecting,
+  setConnecting,
   disconnected,
   messageDelete,
   messageSend,
@@ -30,12 +31,15 @@ export const socketMiddleWare = (params) => {
     const { type, payload } = action;
 
     const isConnectionThere = getState().socket.isConnected;
+    const isConnecting = getState().socket.isConnecting;
 
     if (connecting.match(action)) {
-      if (!socket.connected) {
-        console.log("socket", socket.connected);
+      // dispatch(setConnecting());
+      if (!socket.connected && !isConnecting) {
+        //tuki se check ce se ze connecta !!!!!! TODO
+
         socket.connect();
-        console.log("socket", socket.connected);
+
         // on successful connection set connection state of the socket
         socket.on("connect", () => {
           console.log("connected");
@@ -62,33 +66,33 @@ export const socketMiddleWare = (params) => {
         socket.on("invitation-accepted", (data) => {});
         socket.on("invitation-declined", (data) => {});
 
-        // listeners for calls from other users
-        socket.on("call-request-recv", (data) => {
-          console.log("call-request-recv", data);
+        // // listeners for calls from other users
+        // socket.on("call-request-recv", (data) => {
+        //   console.log("call-request-recv", data);
 
-          //if there is an offer then show
-          if (data.offer) {
-            dispatch(modalOpen());
-            dispatch(rtcActions.setOffer(data));
-          }
-        });
-        socket.on("call-request-accepted", (data) => {
-          console.log("call-request-accepted", data);
-          dispatch(rtcActions.handleAcceptedCall(data));
-        });
-        socket.on("call-negotiation-needed", (data) => {
-          console.log("call-negotiation-needed", data);
-          dispatch(rtcActions.handleInboundNegotiation(data));
-        });
-        socket.on("call-negotiation-done", (data) => {
-          console.log("call-negotiation-done", data);
-          dispatch(rtcActions.handleNegotiationFinal(data));
-        });
+        //   //if there is an offer then show
+        //   if (data.offer) {
+        //     dispatch(modalOpen());
+        //     dispatch(rtcActions.setOffer(data));
+        //   }
+        // });
+        // socket.on("call-request-accepted", (data) => {
+        //   console.log("call-request-accepted", data);
+        //   dispatch(rtcActions.handleAcceptedCall(data));
+        // });
+        // socket.on("call-negotiation-needed", (data) => {
+        //   console.log("call-negotiation-needed", data);
+        //   dispatch(rtcActions.handleInboundNegotiation(data));
+        // });
+        // socket.on("call-negotiation-done", (data) => {
+        //   console.log("call-negotiation-done", data);
+        //   dispatch(rtcActions.handleNegotiationFinal(data));
+        // });
 
-        socket.on("new-ice-candidate", (data) => {
-          console.log("new-ice-candidate", data);
-          dispatch(rtcActions.handleNewIceCandidate(data));
-        });
+        // socket.on("new-ice-candidate", (data) => {
+        //   console.log("new-ice-candidate", data);
+        //   dispatch(rtcActions.handleNewIceCandidate(data));
+        // });
       }
     }
 
@@ -128,35 +132,35 @@ export const socketMiddleWare = (params) => {
       socket.emit("invitation", payload);
     }
 
-    // when the user has started a call
-    if (callRequestSend.match(action) && isConnectionThere) {
-      console.log("call-request-send", payload);
-      socket.emit("call-request-send", payload);
-    }
+    // // when the user has started a call
+    // if (callRequestSend.match(action) && isConnectionThere) {
+    //   console.log("call-request-send", payload);
+    //   socket.emit("call-request-send", payload);
+    // }
 
-    // when the user has accepted a call
-    if (callRequestAccepted.match(action) && isConnectionThere) {
-      console.log("call-request-accepted", payload);
-      socket.emit("call-request-accepted", payload);
-    }
+    // // when the user has accepted a call
+    // if (callRequestAccepted.match(action) && isConnectionThere) {
+    //   console.log("call-request-accepted", payload);
+    //   socket.emit("call-request-accepted", payload);
+    // }
 
-    // when the peer has started negotiating
-    if (peerNegotiationNeeded.match(action) && isConnectionThere) {
-      console.log("call-negotiation-needed", payload);
-      socket.emit("call-negotiation-needed", payload);
-    }
+    // // when the peer has started negotiating
+    // if (peerNegotiationNeeded.match(action) && isConnectionThere) {
+    //   console.log("call-negotiation-needed", payload);
+    //   socket.emit("call-negotiation-needed", payload);
+    // }
 
-    // when the peer has finished negotiating
-    if (peerNegotiationDone.match(action) && isConnectionThere) {
-      console.log("call-negotiation-final", payload);
-      socket.emit("call-negotiation-final", payload);
-    }
+    // // when the peer has finished negotiating
+    // if (peerNegotiationDone.match(action) && isConnectionThere) {
+    //   console.log("call-negotiation-final", payload);
+    //   socket.emit("call-negotiation-final", payload);
+    // }
 
-    if (sendIceCandidate.match(action) && isConnectionThere) {
-      console.log("sendIceCandidate", payload);
+    // if (sendIceCandidate.match(action) && isConnectionThere) {
+    //   console.log("sendIceCandidate", payload);
 
-      socket.emit("send-ice-candidate", payload);
-    }
+    //   socket.emit("send-ice-candidate", payload);
+    // }
 
     return next(action);
   };

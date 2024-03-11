@@ -21,6 +21,9 @@
   background-color: $color-secondary-bright;
 }
 
+.contactsContainer {
+}
+
 .link {
   height: 100%;
 }
@@ -33,7 +36,26 @@
 }
 
 .requestListContainer {
-  max-width: 30rem;
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }
 
 .friendInputContainer {
@@ -82,14 +104,20 @@
 }
 
 .requestList {
+  width: fit-content;
   list-style-type: none;
-  padding: 0 1rem;
+  margin: 0 1.5rem 1rem 1.5rem;
+  padding: 0;
 
-  &__item {
+  &__item:not(:last-child) {
+    border-bottom: 1px solid $color-secondary;
+    padding: 0.5rem 0;
+  }
+
+  &__innerContainer {
     display: flex;
     justify-content: flex-start;
-
-    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
   }
 
   &__leftContainer {

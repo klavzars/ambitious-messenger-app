@@ -1,9 +1,10 @@
 import styles from "./Dropdown.module.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MdMoreVert } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 import { Link, useNavigate } from "react-router-dom";
+import useClickOutside from "../hooks/useClickOutside";
 
 function Dropdown() {
   const dispatch = useDispatch();
@@ -11,6 +12,10 @@ function Dropdown() {
   const userStatus = useSelector((state) => state.auth.status);
   const userError = useSelector((state) => state.auth.error);
   const [isOpen, setIsOpen] = useState(false);
+
+  const dropdownNode = useClickOutside(() => {
+    setIsOpen(false);
+  });
 
   useEffect(() => {
     if (userStatus === "failed") {
@@ -31,40 +36,52 @@ function Dropdown() {
     setIsOpen(!isOpen);
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const closeDropdown = () => {
+    setIsOpen(false);
   };
 
-  const handleSettings = () => {
-    // TODO
+  const handleDropdownAction = (handler) => {
+    closeDropdown();
+    handler();
+  };
+
+  const handleLogout = () => {
+    handleDropdownAction(() => dispatch(logout()));
+  };
+
+  const handleAddFriend = () => {
+    handleDropdownAction(() => navigate("/chats/add-friend"));
+  };
+
+  const handleFriendRequests = () => {
+    handleDropdownAction(() => navigate("/chats/friend-requests"));
   };
 
   return (
-    <>
-      <button className={`${styles.buttonOptions} ${styles.button}`}>
+    <nav ref={dropdownNode}>
+      <button
+        className={
+          isOpen
+            ? `${styles.buttonOptions} ${styles.button} ${styles.buttonPressed}`
+            : `${styles.buttonOptions} ${styles.button}`
+        }
+      >
         <MdMoreVert className={`${styles.buttonIcon} ${styles.buttonIcon__options}`} onClick={toggleDropdown} />
       </button>
       {isOpen && (
         <div className={styles.dropdown}>
-          <Link to="/chats/add-friend">
-            <button className={`${styles.dropdown__button} ${styles.dropdown__addFriend}`} onClick={handleSettings}>
-              Add Friend
-            </button>
-          </Link>
-          <Link to="/chats/friend-requests">
-            <button className={`${styles.dropdown__button} ${styles.dropdown__addFriend}`} onClick={handleSettings}>
-              Friend Requests
-            </button>
-          </Link>
+          <button className={`${styles.dropdown__button} ${styles.dropdown__addFriend}`} onClick={handleAddFriend}>
+            Add Friend
+          </button>
+          <button className={`${styles.dropdown__button} ${styles.dropdown__addFriend}`} onClick={handleFriendRequests}>
+            Friend Requests
+          </button>
           <button className={`${styles.dropdown__button} ${styles.dropdown__logout}`} onClick={handleLogout}>
             Logout
           </button>
-          {/* <button className={`${styles.dropdown__button} ${styles.dropdown__settings}`} onClick={handleSettings}>
-            Settings
-          </button> */}
         </div>
       )}
-    </>
+    </nav>
   );
 }
 
