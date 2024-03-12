@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="50%" src="assets/repo_banner.svg"/>
+    <img width="40%" src="assets/banner_v1.png"/>
 </p>
 
 ### A Modern Web Messaging Application
@@ -10,7 +10,7 @@ _Still a work in progress... because perfection takes time, and so does debuggin
 
 ## Screenshots 📸
 
-Coming soon.
+_Coming soon._
 
 ## Features💡
 
