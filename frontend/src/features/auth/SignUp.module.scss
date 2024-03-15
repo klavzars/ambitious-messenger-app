@@ -1,0 +1,147 @@
+@import "../../sass_utilities/variables";
+@import "../../sass_utilities/mixins";
+
+.outsideContainer {
+  min-height: 100vh;
+  width: 100%;
+  // position: relative;
+  background: $color-secondary-bright;
+}
+
+.card {
+  margin: 0;
+  background-color: $color-secondary-bright;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.mainRow {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 35rem;
+  width: 100%;
+}
+
+.col {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logoImage {
+  width: 100%;
+  height: auto;
+  max-height: 40vh;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  &__title {
+    font-weight: $font-semibold;
+    font-size: 2.9rem;
+    align-self: flex-start;
+    margin: 2rem 0 2rem 2.5rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__link {
+    color: $color-text;
+    font-size: $font-small;
+  }
+
+  &__resetPasswordLink {
+    align-self: flex-end;
+    margin-right: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  &__createAccountLink {
+    align-self: center;
+    margin-top: 0.6rem;
+  }
+
+  &__logoImage {
+    width: 10rem;
+  }
+
+  &__button {
+    background-color: $color-primary;
+    border: none;
+    color: $color-text-bright;
+    font-weight: $font-semibold;
+    color: $color-secondary-bright;
+    padding: 0.6rem 4rem;
+    border-radius: 60px;
+    align-self: center;
+    margin: 0rem 0 0.2rem 0;
+  }
+
+  &__error {
+    color: $color-invalid;
+    font-size: 0.85rem;
+    font-weight: $font-semibold;
+    margin: 0.2rem 0 1rem 0;
+  }
+}
+
+@include breakpoint-lg-up {
+  .mainRow {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    max-width: none;
+  }
+
+  .col {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .card {
+    box-shadow: 7px 10px 20px 11px rgba(0, 0, 0, 0.11);
+    -webkit-box-shadow: 7px 10px 20px 11px rgba(0, 0, 0, 0.11);
+    -moz-box-shadow: 7px 10px 20px 11px rgba(0, 0, 0, 0.11);
+
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    background-color: grey;
+    width: 80%;
+    max-width: 60rem;
+    background-color: $color-secondary-bright;
+    padding: 2rem;
+  }
+
+  .logoImage {
+    width: 90%;
+    height: auto;
+    max-height: 30rem;
+  }
+
+  .outsideContainer {
+    position: relative;
+    background: #84d2e8;
+    background: linear-gradient(90deg, rgba(132, 210, 232, 1) 0%, rgba(93, 190, 217, 1) 100%);
+  }
+}

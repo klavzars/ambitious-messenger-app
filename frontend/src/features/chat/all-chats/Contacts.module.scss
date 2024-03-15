@@ -1,0 +1,227 @@
+@import "../../../sass_utilities/variables";
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.contactsContainer {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.leftSideContainer {
+  display: flex;
+  align-items: center;
+}
+
+.topContainer {
+  padding: 0 1.3rem 0 1.5rem;
+  box-sizing: border-box;
+  border-right: 2px solid $color-secondary-bright;
+}
+
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  height: 10%;
+  min-height: 4.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+
+.heading {
+  font-size: 1.7rem;
+  font-weight: $font-semibold;
+}
+
+.buttonsContainer {
+  position: relative;
+  display: flex;
+}
+
+.button {
+  display: flex;
+  background-color: transparent;
+  border: none;
+  color: $color-primary;
+  height: 100%;
+  margin: 0 0.3rem;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+
+  &Options {
+    margin-right: 0;
+  }
+
+  &Icon {
+    &__newChat {
+      height: 1.65rem;
+    }
+
+    &__options {
+      height: 1.7rem;
+    }
+
+    width: auto;
+  }
+
+  &:hover {
+    background-color: $color-secondary-bright;
+  }
+}
+
+.searchBar {
+  display: flex;
+  justify-content: center;
+  background-color: $color-secondary-bright;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 1rem;
+  font-family: $font-family;
+  margin: auto;
+  margin-bottom: 0.2rem;
+  margin-top: 0.4rem;
+
+  &__input {
+    border: none;
+    display: inline-block;
+    background-color: transparent;
+    margin-left: 0.3rem;
+    flex-grow: 1;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+
+  &__searchIcon,
+  &__clear {
+    background-color: transparent;
+    height: 100%;
+    display: flex;
+    align-self: center;
+    align-items: center;
+
+    &Img,
+    &Button {
+      background-color: transparent;
+      border: none;
+      color: $color-secondary-dark;
+      height: 1.2rem;
+      width: auto;
+    }
+  }
+
+  &__clear {
+    cursor: pointer;
+    margin-left: 0.7rem;
+  }
+}
+
+.contact {
+  max-width: 100%;
+  display: flex;
+  padding: 0.5rem 0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-secondary-bright;
+  }
+
+  &Active {
+    background-color: $color-secondary-bright;
+  }
+
+  &__imageContainer {
+    height: inherit;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    width: 23%;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 100%;
+  }
+
+  &__mainContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__left {
+    align-self: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 0.3rem;
+  }
+
+  &__right {
+    padding: 1.5rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: $font-semibold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__message,
+  &__time {
+    color: $color-text-bright;
+  }
+
+  &__message {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: $font-small-medium;
+    color: $color-text-bright;
+  }
+
+  &__time {
+    font-style: italic;
+    font-size: $font-small;
+    vertical-align: middle;
+  }
+}

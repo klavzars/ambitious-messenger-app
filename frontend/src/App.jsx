@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
-import LogIn from "./pages/LogIn";
-import SignUp from "./pages/SignUp";
-import { setAuthStatus } from "./features/auth/authSlice";
-import { setUserData } from "./features/user/userSlice";
+import LogIn from "./features/auth/LogIn";
+import SignUp from "./features/auth/SignUp";
+import { setAuthStatus } from "./store/authSlice";
+import { setUserData } from "./store/userSlice";
 import "./App.scss";
 import { Navigate } from "react-router-dom";
-import ProtectedRoute from "./components/routing/ProtectedRoute";
-import PublicRoute from "./components/routing/PublicRoute";
-import Chats from "./pages/Chats";
+import ProtectedRoute from "./features/routing/ProtectedRoute";
+import PublicRoute from "./features/routing/PublicRoute";
+import Chats from "./features/chat/Chats";
 import useIsMobile from "./hooks/useIsMobile";
-import Chat from "./components/chat/Chat";
+import Chat from "./features/chat/Chat";
 
-import AddFriend from "./components/chat/AddFriend";
+import AddFriend from "./features/friends/AddFriend";
 
 import { fetcher } from "./app/fetcher";
-import FriendRequests from "./components/friends/FriendRequests";
-import Contacts from "./components/chat/Contacts";
-import NewChat from "./components/chat/NewChat";
-import NoChatsOpen from "./components/chat/NoChatsOpen";
+import FriendRequests from "./features/friends/FriendRequests";
+import Contacts from "./features/chat/all-chats/Contacts";
+import NewChat from "./features/chat/new-chat/NewChat";
+import NoChatsOpen from "./features/chat/NoChatsOpen";
 
 function App() {
   const authStatus = useSelector((state) => state.auth.authStatus);

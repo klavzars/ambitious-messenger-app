@@ -1,14 +1,14 @@
-import authSlice from "../features/auth/authSlice";
-import friendsSlice from "../features/friends/friendsSlice";
-import chatSlice from "../features/chats/chatSlice";
-import socketSlice from "../features/websocket/socketSlice";
+import authSlice from "../store/authSlice";
+import friendsSlice from "../store/friendsSlice";
+import chatSlice from "../store/chatSlice";
+import socketSlice from "../store/socketSlice";
 import { configureStore } from "@reduxjs/toolkit";
-import { socketMiddleWare } from "../features/websocket/websocketMiddleware";
+import { socketMiddleWare } from "../store/middleware/websocketMiddleware";
 
-import userSlice from "../features/user/userSlice";
-import messageSlice from "../features/messages/messageSlice";
-import { rtcMiddleware } from "../features/webrtc/rtcMiddleware";
-import rtcSlice from "../features/webrtc/rtcSlice";
+import userSlice from "../store/userSlice";
+import messageSlice from "../store/messageSlice";
+import { rtcMiddleware } from "../store/middleware/rtcMiddleware";
+import rtcSlice from "../store/rtcSlice";
 
 export default configureStore({
   reducer: {
