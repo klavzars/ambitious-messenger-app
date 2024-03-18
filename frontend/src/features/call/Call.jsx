@@ -8,7 +8,7 @@ import useIsMobile from "../../hooks/useIsMobile";
 import { streamEmitter } from "../../services/webrtc/rtcMiddleware";
 
 import { useContext, useEffect, useState } from "react";
-import { MediaStreamContext } from "../../context/MediaStreamContext";
+import { MediaStreamContext } from "../../store/context/MediaStreamContext";
 
 const Call = () => {
   const streams = useContext(MediaStreamContext);
