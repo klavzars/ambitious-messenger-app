@@ -15,14 +15,14 @@ _Coming soon._
 ## Features💡
 
 - **User Authentication**: Register, login and logout mechanisms for secure access.
-- **Friend network**: Send, receive, accept or decline friend requests.
+- **Friends Network**: Send, receive, accept or decline friend requests.
 - **Real-time Chat**: Text communication between two users via websockets.
 
 _More features coming soon._
 
 ## Tech stack 🛠️
 
-- [React](https://react.dev/)
+- [React](https://react.dev/) & [Redux](https://redux.js.org/)
 - [Express](https://expressjs.com/)
 - [Prisma ORM](https://www.prisma.io/)
 - [PostgreSQL](https://www.postgresql.org/)
