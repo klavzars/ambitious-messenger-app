@@ -10,7 +10,13 @@ _Still a work in progress... because perfection takes time, and so does debuggin
 
 ## Screenshots 📸
 
-_Coming soon._
+Here's a little demo sneak peek:
+
+<p align="center">
+    <img width="70%" style="border: 1px solid grey;" src="assets/demo_screenshot_v1.png"/>
+</p>
+
+_More screenshots comming soon._
 
 ## Features💡
 
