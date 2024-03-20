@@ -13,7 +13,7 @@ _Still a work in progress... because perfection takes time, and so does debuggin
 Here's a little demo sneak peek:
 
 <p align="center">
-    <img width="100%" style="border: 1px solid grey;" src="assets/demo_screenshot_v1.png"/>
+    <img width="90%" style="border: 1px solid grey;" src="assets/demo_screenshot_v1.png"/>
 </p>
 
 _More screenshots comming soon._
